@@ -26,6 +26,22 @@ function SettleUp (groupMembers) {
     return acc
   }, {})
 
+  result.amountOwedByGroupMember = Object.keys(groupMembers).reduce((acc, name) => {
+    acc[name] = {}
+    return acc
+  }, {})
+
+  const owingMembers = Object.keys(groupMembers).filter(name => result.totalPaidPerGroupMember[name] <= sharePerMember)
+  result.amountOwedByGroupMember = owingMembers.reduce((acc, name) => {
+    // pick first other member with money owed
+    const owedToName = Object.keys(groupMembers)
+      .filter(other => other !== name)
+      .filter(other => result.totalPaidPerGroupMember[other] > sharePerMember)
+      [0]
+    acc[name] = { [owedToName]: result.amountOwedToGroupMember[owedToName] }
+    return acc
+  }, result.amountOwedByGroupMember)
+
   return result
 }
 

@@ -67,4 +67,25 @@ describe('Settle Up', () => {
       { eAndG: 0, sAndW: 0 }
     )
   })
+
+  it('calculates the amount group members should pay to ohers (in a group of 2) to settle up', () => {
+    const eAndG = noPayments()
+    const sAndW = noPayments()
+    compareAsJson(
+      SettleUp({ eAndG, sAndW }).amountOwedByGroupMember,
+      { eAndG: {}, sAndW: {} }
+    )
+
+    eAndG.paid['a'] = 2
+    compareAsJson(
+      SettleUp({ eAndG, sAndW }).amountOwedByGroupMember,
+      { eAndG: {}, sAndW: { eAndG: 1 } }
+    )
+
+    sAndW.paid['b'] = 3
+    compareAsJson(
+      SettleUp({ eAndG, sAndW }).amountOwedByGroupMember,
+      { eAndG: { sAndW: 0.5 }, sAndW: {} }
+    )
+  })
 })
