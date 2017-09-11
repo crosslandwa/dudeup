@@ -5,28 +5,25 @@ const initial = () => ({
   totalPaidPerGroupMember: {}
 })
 
-const values = (map, key) => Object.keys(map[key]).map(x => map[key][x])
 const entries = map => Object.keys(map).map(key => [key, map[key]])
 const sum = values => values.reduce((total, x) => rounded(total + x), 0)
-const totalPaid = member => sum(values(member, 'paid'))
+const totalPaid = memberPayments => sum(entries(memberPayments).map(([item, amount]) => amount))
 const rounded = amount => Math.round(amount * 1e2) / 1e2;
 
-function SettleUp (groupMembers) {
-  const result = Object.keys(groupMembers).reduce((acc, name) => {
-    acc.totalPaidPerGroupMember[name] = totalPaid(groupMembers[name])
+function SettleUp (groupMemberPayments) {
+  const result = Object.keys(groupMemberPayments).reduce((acc, name) => {
+    acc.totalPaidPerGroupMember[name] = totalPaid(groupMemberPayments[name])
     acc.amountOwedByGroupMember[name] = {}
     return acc
   }, initial())
 
-  result.groupTotal = sum(values(result, 'totalPaidPerGroupMember'))
+  result.groupTotal = sum(entries(result.totalPaidPerGroupMember).map(([name, total]) => total))
 
-  const numberOfGroupMembers = Object.keys(groupMembers).length
-  const sharePerMember = rounded(result.groupTotal / Math.max(1, numberOfGroupMembers))
+  const numberOfGroupMembers = Object.keys(groupMemberPayments).length
+  result.averageAmountPerGroupMember = rounded(result.groupTotal / Math.max(1, numberOfGroupMembers))
 
-  result.averageAmountPerGroupMember = sharePerMember
-
-  const balances = Object.keys(groupMembers).reduce((acc, name) => {
-    acc[name] = rounded(result.totalPaidPerGroupMember[name] - sharePerMember)
+  const balances = Object.keys(groupMemberPayments).reduce((acc, name) => {
+    acc[name] = rounded(result.totalPaidPerGroupMember[name] - result.averageAmountPerGroupMember)
     return acc
   }, {})
 
