@@ -8,7 +8,7 @@ const initial = () => ({
 const entries = map => Object.keys(map).map(key => [key, map[key]])
 const sum = values => values.reduce((total, x) => rounded(total + x), 0)
 const totalPaid = memberPayments => sum(entries(memberPayments).map(([item, amount]) => amount))
-const rounded = amount => Math.round(amount * 1e2) / 1e2;
+const rounded = amount => Math.round(amount * 1e2) / 1e2
 
 function SettleUp (groupMemberPayments) {
   const result = Object.keys(groupMemberPayments).reduce((acc, name) => {
@@ -27,17 +27,19 @@ function SettleUp (groupMemberPayments) {
     return acc
   }, {})
 
-  while (entries(balances).filter(([name, balance]) => balance > 0).length) {
-    const [owedToName, owedToBalance] = entries(balances).filter(([name, balance]) => balance > 0)[0]
-    const stillOwing = entries(balances).filter(([name, balance]) => balance < 0)
-    if (stillOwing.length) {
-      const [owedByName, owedByBalance] = stillOwing[0]
-      const amount = Math.min(balances[owedToName], Math.abs(balances[owedByName]))
+  const stillOwed = () => entries(balances).filter(([name, balance]) => balance > 0)
+  const stillOwing = () => entries(balances).filter(([name, balance]) => balance < 0)
+
+  while (stillOwed().length) {
+    const [owedToName, owedToBalance] = stillOwed()[0]
+    if (stillOwing().length) {
+      const [owedByName, owedByBalance] = stillOwing()[0]
+      const amount = Math.min(owedToBalance, Math.abs(owedByBalance))
       result.amountOwedByGroupMember[owedByName][owedToName] = amount
-      balances[owedToName] = rounded(balances[owedToName] - amount)
-      balances[owedByName] = rounded(balances[owedByName] + amount)
+      balances[owedToName] = rounded(owedToBalance - amount)
+      balances[owedByName] = rounded(owedByBalance + amount)
     } else {
-      console.log(`writing off ${balances[owedToName]} owed to ${owedToName}`)
+      console.log(`Writing off ${owedToBalance} owed to ${owedToName}`)
       balances[owedToName] = rounded(0)
     }
   }
