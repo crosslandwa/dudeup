@@ -6,12 +6,12 @@ const compareAsJson = (a, b) => {
 }
 
 describe('Settle Up', () => {
-  it('returns the total paid per person', () => {
+  it('returns the total paid per group member', () => {
     const eAndG = noPayments()
     const sAndW = noPayments()
 
     compareAsJson(
-      SettleUp({ eAndG, sAndW }).totalPerPerson,
+      SettleUp({ eAndG, sAndW }).totalPaidPerGroupMember,
       { eAndG: 0, sAndW: 0 }
     )
 
@@ -20,7 +20,7 @@ describe('Settle Up', () => {
     sAndW.paid['c'] = 0.5
 
     compareAsJson(
-      SettleUp({ eAndG, sAndW }).totalPerPerson,
+      SettleUp({ eAndG, sAndW }).totalPaidPerGroupMember,
       { eAndG: 3, sAndW: 0.5 }
     )
   })
@@ -40,19 +40,19 @@ describe('Settle Up', () => {
     const eAndG = noPayments()
     const sAndW = noPayments()
     compareAsJson(
-      SettleUp({ eAndG, sAndW }).totalOwedPerPerson,
+      SettleUp({ eAndG, sAndW }).amountOwedToGroupMember,
       { eAndG: 0, sAndW: 0 }
     )
 
     eAndG.paid['a'] = 2
     compareAsJson(
-      SettleUp({ eAndG, sAndW }).totalOwedPerPerson,
+      SettleUp({ eAndG, sAndW }).amountOwedToGroupMember,
       { eAndG: 1, sAndW: 0 }
     )
 
     sAndW.paid['b'] = 2
     compareAsJson(
-      SettleUp({ eAndG, sAndW }).totalOwedPerPerson,
+      SettleUp({ eAndG, sAndW }).amountOwedToGroupMember,
       { eAndG: 0, sAndW: 0 }
     )
   })
