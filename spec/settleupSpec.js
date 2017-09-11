@@ -35,4 +35,25 @@ describe('Settle Up', () => {
     sAndW.paid['c'] = 0.5
     expect(SettleUp({ eAndG, sAndW }).groupTotal).toEqual(3.5)
   })
+
+  it('returns the amount owed to every member of the group', () => {
+    const eAndG = noPayments()
+    const sAndW = noPayments()
+    compareAsJson(
+      SettleUp({ eAndG, sAndW }).totalOwedPerPerson,
+      { eAndG: 0, sAndW: 0 }
+    )
+
+    eAndG.paid['a'] = 2
+    compareAsJson(
+      SettleUp({ eAndG, sAndW }).totalOwedPerPerson,
+      { eAndG: 1, sAndW: 0 }
+    )
+
+    sAndW.paid['b'] = 2
+    compareAsJson(
+      SettleUp({ eAndG, sAndW }).totalOwedPerPerson,
+      { eAndG: 0, sAndW: 0 }
+    )
+  })
 })

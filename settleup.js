@@ -1,5 +1,6 @@
 const initial = () => ({
   groupTotal: 0,
+  totalOwedPerPerson: {},
   totalPerPerson: {}
 })
 
@@ -14,6 +15,15 @@ function SettleUp (people) {
   }, initial())
 
   result.groupTotal = sum(values(result, 'totalPerPerson'))
+
+  const numberOfPeople = Object.keys(people).length
+  const sharePerMember = result.groupTotal / Math.max(1, numberOfPeople)
+
+  result.totalOwedPerPerson = Object.keys(people).reduce((acc, name) => {
+    acc[name] = Math.max(0, result.totalPerPerson[name] - sharePerMember)
+    return acc
+  }, {})
+
   return result
 }
 
