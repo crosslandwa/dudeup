@@ -1,9 +1,19 @@
+const initial = () => ({
+  groupTotal: 0,
+  totalPerPerson: {}
+})
+
 function SettleUp (people) {
-  return Object.keys(people).reduce((acc, name) => {
+  const result = Object.keys(people).reduce((acc, name) => {
     const person = people[name]
     acc.totalPerPerson[name] = totalPaid(person)
     return acc
-  }, { totalPerPerson: {} })
+  }, initial())
+
+  result.groupTotal = Object.keys(result.totalPerPerson)
+    .map(name => result.totalPerPerson[name])
+    .reduce((total, amount) => total + amount, 0)
+  return result
 }
 
 const totalPaid = person => Object.keys(person.paid)

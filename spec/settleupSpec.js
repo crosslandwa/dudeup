@@ -6,28 +6,33 @@ const compareAsJson = (a, b) => {
 }
 
 describe('Settle Up', () => {
-  it('returns a total paid of zero when no purchases have been made', () => {
+  it('returns the total paid per person', () => {
+    const eAndG = noPayments()
+    const sAndW = noPayments()
+
     compareAsJson(
-      SettleUp({ eAndG: noPayments(), sAndW: noPayments() }),
-      { totalPerPerson: {
-        eAndG: 0,
-        sAndW: 0
-      }}
+      SettleUp({ eAndG, sAndW }).totalPerPerson,
+      { eAndG: 0, sAndW: 0 }
+    )
+
+    eAndG.paid['a'] = 1
+    eAndG.paid['b'] = 2
+    sAndW.paid['c'] = 0.5
+
+    compareAsJson(
+      SettleUp({ eAndG, sAndW }).totalPerPerson,
+      { eAndG: 3, sAndW: 0.5 }
     )
   })
 
-  it('returns a total paid per person when purchases have been made', () => {
+  it('returns the total paid by the group', () => {
     const eAndG = noPayments()
+    const sAndW = noPayments()
+    expect(SettleUp({ eAndG, sAndW }).groupTotal).toEqual(0)
+
     eAndG.paid['a'] = 1
     eAndG.paid['b'] = 2
-    const sAndW = noPayments()
     sAndW.paid['c'] = 0.5
-    compareAsJson(
-      SettleUp({ eAndG, sAndW }),
-      { totalPerPerson: {
-        eAndG: 3,
-        sAndW: 0.5
-      }}
-    )
+    expect(SettleUp({ eAndG, sAndW }).groupTotal).toEqual(3.5)
   })
 })
