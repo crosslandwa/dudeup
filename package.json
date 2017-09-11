@@ -1,0 +1,18 @@
+{
+  "name": "settleup",
+  "version": "1.0.0",
+  "description": "Settle up shared hoiday costs",
+  "main": "settleup.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "devDependencies": {
+    "jasmine": "~2.3.1"
+  },
+  "keywords": [
+    "holiday",
+    "money"
+  ],
+  "author": "https://github.com/crosslandwa",
+  "license": "ISC"
+}
