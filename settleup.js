@@ -1,9 +1,9 @@
 function SettleUp (people) {
   return Object.keys(people).reduce((acc, name) => {
     const person = people[name]
-    acc[name] = { totalPaid: totalPaid(person) }
+    acc.totalPerPerson[name] = totalPaid(person)
     return acc
-  }, {})
+  }, { totalPerPerson: {} })
 }
 
 const totalPaid = person => Object.keys(person.paid)
