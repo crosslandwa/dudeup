@@ -36,7 +36,7 @@ describe('Settle Up', () => {
     expect(SettleUp({ eAndG, sAndW }).groupTotal).toEqual(3.5)
   })
 
-  it('calculates the average amount per group member', () => {
+  it('calculates the average amount owed per group member', () => {
     const eAndG = noPayments()
     const sAndW = noPayments()
     expect(SettleUp({ eAndG, sAndW }).averageAmountPerGroupMember).toEqual(0)
@@ -47,28 +47,7 @@ describe('Settle Up', () => {
     expect(SettleUp({ eAndG, sAndW }).averageAmountPerGroupMember).toEqual(1.75)
   })
 
-  it('calculates the amount owed to every member of the group', () => {
-    const eAndG = noPayments()
-    const sAndW = noPayments()
-    compareAsJson(
-      SettleUp({ eAndG, sAndW }).amountOwedToGroupMember,
-      { eAndG: 0, sAndW: 0 }
-    )
-
-    eAndG.paid['a'] = 2
-    compareAsJson(
-      SettleUp({ eAndG, sAndW }).amountOwedToGroupMember,
-      { eAndG: 1, sAndW: 0 }
-    )
-
-    sAndW.paid['b'] = 2
-    compareAsJson(
-      SettleUp({ eAndG, sAndW }).amountOwedToGroupMember,
-      { eAndG: 0, sAndW: 0 }
-    )
-  })
-
-  it('calculates the amount group members should pay to ohers (in a group of 2) to settle up', () => {
+  it('calculates the amount group members should pay to others (in a group of 2) to settle up', () => {
     const eAndG = noPayments()
     const sAndW = noPayments()
     compareAsJson(
