@@ -6,6 +6,8 @@ function SettleUp (people) {
   }, {})
 }
 
-const totalPaid = person => Object.keys(person.paid).map(item => person.paid[item]).reduce((total, amount)  => total + amount, 0)
+const totalPaid = person => Object.keys(person.paid)
+  .map(item => person.paid[item])
+  .reduce((total, amount)  => total + amount, 0)
 
 module.exports = SettleUp
