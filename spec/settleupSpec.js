@@ -5,7 +5,6 @@ const compareAsJson = (a, b) => {
   expect(JSON.stringify(a)).toEqual(JSON.stringify(b))
 }
 
-
 describe('Settle Up', () => {
   it('returns a total paid of zero when no purchases have been made', () => {
     compareAsJson(
