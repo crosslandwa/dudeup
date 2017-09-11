@@ -3,6 +3,7 @@ const initial = () => ({
   totalPerPerson: {}
 })
 
+const values = (map, key) => Object.keys(map[key]).map(x => map[key][x])
 const sum = values => values.reduce((total, x) => total + x, 0)
 
 function SettleUp (people) {
@@ -12,10 +13,10 @@ function SettleUp (people) {
     return acc
   }, initial())
 
-  result.groupTotal = sum(Object.keys(result.totalPerPerson).map(name => result.totalPerPerson[name]))
+  result.groupTotal = sum(values(result, 'totalPerPerson'))
   return result
 }
 
-const totalPaid = person => sum(Object.keys(person.paid).map(item => person.paid[item]))
+const totalPaid = person => sum(values(person, 'paid'))
 
 module.exports = SettleUp
