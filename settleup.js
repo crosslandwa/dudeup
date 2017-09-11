@@ -1,16 +1,19 @@
 const initial = () => ({
   averageAmountPerGroupMember: 0,
   groupTotal: 0,
+  amountOwedByGroupMember: {},
   amountOwedToGroupMember: {},
   totalPaidPerGroupMember: {}
 })
 
 const values = (map, key) => Object.keys(map[key]).map(x => map[key][x])
+const entries = map => Object.keys(map).map(key => [key, map[key]])
 const sum = values => values.reduce((total, x) => total + x, 0)
 
 function SettleUp (groupMembers) {
   const result = Object.keys(groupMembers).reduce((acc, name) => {
     acc.totalPaidPerGroupMember[name] = totalPaid(groupMembers[name])
+    acc.amountOwedByGroupMember[name] = {}
     return acc
   }, initial())
 
@@ -26,29 +29,19 @@ function SettleUp (groupMembers) {
     return acc
   }, {})
 
-  result.amountOwedByGroupMember = Object.keys(groupMembers).reduce((acc, name) => {
-    acc[name] = {}
-    return acc
-  }, {})
-
-
-  const owingMembers = Object.keys(groupMembers).filter(name => result.totalPaidPerGroupMember[name] < sharePerMember)
-  const owedMembers = Object.keys(groupMembers).filter(name => !owingMembers.includes(name))
-
   const balances = Object.keys(groupMembers).reduce((acc, name) => {
-    acc[name] = { balance: result.totalPaidPerGroupMember[name] - sharePerMember }
+    acc[name] = result.totalPaidPerGroupMember[name] - sharePerMember
     return acc
   }, {})
 
-  result.amountOwedByGroupMember = owingMembers.reduce((acc, name) => {
-    const owedToName = Object.keys(balances)
-      .filter(other => other !== name)
-      .filter(other => balances[other].balance > 0)[0]
-    const amount = Math.min(balances[owedToName].balance, Math.abs(balances[name].balance))
-    acc[name] = { [owedToName]: amount }
-    balances[owedToName].balance -= amount
-    return acc
-  }, result.amountOwedByGroupMember)
+  while (entries(balances).filter(([name, balance]) => balance > 0).length) {
+    const [owedToName, owedToBalance] = entries(balances).filter(([name, balance]) => balance > 0)[0]
+    const [owedByName, owedByBalance] = entries(balances).filter(([name, balance]) => balance < 0)[0]
+    const amount = Math.min(balances[owedToName], Math.abs(balances[owedByName]))
+    result.amountOwedByGroupMember[owedByName][owedToName] = amount
+    balances[owedToName] -= amount
+    balances[owedByName] += amount
+  }
 
   return result
 }

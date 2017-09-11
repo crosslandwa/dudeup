@@ -93,11 +93,13 @@ describe('Settle Up', () => {
     const a = noPayments()
     const b = noPayments()
     const c = noPayments()
+    const d = noPayments()
 
-    a.paid['aLovelyThing'] = 3
+    a.paid['aLovelyThing'] = 4
+    b.paid['anotherLovelyThing'] = 2
     compareAsJson(
-      SettleUp({ a, b, c }).amountOwedByGroupMember,
-      { a: {}, b: { a: 1 }, c: { a: 1 } }
+      SettleUp({ a, b, c, d }).amountOwedByGroupMember,
+      { a: {}, b: {}, c: { a: 1.5 }, d: { a: 1, b: 0.5 } }
     )
   })
 })
