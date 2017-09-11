@@ -88,4 +88,16 @@ describe('Settle Up', () => {
       { eAndG: { sAndW: 0.5 }, sAndW: {} }
     )
   })
+
+  it('calculates the amount group members should pay to ohers (in a group of 3+) to settle up', () => {
+    const a = noPayments()
+    const b = noPayments()
+    const c = noPayments()
+
+    a.paid['aLovelyThing'] = 3
+    compareAsJson(
+      SettleUp({ a, b, c }).amountOwedByGroupMember,
+      { a: {}, b: { a: 1 }, c: { a: 1 } }
+    )
+  })
 })
