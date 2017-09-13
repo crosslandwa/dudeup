@@ -50,7 +50,7 @@ class ItemList extends Component {
             {this.props.dudeId && (<div onClick={() => this.props.addItem(this.props.dudeId)}>
               <PlusButton />
             </div>)}
-            {this.props.total && (<div>Total spend: {this.props.total}</div>)}
+            {this.props.total && (<div>Total spend: {this.props.total.toFixed(2)}</div>)}
           </div>
         </div>
       </div>

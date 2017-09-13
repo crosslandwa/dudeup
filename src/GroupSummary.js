@@ -29,8 +29,8 @@ class GroupSummary extends Component {
   render() {
     return (
       <div style={styles} >
-        <div style={leftTextStyle} ><span>Group spend: {this.props.groupTotal}</span></div>
-        <div style={rightTextStyle} ><span>Average spend per Dude: {this.props.averageSpendPerDude}</span></div>
+        <div style={leftTextStyle} ><span>Group spend: {this.props.groupTotal.toFixed(2)}</span></div>
+        <div style={rightTextStyle} ><span>Average spend per Dude: {this.props.averageSpendPerDude.toFixed(2)}</span></div>
       </div>
     )
   }
