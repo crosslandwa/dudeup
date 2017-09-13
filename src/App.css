@@ -15,8 +15,7 @@ body {
 
 .App-header {
   background-color: #222;
-  height: 150px;
-  padding: 20px;
+  line-height: 60px;
   color: white;
   border-radius: 10px;
 }
