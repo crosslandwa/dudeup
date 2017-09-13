@@ -42,7 +42,7 @@ class ItemList extends Component {
           <div style={headerStyle} >
             {this.props.name
               ? `Bought by ${this.props.name}`
-              : 'Select a dude above to see bought items'
+              : 'Select a dude above to see bought items...'
             }
           </div>
           {this.props.itemIds.map(itemId => <Item key={itemId} id={itemId} />)}

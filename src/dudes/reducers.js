@@ -9,8 +9,9 @@ export function selectedDudeReducer (state = null, action) {
   switch (action.type) {
     case 'DUDE_SELECT':
       return action.id
+    default:
+      return state
   }
-  return state
 }
 
 export function dudesReducer (state = initialState, action) {
@@ -19,8 +20,9 @@ export function dudesReducer (state = initialState, action) {
       return addDude(state, action.id)
     case 'DUDE_UPDATE_NAME':
       return updateName(state, action.id, action.name)
+    default:
+      return state
   }
-  return state
 }
 
 function addDude (state, id) {

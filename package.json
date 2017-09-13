@@ -5,12 +5,12 @@
   "dependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-scripts": "1.0.13"
-  },
-  "devDependencies": {
+    "react-scripts": "1.0.13",
     "react-redux": "^5.0.4",
+    "reduce-reducers": "^0.1.2",
     "redux": "^3.6.0",
-    "redux-localstorage": "^0.4.1"
+    "redux-localstorage": "^0.4.1",
+    "settleup": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

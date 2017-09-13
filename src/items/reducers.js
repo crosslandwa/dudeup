@@ -13,8 +13,9 @@ export function itemsReducer (state = initialState, action) {
       return updateDescription(state, action.id, action.description)
     case 'ITEM_UPDATE_PRICE':
       return updatePrice(state, action.id, action.price)
+    default:
+      return state
   }
-  return state
 }
 
 function addItem (state, id, dudeId) {
