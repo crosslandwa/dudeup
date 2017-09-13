@@ -15,15 +15,17 @@ export function selectedDudeReducer (state = null, action) {
 
 export function dudesReducer (state = initialState, action) {
   switch (action.type) {
+    case 'DUDE_NEW':
+      return addDude(state, action.id)
     case 'DUDE_UPDATE_NAME':
       return updateName(state, action.id, action.name)
   }
   return state
 }
 
-function addDude (state, id, name) {
+function addDude (state, id) {
   const updated = clone(state)
-  updated.byId[id] = { id, name }
+  updated.byId[id] = { id, name: '' }
   if (!updated.allIds.includes(id)) {
     updated.allIds = updated.allIds.concat(id)
   }

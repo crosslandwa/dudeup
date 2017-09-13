@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import NameBadge from './NameBadge'
 import PlusButton from './PlusButton'
 import { selectAllDudeIds } from './dudes/selectors'
+import { addDude } from './dudes/actions'
 
 const styles = {
   display: 'flex',
@@ -34,7 +35,9 @@ class NamesStrip extends Component {
         {this.props.ids.map(dudeId => (
             <NameBadge key={dudeId} dudeId={dudeId} />
         ))}
-        <PlusButton />
+        <div onClick={this.props.addDude}>
+          <PlusButton />
+        </div>
       </div>
     )
   }
@@ -44,6 +47,6 @@ const mapStateToProps = (state) => ({
   ids: selectAllDudeIds(state),
 })
 
-const mapDispatchToProps = (dispatch) => ({ })
+const mapDispatchToProps = { addDude }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NamesStrip)

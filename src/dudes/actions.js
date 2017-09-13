@@ -1,3 +1,9 @@
+import { uniqueId } from '../reducers'
+
+export function addDude () {
+  return { type: 'DUDE_NEW', id: uniqueId('dude') }
+}
+
 export function selectDude (id) {
   return { type: 'DUDE_SELECT', id}
 }
