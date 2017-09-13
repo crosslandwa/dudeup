@@ -5,15 +5,6 @@ const initialState = {
   allIds: []
 }
 
-const initialDudeState = {
-  byId: {
-    a: { id: 'a', name: 'WillyC' },
-    b: { id: 'b', name: 'Su' },
-    c: { id: 'c', name: 'JonnyJonJon' },
-  },
-  allIds: ['a', 'b', 'c']
-}
-
 export function selectedDudeReducer (state = null, action) {
   switch (action.type) {
     case 'DUDE_SELECT':
@@ -22,8 +13,10 @@ export function selectedDudeReducer (state = null, action) {
   return state
 }
 
-export function dudesReducer (state = initialDudeState, action) {
+export function dudesReducer (state = initialState, action) {
   switch (action.type) {
+    case 'DUDE_UPDATE_NAME':
+      return updateName(state, action.id, action.name)
   }
   return state
 }
@@ -34,5 +27,11 @@ function addDude (state, id, name) {
   if (!updated.allIds.includes(id)) {
     updated.allIds = updated.allIds.concat(id)
   }
+  return updated
+}
+
+function updateName (state, id, name) {
+  const updated = clone(state)
+  updated.byId[id].name = name
   return updated
 }
