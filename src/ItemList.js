@@ -55,22 +55,22 @@ class ItemList extends Component {
       <div>
         <div style={styles} >
           <div style={headerStyle} >
-            {this.props.name
-              ? `Bought by ${this.props.name}`
-              : 'Select a dude above to see bought items...'
+            {this.props.dudeId
+              ? `Paid for by ${this.props.name}`
+              : 'Select a dude above to see/edit what they paid for...'
             }
           </div>
           {this.props.itemIds.map(itemId => <Item key={itemId} id={itemId} />)}
-          <div style={footerStyle} >
-            {this.props.dudeId && (
+          {this.props.dudeId && (
+            <div style={footerStyle} >
               <input style={addButtonStyle}
                 type="button"
                 value="add"
                 onClick={() => this.props.addItem(this.props.dudeId)}
               />
-            )}
-            {this.props.dudeId && <div style={totalSpendStyle} >Total spend: {(this.props.total || 0).toFixed(2)}</div>}
-          </div>
+              <div style={totalSpendStyle} >Total spend: {(this.props.total || 0).toFixed(2)}</div>
+            </div>
+          )}
         </div>
       </div>
     )

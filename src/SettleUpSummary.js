@@ -25,7 +25,7 @@ class SettleUpSummary extends Component {
   render() {
     return (
       <div style={styles} >
-        {this.props.dudeId ? '' : '... and how to settle up with the rest of the dudes'}
+        {this.props.dudeId ? '' : '... and how to settle up with the other dudes'}
         {this.props.dudeId && (
           <div style={listStyle}>
             {(this.props.amountsYouOwe.length === 0) && (
