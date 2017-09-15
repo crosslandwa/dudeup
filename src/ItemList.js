@@ -4,7 +4,7 @@ import Item from './Item'
 import { selectDudesName, selectSelectedDudeId } from './dudes/selectors'
 import { selectItemIdsForDude, selectTotalItemCostForDude } from './items/selectors'
 import { addItem } from './items/actions'
-import { black, dusty } from './colours'
+import { dusty } from './colours'
 
 const styles = {
   display: 'flex',

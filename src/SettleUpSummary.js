@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectDudesName, selectSelectedDudeId } from './dudes/selectors'
+import { selectSelectedDudeId } from './dudes/selectors'
 import { selectAmountsOwedByDude, selectAmountsOwedToDude } from './settleup/selectors'
 import { overcast } from './colours'
 
@@ -11,14 +11,9 @@ const styles = {
   justifyContent: 'space-around',
   borderRadius: 5,
   backgroundColor: overcast,
-  alignItems: 'center'
-}
-
-const headerStyle = {
-  lineHeight: '30px',
-  fontWeight: 'bold',
-  textAlign: 'left',
-  marginLeft: '2px'
+  alignItems: 'center',
+  lineHeight: '26px',
+  minHeight: 30
 }
 
 const listStyle = {
@@ -29,31 +24,28 @@ const listStyle = {
 class SettleUpSummary extends Component {
   render() {
     return (
-      <div>
-        <div style={styles} >
-          <div style={headerStyle} >
-            {this.props.name
-              ? `Owed by ${this.props.name}`
-              : '... and see what they owe'
-            }
-          </div>
+      <div style={styles} >
+        {this.props.dudeId ? '' : '... and how to settle up with the rest of the dudes'}
+        {this.props.dudeId && (
           <div style={listStyle}>
-            {this.props.dudeId && (this.props.amountsYouOwe.length === 0) && (
+            {(this.props.amountsYouOwe.length === 0) && (
               <div>You don't owe anything!</div>
             )}
             {this.props.amountsYouOwe.map(({dudeName, amount}, index) => (
               <div key={index} >You owe {dudeName} {amount}</div>
             ))}
           </div>
+        )}
+        {this.props.dudeId && (
           <div style={listStyle}>
-            {this.props.dudeId && (this.props.amountsOwedToYou.length === 0) && (
+            {(this.props.amountsOwedToYou.length === 0) && (
               <div>You aren't owed anything...</div>
             )}
             {this.props.amountsOwedToYou.map(({dudeName, amount}, index) => (
               <div key={index} >{dudeName} owes you {amount}</div>
             ))}
           </div>
-        </div>
+        )}
       </div>
     )
   }
@@ -61,9 +53,6 @@ class SettleUpSummary extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   dudeId: selectSelectedDudeId(state),
-  name: selectSelectedDudeId(state)
-    ? selectDudesName(state, selectSelectedDudeId(state))
-    : null,
   amountsYouOwe: selectSelectedDudeId(state)
     ? selectAmountsOwedByDude(state, selectSelectedDudeId(state))
     : [],
