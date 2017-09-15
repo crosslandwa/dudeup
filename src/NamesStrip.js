@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import NameBadge from './NameBadge'
 import { selectAllDudeIds } from './dudes/selectors'
 import { addDude } from './dudes/actions'
-import { black, overcast } from './colours'
+import { overcast } from './colours'
 
 const styles = {
   display: 'flex',
