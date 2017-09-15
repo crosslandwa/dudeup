@@ -7,9 +7,9 @@ import { addDude } from './dudes/actions'
 const styles = {
   display: 'flex',
   width: '100%',
+  minHeight: 62,
   justifyContent: 'space-around',
   height: '100%',
-  padding: '2% 0',
   borderRadius: 10,
   borderWidth: 1,
   borderStyle: 'solid',
@@ -22,7 +22,6 @@ const nameListStyle = {
   width: '85%',
   display: 'flex',
   flexWrap: 'wrap',
-  padding: '0 2%',
   justifyContent: 'center'
 }
 

@@ -19,8 +19,7 @@ const styles = (selected) => ({
   padding: '0 4px',
   font: 'inherit',
   textAlign: 'center',
-  marginLeft: '1%',
-  marginRight: '1%'
+  margin: '1%'
 })
 
 class NameBadge extends Component {
