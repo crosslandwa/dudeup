@@ -23,7 +23,7 @@ const nameListStyle = {
   display: 'flex',
   flexWrap: 'wrap',
   padding: '0 2%',
-  justifyContent: 'space-between'
+  justifyContent: 'center'
 }
 
 const addButtonStyle = {
