@@ -40,7 +40,7 @@ const addButtonStyle = {
   cursor: 'pointer',
   marginLeft: '2%',
   marginRight: '2%',
-  width: '10%',
+  width: '11%',
   height: '30px',
   fontSize: 'inherit',
   backgroundColor: '#e9ffee',

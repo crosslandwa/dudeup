@@ -17,31 +17,22 @@ const styles = (selected) => ({
   justifyContent: 'center',
   alignItems: 'center',
   padding: '0 4px',
-})
-
-const inputStyle = {
-  width: '100%',
-  fontFamily: 'sans-serif',
-  fontSize: 'inherit',
-  background: 'none',
-  border: 'none',
-  height: '100%',
+  font: 'inherit',
   textAlign: 'center',
-}
+})
 
 class NameBadge extends Component {
   render() {
     return (
-      <div style={styles(this.props.selected)}>
-        <input
-          style={inputStyle}
-          type="text"
-          value={this.props.name}
-          onChange={this.props.updateName}
-          onClick={this.props.select}
-          placeholder="Enter a name..."
-        />
-      </div>
+      <input
+        style={styles(this.props.selected)}
+        type="text"
+        value={this.props.name}
+        onChange={this.props.updateName}
+        onClick={this.props.select}
+        placeholder="Enter a name..."
+        onKeyPress={this.props.enter}
+      />
     )
   }
 }
@@ -52,6 +43,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, { dudeId }) => ({
+  enter: event => { if (event.key === 'Enter') dispatch(selectDude(dudeId)) },
   select: () => dispatch(selectDude(dudeId)),
   updateName: (event) => dispatch(updateDudeName(dudeId, event.target.value)),
 })
