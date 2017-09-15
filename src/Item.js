@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { selectItemDescription, selectItemPrice } from './items/selectors'
-import { updateItemDescription, updateItemPrice } from './items/actions'
+import { updateItemDescription, updateItemPrice, removeItem } from './items/actions'
 
 const style = {
   height: '40px',
@@ -25,16 +25,24 @@ const inputStyle = {
 
 const priceStyle = {
   width: '10%',
-  marginLeft: '3%',
-  marginRight: '3%',
+  marginLeft: '2%',
+  marginRight: '2%',
   cursor: 'pointer',
 }
 
 const descriptionStyle = {
   width: '70%',
   textAlign: 'left',
-  marginRight: '3%',
+  marginRight: '2%',
   padding: '0 4px'
+}
+
+const removeButtonStyle = {
+  background: 'none',
+  border: 'none',
+  font: 'inherit',
+  cursor: 'pointer',
+  marginRight: '2%'
 }
 
 class Item extends Component {
@@ -55,6 +63,11 @@ class Item extends Component {
           onChange={this.props.updateDescription}
           placeholder="Enter a description..."
         />
+        <input style={removeButtonStyle}
+          type="button"
+          value="remove"
+          onClick={this.props.removeItem}
+        />
       </div>
     )
   }
@@ -68,6 +81,7 @@ const mapStateToProps = (state, { id }) => ({
 const mapDispatchToProps = (dispatch, {id}) => ({
   updateDescription: (event) => dispatch(updateItemDescription(id, event.target.value)),
   updatePrice: (event) => dispatch(updateItemPrice(id, event.target.value)),
+  removeItem: () => dispatch(removeItem(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Item)

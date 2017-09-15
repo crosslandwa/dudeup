@@ -13,3 +13,7 @@ export function updateItemDescription (id, description) {
 export function updateItemPrice (id, price) {
   return { type: 'ITEM_UPDATE_PRICE', id, price: rounded(price) }
 }
+
+export function removeItem (id) {
+  return { type: 'ITEM_REMOVE', id }
+}

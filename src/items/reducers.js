@@ -13,6 +13,8 @@ export function itemsReducer (state = initialState, action) {
       return updateDescription(state, action.id, action.description)
     case 'ITEM_UPDATE_PRICE':
       return updatePrice(state, action.id, action.price)
+    case 'ITEM_REMOVE':
+      return removeItem(state, action.id)
     default:
       return state
   }
@@ -36,5 +38,12 @@ function updateDescription(state, id, description) {
 function updatePrice(state, id, price) {
   const updated = clone(state)
   updated.byId[id].price = price
+  return updated
+}
+
+function removeItem (state, id) {
+  const updated = clone(state)
+  delete updated.byId[id]
+  updated.allIds = updated.allIds.filter(other => other !== id)
   return updated
 }
