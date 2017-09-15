@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import NameBadge from './NameBadge'
 import { selectAllDudeIds } from './dudes/selectors'
 import { addDude } from './dudes/actions'
+import { black, overcast } from './colours'
 
 const styles = {
   display: 'flex',
@@ -10,11 +11,8 @@ const styles = {
   minHeight: 62,
   justifyContent: 'space-around',
   height: '100%',
-  borderRadius: 10,
-  borderWidth: 1,
-  borderStyle: 'solid',
-  borderColor: '#333333',
-  backgroundColor: '#5df580',
+  borderRadius: 5,
+  backgroundColor: overcast,
   alignItems: 'center'
 }
 
@@ -33,7 +31,8 @@ const addButtonStyle = {
   width: '15%',
   height: '30px',
   fontSize: 'inherit',
-  marginLeft: '2%'
+  marginLeft: '2%',
+  borderRadius: 5
 }
 
 class NamesStrip extends Component {

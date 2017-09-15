@@ -1,6 +1,20 @@
 body {
   display: flex;
   justify-content: center;
+  color: #333333; /*black*/
+}
+
+input {
+  color: #333333; /*black*/
+}
+
+::selection {
+  background: #D5D5D5;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 8px #333333; /*black*/
 }
 
 .App {
@@ -14,10 +28,10 @@ body {
 }
 
 .App-header {
-  background-color: #222;
+  background-color: #333333; /*black*/
   line-height: 60px;
-  color: white;
-  border-radius: 10px;
+  color: #D5D5D5; /*paper*/
+  border-radius: 5px;
 }
 
 .App-intro {

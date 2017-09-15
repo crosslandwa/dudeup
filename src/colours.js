@@ -1,0 +1,5 @@
+export const black = '#333333'
+export const dusty= '#96858F'
+export const lavender= '#6D7993'
+export const overcast= '#9099A2'
+export const paper= '#D5D5D5'

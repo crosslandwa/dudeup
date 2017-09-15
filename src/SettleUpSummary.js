@@ -2,17 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { selectDudesName, selectSelectedDudeId } from './dudes/selectors'
 import { selectAmountsOwedByDude, selectAmountsOwedToDude } from './settleup/selectors'
+import { overcast } from './colours'
 
 const styles = {
   display: 'flex',
   width: '100%',
   flexDirection: 'column',
   justifyContent: 'space-around',
-  borderRadius: 10,
-  borderWidth: 1,
-  borderStyle: 'solid',
-  borderColor: '#333333',
-  backgroundColor: '#f5d55d',
+  borderRadius: 5,
+  backgroundColor: overcast,
   alignItems: 'center'
 }
 

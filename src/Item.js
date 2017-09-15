@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { selectItemDescription, selectItemPrice } from './items/selectors'
 import { updateItemDescription, updateItemPrice, removeItem } from './items/actions'
+import { black, paper } from './colours'
 
 const style = {
   height: '40px',
@@ -16,7 +17,7 @@ const inputStyle = {
   height: '30px',
   fontFamily: 'sans-serif',
   fontSize: 'inherit',
-  backgroundColor: '#e9ffee',
+  backgroundColor: paper,
   borderRadius: 5,
   borderWidth: 1,
   borderStyle: 'solid',
@@ -24,16 +25,16 @@ const inputStyle = {
 }
 
 const priceStyle = {
-  width: '10%',
-  marginLeft: '2%',
-  marginRight: '2%',
-  cursor: 'pointer',
+  width: '12%',
+  marginLeft: '1%',
+  marginRight: '1%',
+  padding: '0 1%'
 }
 
 const descriptionStyle = {
   width: '70%',
   textAlign: 'left',
-  marginRight: '2%',
+  marginRight: '1%',
   padding: '0 4px'
 }
 
@@ -42,7 +43,9 @@ const removeButtonStyle = {
   border: 'none',
   font: 'inherit',
   cursor: 'pointer',
-  marginRight: '2%'
+  marginRight: '1%',
+  borderRadius: 5,
+  padding: '0 1%'
 }
 
 class Item extends Component {

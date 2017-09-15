@@ -2,16 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { selectDudesName, selectSelectedDudeId } from './dudes/selectors'
 import { selectDude, updateDudeName } from './dudes/actions'
+import { dusty, lavender } from './colours'
 
 const styles = (selected) => ({
   height: 48,
   minWidth: 60,
   maxWidth: 100,
-  backgroundColor: selected ? '#f5d55d' : '#adffc0',
-  borderRadius: 10,
-  borderWidth: 2,
-  borderStyle: 'solid',
-  borderColor: '#333333',
+  backgroundColor: selected ? dusty : lavender,
+  borderRadius: 5,
+  borderStyle: 'none',
   cursor: 'pointer',
   display: 'flex',
   justifyContent: 'center',

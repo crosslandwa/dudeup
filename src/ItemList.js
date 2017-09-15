@@ -4,17 +4,15 @@ import Item from './Item'
 import { selectDudesName, selectSelectedDudeId } from './dudes/selectors'
 import { selectItemIdsForDude, selectTotalItemCostForDude } from './items/selectors'
 import { addItem } from './items/actions'
+import { black, dusty } from './colours'
 
 const styles = {
   display: 'flex',
   width: '100%',
   flexDirection: 'column',
   justifyContent: 'space-around',
-  borderRadius: 10,
-  borderWidth: 1,
-  borderStyle: 'solid',
-  borderColor: '#333333',
-  backgroundColor: '#f5d55d',
+  borderRadius: 5,
+  backgroundColor: dusty,
   alignItems: 'center'
 }
 
@@ -38,15 +36,11 @@ const addButtonStyle = {
   border: 'none',
   font: 'inherit',
   cursor: 'pointer',
-  marginLeft: '2%',
-  marginRight: '2%',
-  width: '11%',
+  marginLeft: '1%',
+  width: '15%',
   height: '30px',
   fontSize: 'inherit',
-  backgroundColor: '#e9ffee',
   borderRadius: 5,
-  borderWidth: 1,
-  borderStyle: 'solid',
 }
 
 const totalSpendStyle = {
