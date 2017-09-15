@@ -8,7 +8,8 @@ const styles = {
   display: 'flex',
   width: '100%',
   justifyContent: 'space-around',
-  height: 60,
+  height: '100%',
+  padding: '2% 0',
   borderRadius: 10,
   borderWidth: 1,
   borderStyle: 'solid',
@@ -17,14 +18,12 @@ const styles = {
   alignItems: 'center'
 }
 
-const dudesStyle = {
-  borderRight: '#333333 2px solid',
-  height: '100%',
+const nameListStyle = {
+  width: '85%',
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '80px',
-  flexDirection: 'column'
+  flexWrap: 'wrap',
+  padding: '0 2%',
+  justifyContent: 'space-between'
 }
 
 const addButtonStyle = {
@@ -32,30 +31,26 @@ const addButtonStyle = {
   border: 'none',
   font: 'inherit',
   cursor: 'pointer',
-  width: '80%',
+  width: '15%',
   height: '30px',
   fontSize: 'inherit',
-  backgroundColor: '#e9ffee',
-  borderRadius: 5,
-  borderWidth: 1,
-  borderStyle: 'solid',
+  marginLeft: '2%'
 }
 
 class NamesStrip extends Component {
   render() {
     return (
-      <div style={styles} >
-        <div style={dudesStyle} >
-          <span>Dudes:</span>
-          <input style={addButtonStyle}
-            type="button"
-            value="add"
-            onClick={this.props.addDude}
-          />
-        </div>
-        {this.props.ids.map(dudeId => (
+        <div style={styles} >
+        <input style={addButtonStyle}
+          type="button"
+          value="Add dude:"
+          onClick={this.props.addDude}
+        />
+        <div style={nameListStyle}>
+          {this.props.ids.map(dudeId => (
             <NameBadge key={dudeId} dudeId={dudeId} />
-        ))}
+          ))}
+        </div>
       </div>
     )
   }
