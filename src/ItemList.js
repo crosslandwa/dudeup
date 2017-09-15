@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Item from './Item'
-import PlusButton from './PlusButton'
 import { selectDudesName, selectSelectedDudeId } from './dudes/selectors'
 import { selectItemIdsForDude, selectTotalItemCostForDude } from './items/selectors'
 import { addItem } from './items/actions'
@@ -29,9 +28,31 @@ const headerStyle = {
 const footerStyle = {
   height: '60px',
   display: 'flex',
-  justifyContent: 'space-around',
+  justifyContent: 'flex-start',
   alignItems: 'center',
   width: '100%'
+}
+
+const addButtonStyle = {
+  background: 'none',
+  border: 'none',
+  font: 'inherit',
+  cursor: 'pointer',
+  marginLeft: '2%',
+  marginRight: '2%',
+  width: '10%',
+  height: '30px',
+  fontSize: 'inherit',
+  backgroundColor: '#e9ffee',
+  borderRadius: 5,
+  borderWidth: 1,
+  borderStyle: 'solid',
+}
+
+const totalSpendStyle = {
+  width: '90%',
+  textAlign: 'right',
+  marginRight: '2%'
 }
 
 class ItemList extends Component {
@@ -47,10 +68,14 @@ class ItemList extends Component {
           </div>
           {this.props.itemIds.map(itemId => <Item key={itemId} id={itemId} />)}
           <div style={footerStyle} >
-            {this.props.dudeId && (<div onClick={() => this.props.addItem(this.props.dudeId)}>
-              <PlusButton />
-            </div>)}
-            {this.props.total && (<div>Total spend: {this.props.total.toFixed(2)}</div>)}
+            {this.props.dudeId && (
+              <input style={addButtonStyle}
+                type="button"
+                value="add"
+                onClick={() => this.props.addItem(this.props.dudeId)}
+              />
+            )}
+            {this.props.name && <div style={totalSpendStyle} >Total spend: {(this.props.total || 0).toFixed(2)}</div>}
           </div>
         </div>
       </div>
