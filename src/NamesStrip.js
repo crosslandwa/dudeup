@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import NameBadge from './NameBadge'
-import PlusButton from './PlusButton'
 import { selectAllDudeIds } from './dudes/selectors'
 import { addDude } from './dudes/actions'
 
@@ -24,20 +23,39 @@ const dudesStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: '80px'
+  width: '80px',
+  flexDirection: 'column'
+}
+
+const addButtonStyle = {
+  background: 'none',
+  border: 'none',
+  font: 'inherit',
+  cursor: 'pointer',
+  width: '80%',
+  height: '30px',
+  fontSize: 'inherit',
+  backgroundColor: '#e9ffee',
+  borderRadius: 5,
+  borderWidth: 1,
+  borderStyle: 'solid',
 }
 
 class NamesStrip extends Component {
   render() {
     return (
       <div style={styles} >
-        <div style={dudesStyle} ><span>Dudes:</span></div>
+        <div style={dudesStyle} >
+          <span>Dudes:</span>
+          <input style={addButtonStyle}
+            type="button"
+            value="add"
+            onClick={this.props.addDude}
+          />
+        </div>
         {this.props.ids.map(dudeId => (
             <NameBadge key={dudeId} dudeId={dudeId} />
         ))}
-        <div onClick={this.props.addDude}>
-          <PlusButton />
-        </div>
       </div>
     )
   }

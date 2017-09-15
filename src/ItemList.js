@@ -75,7 +75,7 @@ class ItemList extends Component {
                 onClick={() => this.props.addItem(this.props.dudeId)}
               />
             )}
-            {this.props.name && <div style={totalSpendStyle} >Total spend: {(this.props.total || 0).toFixed(2)}</div>}
+            {this.props.dudeId && <div style={totalSpendStyle} >Total spend: {(this.props.total || 0).toFixed(2)}</div>}
           </div>
         </div>
       </div>
