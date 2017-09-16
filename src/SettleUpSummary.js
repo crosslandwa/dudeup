@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectSelectedDudeId } from './dudes/selectors'
+import { selectSelectedDudeId, selectDudesName } from './dudes/selectors'
 import { removeDude } from './dudes/actions'
 import { selectAmountsOwedByDude, selectAmountsOwedToDude } from './settleup/selectors'
 import { overcast } from './colours'
@@ -54,8 +54,8 @@ class SettleUpSummary extends Component {
           ))}
         </div>
         <input style={addButtonStyle}
-          type="button"
-          value="Remove ya this dude!"
+          type='button'
+          value={`Remove ya ${this.props.name}!`}
           onClick={() => this.props.removeDude(this.props.dudeId)}
         />
       </div>
@@ -73,6 +73,9 @@ class SettleUpSummary extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   dudeId: selectSelectedDudeId(state),
+  name: selectSelectedDudeId(state)
+    ? selectDudesName(state, selectSelectedDudeId(state))
+    : null,
   amountsYouOwe: selectSelectedDudeId(state)
     ? selectAmountsOwedByDude(state, selectSelectedDudeId(state))
     : [],
