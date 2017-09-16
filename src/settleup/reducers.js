@@ -2,14 +2,18 @@ import { clone } from '../reducers'
 import SettleUp from 'settleup'
 
 const initialState = {}
+const actionsThatDoNotAffectPrices = [
+  'ITEM_UPDATE_DESCRIPTION',
+  'DUDE_UPDATE_NAME'
+]
 
 export function settleUpReducer (state = initialState, action) {
   return state
 }
 
 export function settleUpCalculationsReducer (state, action) {
-  // settle up on every action for now.
-  // TODO optimise by only settling up at start, and on price update, add dude, etc
+  if (actionsThatDoNotAffectPrices.includes(action.type)) return state
+
   const formatted = state.entities.dudes.allIds.reduce((acc, dudeId) => {
     acc[dudeId] = state.entities.items.allIds
       .map(itemId => state.entities.items.byId[itemId])
