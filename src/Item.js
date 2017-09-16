@@ -40,7 +40,7 @@ const descriptionStyle = {
 
 const removeButtonStyle = {
   background: 'none',
-  border: 'none',
+  border: 'solid 1px',
   font: 'inherit',
   cursor: 'pointer',
   marginRight: '1%',

@@ -33,7 +33,7 @@ const footerStyle = {
 
 const addButtonStyle = {
   background: 'none',
-  border: 'none',
+  border: 'solid 1px',
   font: 'inherit',
   cursor: 'pointer',
   marginLeft: '1%',
