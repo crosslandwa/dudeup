@@ -1,5 +1,5 @@
 import { clone } from '../reducers'
-
+import { selectItemIdsForDude } from './selectors'
 const initialState = {
   byId: {},
   allIds: []
@@ -15,6 +15,12 @@ export function itemsReducer (state = initialState, action) {
       return updatePrice(state, action.id, action.price)
     case 'ITEM_REMOVE':
       return removeItem(state, action.id)
+    case 'DUDE_REMOVE':
+      return state.allIds.map(id => state.byId[id])
+        .filter(item => item.dudeId === action.id)
+        .reduce((updated, item) => {
+          return removeItem(updated, item.id)
+        }, state)
     default:
       return state
   }

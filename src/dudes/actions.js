@@ -11,3 +11,7 @@ export function selectDude (id) {
 export function updateDudeName (id, name) {
   return { type: 'DUDE_UPDATE_NAME', id, name}
 }
+
+export function removeDude (id) {
+  return { type: 'DUDE_REMOVE', id }
+}

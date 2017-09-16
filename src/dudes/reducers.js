@@ -9,6 +9,8 @@ export function selectedDudeReducer (state = null, action) {
   switch (action.type) {
     case 'DUDE_SELECT':
       return action.id
+    case 'DUDE_REMOVE':
+      return null
     default:
       return state
   }
@@ -20,6 +22,8 @@ export function dudesReducer (state = initialState, action) {
       return addDude(state, action.id)
     case 'DUDE_UPDATE_NAME':
       return updateName(state, action.id, action.name)
+    case 'DUDE_REMOVE':
+      return removeDude(state, action.id)
     default:
       return state
   }
@@ -37,5 +41,12 @@ function addDude (state, id) {
 function updateName (state, id, name) {
   const updated = clone(state)
   updated.byId[id].name = name
+  return updated
+}
+
+function removeDude (state, id) {
+  const updated = clone(state)
+  delete updated.byId[id]
+  updated.allIds = updated.allIds.filter(other => other !== id)
   return updated
 }
