@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Item from './Item'
-import { selectDudesName, selectSelectedDudeId } from './dudes/selectors'
-import { selectItemIdsForDude, selectTotalItemCostForDude } from './items/selectors'
-import { addItem } from './items/actions'
-import { dusty } from './colours'
+import { selectDudesName, selectSelectedDudeId } from '../dudes/selectors'
+import { selectItemIdsForDude, selectTotalItemCostForDude } from './selectors'
+import { addItem } from './actions'
+import { dusty } from '../colours'
 
 const styles = {
   display: 'flex',

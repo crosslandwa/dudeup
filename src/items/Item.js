@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectItemDescription, selectItemPrice } from './items/selectors'
-import { updateItemDescription, updateItemPrice, removeItem } from './items/actions'
-import { paper } from './colours'
+import { selectItemDescription, selectItemPrice } from './selectors'
+import { updateItemDescription, updateItemPrice, removeItem } from './actions'
+import { paper } from '../colours'
 
 const style = {
   height: '40px',
