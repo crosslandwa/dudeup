@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import NamesStrip from './NamesStrip'
-import GroupSummary from './GroupSummary'
+import Dudes from './dudes/Dudes'
 import ItemList from './ItemList'
 import SettleUpSummary from './SettleUpSummary'
 import ChooseList from './lists/ChooseList'
@@ -14,10 +13,7 @@ class App extends Component {
           <h2>Dude Up</h2>
           <ChooseList />
         </div>
-        <div className="App-group">
-          <NamesStrip />
-          <GroupSummary />
-        </div>
+        <Dudes />
         <div className="App-group">
           <ItemList />
         </div>
