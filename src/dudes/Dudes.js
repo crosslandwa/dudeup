@@ -4,12 +4,14 @@ import GroupSummary from '../GroupSummary'
 
 class Dudes extends Component {
   render() {
-    return (
-      <div className="App-group">
-        <NamesStrip />
-        <GroupSummary />
-      </div>
-    )
+    return this.props.selectedListId
+      ? (
+        <div className="App-group">
+          <NamesStrip />
+          <GroupSummary />
+        </div>
+      )
+      : null
   }
 }
 

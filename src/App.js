@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import './App.css'
 import Dudes from './dudes/Dudes'
-import ItemList from './ItemList'
+import SelectedDudeContainer from './dudes/SelectedDudeContainer'
+import SelectedListContainer from './lists/SelectedListContainer'
+import Items from './items/Items'
 import SettleUpSummary from './SettleUpSummary'
 import ChooseList from './lists/ChooseList'
 
@@ -13,13 +15,13 @@ class App extends Component {
           <h2>Dude Up</h2>
           <ChooseList />
         </div>
-        <Dudes />
-        <div className="App-group">
-          <ItemList />
-        </div>
-        <div className="App-group">
-          <SettleUpSummary />
-        </div>
+        <SelectedListContainer>
+          <Dudes />
+          <SelectedDudeContainer>
+            <Items />
+            <SettleUpSummary />
+          </SelectedDudeContainer>
+        </SelectedListContainer>
       </div>
     )
   }
