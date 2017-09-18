@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectAverageCostPerDude, selectTotalItemCost } from './items/selectors'
+import { selectAverageCostPerDude, selectTotalItemCost } from '../items/selectors'
 
 const styles = {
   display: 'flex',
