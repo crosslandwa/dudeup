@@ -1,16 +1,16 @@
 import { selectDudesName } from '../dudes/selectors'
 
 export function selectAmountsOwedByDude (state, dudeId) {
-  return Object.keys(state.settleUp[dudeId])
+  return Object.keys(state.settleUp.amountOwedByGroupMember[dudeId])
     .map(owedToDudeId => ({
       dudeId: owedToDudeId,
       dudeName: selectDudesName(state, owedToDudeId),
-      amount: state.settleUp[dudeId][owedToDudeId]
+      amount: state.settleUp.amountOwedByGroupMember[dudeId][owedToDudeId]
     }))
 }
 
 export function selectAmountsOwedToDude (state, dudeId) {
-  const otherDudeIds = Object.keys(state.settleUp).filter(otherDudeId => otherDudeId !== dudeId)
+  const otherDudeIds = Object.keys(state.settleUp.amountOwedByGroupMember).filter(otherDudeId => otherDudeId !== dudeId)
   return otherDudeIds.reduce((acc, otherDudeId) => {
     return acc.concat(
       selectAmountsOwedByDude(state, otherDudeId)

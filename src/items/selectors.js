@@ -1,8 +1,8 @@
 import { selectNumberOfDudes } from '../dudes/selectors'
 
 const rounded = amount => Math.round(amount * 1e2) / 1e2
+
 const items = state => state.entities.items
-const totalPrice = (state, ids) => ids.reduce((total, id) => total + selectItemPrice(state, id), 0)
 
 export function selectItemIdsForDude (state, dudeId) {
   return items(state).allIds.map(id => items(state).byId[id]).filter(item => item.dudeId === dudeId).map(item => item.id)
@@ -17,13 +17,13 @@ export function selectItemPrice (state, itemId) {
 }
 
 export function selectTotalItemCost (state) {
-  return totalPrice(state, items(state).allIds)
+  return state.settleUp.groupTotal
 }
 
 export function selectTotalItemCostForDude (state, dudeId) {
-  return rounded(totalPrice(state, selectItemIdsForDude(state, dudeId)))
+  return state.settleUp.totalPaidPerGroupMember[dudeId]
 }
 
 export function selectAverageCostPerDude (state) {
-  return rounded(selectTotalItemCost(state) / Math.max(1, selectNumberOfDudes(state)))
+  return state.settleUp.averageAmountPerGroupMember
 }

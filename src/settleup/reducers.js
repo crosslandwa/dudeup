@@ -28,7 +28,7 @@ export function settleUpCalculationsReducer (state, action) {
   }, {})
 
   const updated = clone(state)
-  updated.settleUp = SettleUp(formatted).amountOwedByGroupMember
+  updated.settleUp = SettleUp(formatted)
 
   return updated
 }
