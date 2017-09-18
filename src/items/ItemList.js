@@ -59,7 +59,7 @@ class ItemList extends Component {
           <div style={footerStyle} >
             <input style={addButtonStyle}
               type="button"
-              value="add"
+              value="Add"
               onClick={this.props.addItem}
             />
             <div style={totalSpendStyle} >Total spend: {(this.props.total || 0).toFixed(2)}</div>

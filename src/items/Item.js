@@ -68,7 +68,7 @@ class Item extends Component {
         />
         <input style={removeButtonStyle}
           type="button"
-          value="remove"
+          value="Delete"
           onClick={this.props.removeItem}
         />
       </div>

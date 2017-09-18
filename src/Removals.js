@@ -4,7 +4,7 @@ import { selectListName } from './lists/selectors'
 import { selectDudesName } from './dudes/selectors'
 import { removeDude } from './dudes/actions'
 import { removeList } from './lists/actions'
-import { black, dusty, overcast, paper } from './colours'
+import { black, overcast, paper } from './colours'
 
 const styles = {
   display: 'flex',

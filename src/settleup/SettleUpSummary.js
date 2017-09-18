@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectDudesName } from '../dudes/selectors'
-import { removeDude } from '../dudes/actions'
 import { selectAmountsOwedByDude, selectAmountsOwedToDude } from './selectors'
 import { overcast } from '../colours'
 
@@ -20,16 +18,6 @@ const styles = {
 const listStyle = {
   marginTop: '5px',
   marginBottom: '5px'
-}
-
-const addButtonStyle = {
-  background: 'none',
-  border: 'solid 1px',
-  font: 'inherit',
-  cursor: 'pointer',
-  height: '30px',
-  fontSize: 'inherit',
-  borderRadius: 5
 }
 
 class SettleUpSummary extends Component {
@@ -52,11 +40,6 @@ class SettleUpSummary extends Component {
                 <div key={index} >{dudeName} owes you {amount.toFixed(2)}</div>
               ))}
             </div>
-            <input style={addButtonStyle}
-              type='button'
-              value={`Remove ya ${this.props.name}!`}
-              onClick={this.props.removeDude}
-            />
           </div>
         </div>
       )
@@ -65,9 +48,6 @@ class SettleUpSummary extends Component {
 }
 
 const mapStateToProps = (state, { selectedDudeId }) => ({
-  name: selectedDudeId
-    ? selectDudesName(state, selectedDudeId)
-    : null,
   amountsYouOwe: selectedDudeId
     ? selectAmountsOwedByDude(state, selectedDudeId)
     : [],
@@ -76,8 +56,4 @@ const mapStateToProps = (state, { selectedDudeId }) => ({
     : [],
 })
 
-const mapDispatchToProps = (dispatch, { selectedDudeId }) => ({
-  removeDude: () => dispatch(removeDude(selectedDudeId))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(SettleUpSummary)
+export default connect(mapStateToProps)(SettleUpSummary)
