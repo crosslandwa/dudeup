@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectSelectedDudeId, selectDudesName } from '../dudes/selectors'
+import { selectDudesName } from '../dudes/selectors'
 import { removeDude } from '../dudes/actions'
 import { selectAmountsOwedByDude, selectAmountsOwedToDude } from './selectors'
 import { overcast } from '../colours'
@@ -55,7 +55,7 @@ class SettleUpSummary extends Component {
             <input style={addButtonStyle}
               type='button'
               value={`Remove ya ${this.props.name}!`}
-              onClick={() => this.props.removeDude(this.props.dudeId)}
+              onClick={this.props.removeDude}
             />
           </div>
         </div>
@@ -64,21 +64,20 @@ class SettleUpSummary extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  dudeId: selectSelectedDudeId(state),
-  name: selectSelectedDudeId(state)
-    ? selectDudesName(state, selectSelectedDudeId(state))
+const mapStateToProps = (state, { selectedDudeId }) => ({
+  name: selectedDudeId
+    ? selectDudesName(state, selectedDudeId)
     : null,
-  amountsYouOwe: selectSelectedDudeId(state)
-    ? selectAmountsOwedByDude(state, selectSelectedDudeId(state))
+  amountsYouOwe: selectedDudeId
+    ? selectAmountsOwedByDude(state, selectedDudeId)
     : [],
-  amountsOwedToYou: selectSelectedDudeId(state)
-    ? selectAmountsOwedToDude(state, selectSelectedDudeId(state))
+  amountsOwedToYou: selectedDudeId
+    ? selectAmountsOwedToDude(state, selectedDudeId)
     : [],
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  removeDude: dudeId => dispatch(removeDude(dudeId))
+const mapDispatchToProps = (dispatch, { selectedDudeId }) => ({
+  removeDude: () => dispatch(removeDude(selectedDudeId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettleUpSummary)
