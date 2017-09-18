@@ -10,6 +10,7 @@ export function selectedDudeReducer (state = null, action) {
     case 'DUDE_SELECT':
       return action.id
     case 'DUDE_REMOVE':
+    case 'LIST_SELECT':
       return null
     default:
       return state
