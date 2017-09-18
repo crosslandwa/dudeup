@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectSelectedDudeId, selectDudesName } from './dudes/selectors'
-import { removeDude } from './dudes/actions'
-import { selectAmountsOwedByDude, selectAmountsOwedToDude } from './settleup/selectors'
-import { overcast } from './colours'
+import { selectSelectedDudeId, selectDudesName } from '../dudes/selectors'
+import { removeDude } from '../dudes/actions'
+import { selectAmountsOwedByDude, selectAmountsOwedToDude } from './selectors'
+import { overcast } from '../colours'
 
 const styles = {
   display: 'flex',

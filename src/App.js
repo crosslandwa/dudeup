@@ -4,7 +4,7 @@ import Dudes from './dudes/Dudes'
 import SelectedDudeContainer from './dudes/SelectedDudeContainer'
 import SelectedListContainer from './lists/SelectedListContainer'
 import Items from './items/Items'
-import SettleUpSummary from './SettleUpSummary'
+import SettleUpSummary from './settleup/SettleUpSummary'
 import ChooseList from './lists/ChooseList'
 
 class App extends Component {
