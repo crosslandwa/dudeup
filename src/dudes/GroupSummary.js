@@ -4,7 +4,7 @@ import { selectAverageCostPerDude, selectTotalItemCost } from '../items/selector
 
 const styles = {
   display: 'flex',
-  width: '100%',
+  width: '95%',
   justifyContent: 'space-between',
   height: 60,
   alignItems: 'center'
