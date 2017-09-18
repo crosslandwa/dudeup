@@ -4,6 +4,7 @@ import NamesStrip from './NamesStrip'
 import GroupSummary from './GroupSummary'
 import ItemList from './ItemList'
 import SettleUpSummary from './SettleUpSummary'
+import ChooseList from './lists/ChooseList'
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
       <div className="App" >
         <div className="App-header">
           <h2>Dude Up</h2>
+          <ChooseList />
         </div>
         <div className="App-group">
           <NamesStrip />

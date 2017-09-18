@@ -3,8 +3,10 @@ import SettleUp from 'settleup'
 
 const initialState = {}
 const actionsThatDoNotAffectPrices = [
+  'DUDE_UPDATE_NAME',
   'ITEM_UPDATE_DESCRIPTION',
-  'DUDE_UPDATE_NAME'
+  'LIST_ADD',
+  'LIST_UPDATE_NAME'
 ]
 
 export function settleUpReducer (state = initialState, action) {

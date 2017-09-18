@@ -14,7 +14,7 @@ input {
 
 input:focus {
   outline: none;
-  box-shadow: 0 0 8px #333333; /*black*/
+  box-shadow: 0 0 10px #D5D5D5; /*paper*/
 }
 
 input::placeholder {
