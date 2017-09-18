@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <div className="App" >
         <div className="App-header">
-          <h2>Dude Up</h2>
+          <h2 style={{marginBottom: 0}}>Dude Up</h2>
           <ChooseList />
         </div>
         <SelectedListContainer>
