@@ -12,7 +12,7 @@ export function selectAllDudeIds (state) {
   return selectDudes(state).allIds
 }
 
-export function selectAllDudeIsForList(state, listId) {
+export function selectAllDudeIdsForList(state, listId) {
   return selectListById(state, listId).dudeIds
 }
 

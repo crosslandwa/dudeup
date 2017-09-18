@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import NameBadge from './NameBadge'
-import { selectAllDudeIsForList } from './selectors'
+import { selectAllDudeIdsForList } from './selectors'
 import { addDude } from './actions'
 import { selectListName } from '../lists/selectors'
 
@@ -63,7 +63,7 @@ class NamesStrip extends Component {
 }
 
 const mapStateToProps = (state, { selectedListId }) => ({
-  ids: selectAllDudeIsForList(state, selectedListId),
+  ids: selectAllDudeIdsForList(state, selectedListId),
   listName: selectListName(state, selectedListId)
 })
 

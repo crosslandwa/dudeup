@@ -12,6 +12,6 @@ export function updateListName (id, name) {
   return { type: 'LIST_UPDATE_NAME', id, name}
 }
 
-export function removeList (id) {
-  return { type: 'LIST_REMOVE', id }
+export function removeList (id, dudeIds) {
+  return { type: 'LIST_REMOVE', id, dudeIds }
 }
