@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import NameBadge from './NameBadge'
-import { selectAllDudeIds } from './dudes/selectors'
+import { selectAllDudeIsForList } from './dudes/selectors'
 import { addDude } from './dudes/actions'
 import { overcast } from './colours'
 
@@ -54,10 +54,12 @@ class NamesStrip extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  ids: selectAllDudeIds(state),
+const mapStateToProps = (state, { selectedListId }) => ({
+  ids: selectAllDudeIsForList(state, selectedListId),
 })
 
-const mapDispatchToProps = { addDude }
+const mapDispatchToProps = (dispatch, { selectedListId }) => ({
+  addDude: () => dispatch(addDude(selectedListId))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(NamesStrip)

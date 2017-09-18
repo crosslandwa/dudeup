@@ -32,7 +32,7 @@ export function dudesReducer (state = initialState, action) {
 
 function addDude (state, id) {
   const updated = clone(state)
-  updated.byId[id] = { id, name: '' }
+  updated.byId[id] = { id, name: '', dudeIds: [] }
   if (!updated.allIds.includes(id)) {
     updated.allIds = updated.allIds.concat(id)
   }

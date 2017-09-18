@@ -7,7 +7,7 @@ class Dudes extends Component {
     return this.props.selectedListId
       ? (
         <div className="App-group">
-          <NamesStrip />
+          <NamesStrip selectedListId={this.props.selectedListId} />
           <GroupSummary />
         </div>
       )

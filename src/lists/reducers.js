@@ -22,6 +22,10 @@ export function listsReducer (state = initialState, action) {
       return addList(state, action.id)
     case 'LIST_UPDATE_NAME':
       return updateName(state, action.id, action.name)
+    case 'DUDE_NEW':
+      return addDude(state, action.listId, action.id)
+    case 'DUDE_REMOVE':
+      return removeDude(state, action.id)
     default:
       return state
   }
@@ -39,5 +43,19 @@ function addList (state, id) {
 function updateName (state, id, name) {
   const updated = clone(state)
   updated.byId[id].name = name
+  return updated
+}
+
+function addDude (state, listId, dudeId) {
+  const updated = clone(state)
+  updated.byId[listId].dudeIds = updated.byId[listId].dudeIds.concat(dudeId)
+  return updated
+}
+
+function removeDude (state, removedDudeId) {
+  const updated = clone(state)
+  updated.allIds.forEach(id => {
+    updated.byId[id].dudeIds = updated.byId[id].dudeIds.filter(dudeId => dudeId !== removedDudeId)
+  })
   return updated
 }

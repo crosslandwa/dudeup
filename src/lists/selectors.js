@@ -2,7 +2,7 @@ function selectLists (state) {
   return state.entities.lists
 }
 
-function selectListById (state, id) {
+export function selectListById (state, id) {
   return selectLists(state).byId[id]
 }
 

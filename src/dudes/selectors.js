@@ -1,3 +1,5 @@
+import { selectListById } from '../lists/selectors'
+
 function selectDudes (state) {
   return state.entities.dudes
 }
@@ -8,6 +10,10 @@ function selectDudeById (state, id) {
 
 export function selectAllDudeIds (state) {
   return selectDudes(state).allIds
+}
+
+export function selectAllDudeIsForList(state, listId) {
+  return selectListById(state, listId).dudeIds
 }
 
 export function selectNumberOfDudes (state) {
