@@ -1,5 +1,3 @@
-import { selectNumberOfDudes } from '../dudes/selectors'
-
 const rounded = amount => Math.round(amount * 1e2) / 1e2
 
 const items = state => state.entities.items
