@@ -54,7 +54,7 @@ class ItemList extends Component {
     return (
       <div>
         <div style={styles} >
-          <div style={headerStyle} >`Paid for by ${this.props.name}`</div>
+          <div style={headerStyle} >Paid for by {this.props.name}</div>
           {this.props.itemIds.map(itemId => <Item key={itemId} id={itemId} />)}
           <div style={footerStyle} >
             <input style={addButtonStyle}
