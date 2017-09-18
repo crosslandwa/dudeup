@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Item from './Item'
-import { selectDudesName, selectSelectedDudeId } from '../dudes/selectors'
+import { selectDudesName } from '../dudes/selectors'
 import { selectItemIdsForDude, selectTotalItemCostForDude } from './selectors'
 import { addItem } from './actions'
 import { dusty } from '../colours'
@@ -54,44 +54,36 @@ class ItemList extends Component {
     return (
       <div>
         <div style={styles} >
-          <div style={headerStyle} >
-            {this.props.dudeId
-              ? `Paid for by ${this.props.name}`
-              : 'Select a dude above to see/edit what they paid for...'
-            }
-          </div>
+          <div style={headerStyle} >`Paid for by ${this.props.name}`</div>
           {this.props.itemIds.map(itemId => <Item key={itemId} id={itemId} />)}
-          {this.props.dudeId && (
-            <div style={footerStyle} >
-              <input style={addButtonStyle}
-                type="button"
-                value="add"
-                onClick={() => this.props.addItem(this.props.dudeId)}
-              />
-              <div style={totalSpendStyle} >Total spend: {(this.props.total || 0).toFixed(2)}</div>
-            </div>
-          )}
+          <div style={footerStyle} >
+            <input style={addButtonStyle}
+              type="button"
+              value="add"
+              onClick={this.props.addItem}
+            />
+            <div style={totalSpendStyle} >Total spend: {(this.props.total || 0).toFixed(2)}</div>
+          </div>
         </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  dudeId: selectSelectedDudeId(state),
-  name: selectSelectedDudeId(state)
-    ? selectDudesName(state, selectSelectedDudeId(state))
+const mapStateToProps = (state, { selectedDudeId }) => ({
+  name: selectedDudeId
+    ? selectDudesName(state, selectedDudeId)
     : null,
-  itemIds: selectSelectedDudeId(state)
-    ? selectItemIdsForDude(state, selectSelectedDudeId(state))
+  itemIds: selectedDudeId
+    ? selectItemIdsForDude(state, selectedDudeId)
     : [],
-  total: selectSelectedDudeId(state)
-    ? selectTotalItemCostForDude(state, selectSelectedDudeId(state))
+  total: selectedDudeId
+    ? selectTotalItemCostForDude(state, selectedDudeId)
     : null,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  addItem: (dudeId) => dispatch(addItem(dudeId))
+const mapDispatchToProps = (dispatch, { selectedDudeId }) => ({
+  addItem: () => dispatch(addItem(selectedDudeId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList)
