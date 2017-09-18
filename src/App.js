@@ -6,6 +6,7 @@ import SelectedListContainer from './lists/SelectedListContainer'
 import Items from './items/Items'
 import SettleUpSummary from './settleup/SettleUpSummary'
 import ChooseList from './lists/ChooseList'
+import Removals from './Removals'
 
 class App extends Component {
   render() {
@@ -20,6 +21,7 @@ class App extends Component {
           <SelectedDudeContainer>
             <Items />
             <SettleUpSummary />
+            <Removals />
           </SelectedDudeContainer>
         </SelectedListContainer>
       </div>

@@ -6,7 +6,11 @@ class SelectedDudeContainer extends Component {
   render() {
     return (
       <div>
-        {React.Children.map(this.props.children, child => React.cloneElement(child, { selectedDudeId: this.props.selectedDudeId }))}
+        {React.Children.map(this.props.children, child => React
+          .cloneElement(child, {
+            selectedListId: this.props.selectedListId,
+            selectedDudeId: this.props.selectedDudeId
+          }))}
       </div>
     )
   }

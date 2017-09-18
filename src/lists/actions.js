@@ -11,3 +11,7 @@ export function selectList (id) {
 export function updateListName (id, name) {
   return { type: 'LIST_UPDATE_NAME', id, name}
 }
+
+export function removeList (id) {
+  return { type: 'LIST_REMOVE', id }
+}
