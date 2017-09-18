@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectDudesName, selectSelectedDudeId } from './dudes/selectors'
-import { selectDude, updateDudeName } from './dudes/actions'
-import { dusty, lavender } from './colours'
+import { selectDudesName, selectSelectedDudeId } from './selectors'
+import { selectDude, updateDudeName } from './actions'
+import { dusty, lavender } from '../colours'
 
 const styles = (selected) => ({
   height: 48,

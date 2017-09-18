@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import NamesStrip from '../NamesStrip'
+import NamesStrip from './NamesStrip'
 import GroupSummary from './GroupSummary'
 
 class Dudes extends Component {

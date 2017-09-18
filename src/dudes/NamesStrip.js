@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import NameBadge from './NameBadge'
-import { selectAllDudeIsForList } from './dudes/selectors'
-import { addDude } from './dudes/actions'
-import { overcast } from './colours'
+import { selectAllDudeIsForList } from './selectors'
+import { addDude } from './actions'
+import { overcast } from '../colours'
 
 const styles = {
   display: 'flex',
