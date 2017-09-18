@@ -42,14 +42,14 @@ class SettleUpSummary extends Component {
               <div>You don't owe anything!</div>
             )}
             {this.props.amountsYouOwe.map(({dudeName, amount}, index) => (
-              <div key={index} >You owe {dudeName} {amount}</div>
+              <div key={index} >You owe {dudeName} {amount.toFixed(2)}</div>
             ))}
             <div style={listStyle}>
               {(this.props.amountsOwedToYou.length === 0) && (
                 <div>You aren't owed anything...</div>
               )}
               {this.props.amountsOwedToYou.map(({dudeName, amount}, index) => (
-                <div key={index} >{dudeName} owes you {amount}</div>
+                <div key={index} >{dudeName} owes you {amount.toFixed(2)}</div>
               ))}
             </div>
             <input style={addButtonStyle}
