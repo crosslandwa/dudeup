@@ -35,7 +35,9 @@ const buttonStyleEnabled = {
 
 class Removals extends Component {
   render() {
-    return (
+    return !this.props.selectedListId
+      ? null
+      : (
       <div style={styles} >
         <input style={!!this.props.selectedDudeId ? buttonStyleEnabled : buttonStyleDisabled}
           type="button"
