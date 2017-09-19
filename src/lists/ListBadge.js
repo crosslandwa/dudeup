@@ -32,6 +32,7 @@ class ListBadge extends Component {
         onClick={this.props.select}
         placeholder="Enter a name..."
         onKeyPress={this.props.enter}
+        autoFocus
       />
     )
   }
