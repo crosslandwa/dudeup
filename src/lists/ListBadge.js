@@ -30,7 +30,7 @@ class ListBadge extends Component {
         value={this.props.name}
         onChange={this.props.updateName}
         onClick={this.props.select}
-        placeholder="Enter a name..."
+        placeholder="New list..."
         onKeyPress={this.props.enter}
         autoFocus
       />

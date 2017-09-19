@@ -42,7 +42,7 @@ class NamesStrip extends Component {
     const hasDudes = this.props.ids.length > 0
     return (
       <div style={{width: '100%'}}>
-        {hasDudes && <div style={headerStyle} >Dudes taking part in {this.props.listName}</div>}
+        {hasDudes && <div style={headerStyle} >Dudes taking part in {this.props.listName || 'list'}</div>}
         <div style={styles} >
           <input style={addButtonStyle(!hasDudes)}
             type="button"

@@ -30,7 +30,7 @@ class NameBadge extends Component {
         value={this.props.name}
         onChange={this.props.updateName}
         onClick={this.props.select}
-        placeholder="Enter a name..."
+        placeholder="Name..."
         onKeyPress={this.props.enter}
         autoFocus
       />

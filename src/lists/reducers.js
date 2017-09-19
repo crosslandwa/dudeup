@@ -36,7 +36,7 @@ export function listsReducer (state = initialState, action) {
 
 function addList (state, id) {
   const updated = clone(state)
-  updated.byId[id] = { id, name: 'New list', dudeIds: [] }
+  updated.byId[id] = { id, name: '', dudeIds: [] }
   if (!updated.allIds.includes(id)) {
     updated.allIds = updated.allIds.concat(id)
   }

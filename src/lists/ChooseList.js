@@ -41,7 +41,7 @@ class ChooseList extends Component {
       <div style={styles} >
         <input style={addButtonStyle(this.props.ids.length === 0)}
           type="button"
-          value={this.props.ids.length ? 'Add list:' : 'Click here to create a list and get started'}
+          value={this.props.ids.length ? 'New list:' : 'Click here to create a list and get started'}
           onClick={this.props.addList}
         />
         {this.props.ids.length > 0 && (
