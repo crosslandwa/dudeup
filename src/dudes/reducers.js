@@ -8,6 +8,7 @@ const initialState = {
 export function selectedDudeReducer (state = null, action) {
   switch (action.type) {
     case 'DUDE_SELECT':
+    case 'DUDE_NEW':
       return action.id
     case 'DUDE_REMOVE':
     case 'LIST_SELECT':

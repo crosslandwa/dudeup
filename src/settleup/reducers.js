@@ -1,7 +1,12 @@
 import { clone } from '../reducers'
 import SettleUp from 'settleup'
 
-const initialState = {}
+const initialState = {
+  averageAmountPerGroupMember: 0,
+  groupTotal: 0,
+  amountOwedByGroupMember: {},
+  totalPaidPerGroupMember: {}
+}
 const actionsThatDoNotAffectPrices = [
   'DUDE_UPDATE_NAME',
   'ITEM_UPDATE_DESCRIPTION',

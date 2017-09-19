@@ -55,8 +55,8 @@ class Removals extends Component {
 }
 
 const mapStateToProps = (state, { selectedDudeId, selectedListId }) => ({
-  selectedDudeName: selectedDudeId ? selectDudesName(state, selectedDudeId) : 'Dude',
-  selectedListName: selectedListId ? selectListName(state, selectedListId) : 'List',
+  selectedDudeName: selectedDudeId ? selectDudesName(state, selectedDudeId) || 'Dude' : 'Dude',
+  selectedListName: selectedListId ? selectListName(state, selectedListId) || 'List' : 'List',
   selectedListDudeIds: selectedListId ? selectAllDudeIdsForList(state, selectedListId) : []
 })
 
