@@ -36,6 +36,7 @@ input::placeholder {
   line-height: 60px;
   color: #D5D5D5; /*paper*/
   border-radius: 5px;
+  padding-bottom: 4px;
 }
 
 .App-intro {
