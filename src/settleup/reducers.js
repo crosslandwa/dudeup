@@ -1,6 +1,10 @@
 import { clone } from '../reducers'
 import SettleUp from 'settleup'
 
+import { selectAllDudeIdsForList } from '../dudes/selectors'
+import { selectSelectedListId } from '../lists/selectors'
+import { selectItemIdsForDude, selectItemPrice } from '../items/selectors'
+
 const initialState = {
   averageAmountPerGroupMember: 0,
   groupTotal: 0,
@@ -19,18 +23,14 @@ export function settleUpReducer (state = initialState, action) {
 }
 
 export function settleUpCalculationsReducer (state, action) {
-  if (actionsThatDoNotAffectPrices.includes(action.type)) return state
+  if (actionsThatDoNotAffectPrices.includes(action.type) || !selectSelectedListId(state)) return state
 
-  if (!state.selectedListId) return state
-
-  const formatted = state.entities.lists.byId[state.selectedListId].dudeIds
+  const formatted = selectAllDudeIdsForList(state, selectSelectedListId(state))
     .reduce((acc, dudeId) => {
-      acc[dudeId] = state.entities.items.allIds
-        .map(itemId => state.entities.items.byId[itemId])
-        .filter(item => item.dudeId === dudeId)
-        .reduce((amountAcc, item) => {
-          amountAcc[item.id] = item.price
-          return amountAcc
+      acc[dudeId] = selectItemIdsForDude(state, dudeId)
+        .reduce((prices, itemId) => {
+          prices[itemId] = selectItemPrice(state, itemId)
+          return prices
         }, {})
       return acc
     }, {})
