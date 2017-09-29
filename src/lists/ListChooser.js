@@ -5,6 +5,7 @@ import { addList } from './actions'
 import { paper } from '../colours'
 import ListBadge from './ListBadge'
 import SelectedListContainer from './SelectedListContainer'
+import AddButton from '../dumbui/AddButton'
 
 const styles = {
   display: 'flex',
@@ -21,15 +22,9 @@ const nameListStyle = {
 }
 
 const addButtonStyle = (fullWidth) => ({
-  background: 'none',
-  border: `solid 1px ${paper}`,
-  font: 'inherit',
-  cursor: 'pointer',
+  borderColor: paper,
   width: fullWidth ? '90%' : '15%',
-  height: '30px',
-  fontSize: 'inherit',
   marginLeft: fullWidth ? 0 : '2%',
-  borderRadius: 5,
   color: paper
 })
 
@@ -37,8 +32,8 @@ class ListChooser extends Component {
   render() {
     return (
       <div style={styles} >
-        <input style={addButtonStyle(this.props.ids.length === 0)}
-          type="button"
+        <AddButton
+          style={addButtonStyle(this.props.ids.length === 0)}
           value={this.props.ids.length ? 'New list:' : 'Click here to create a list and get started'}
           onClick={this.props.addList}
         />
