@@ -15,7 +15,9 @@ const noop = () => {}
 class ClickableButton extends Component {
   render() {
     return (
-      <input style={{...styles, ...this.props.style}}
+      <input
+        style={{...styles, ...this.props.style}}
+        className={this.props.className}
         type="button"
         value={this.props.value}
         onClick={this.props.onClick || noop}

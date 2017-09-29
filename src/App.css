@@ -17,6 +17,11 @@ input:focus {
   box-shadow: 0 0 10px #D5D5D5; /*paper*/
 }
 
+.button--darkHighlight:focus {
+  outline: none;
+  box-shadow: 0 0 10px #333333; /*black*/
+}
+
 input::placeholder {
   color: #B0B0B0; /*darker than paper*/
 }

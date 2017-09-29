@@ -37,11 +37,13 @@ class Removals extends Component {
       <div style={styles} >
         <ClickableButton
           style={!!this.props.selectedDudeId ? buttonStyleEnabled : buttonStyleDisabled}
+          className="button--darkHighlight"
           value={`Delete ${this.props.selectedDudeName}`}
           onClick={!this.props.selectedDudeId ? null : this.props.removeDude}
         />
         <ClickableButton
           style={!!this.props.selectedListId ? buttonStyleEnabled : buttonStyleDisabled}
+          className="button--darkHighlight"
           value={`Delete ${this.props.selectedListName}`}
           onClick={this.props.removeList}
         />
