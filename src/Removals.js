@@ -5,6 +5,7 @@ import { selectDudesName } from './dudes/selectors'
 import { removeDude } from './dudes/actions'
 import { removeList } from './lists/actions'
 import { black, overcast, paper } from './colours'
+import ClickableButton from './dumbui/ClickableButton'
 
 const styles = {
   display: 'flex',
@@ -17,18 +18,13 @@ const styles = {
 const buttonStyleDisabled = {
   background: overcast,
   color: paper,
-  border: 'solid 1px',
-  font: 'inherit',
   marginLeft: '1%',
-  height: '30px',
-  fontSize: 'inherit',
-  borderRadius: 5,
-  width: '30%'
+  width: '30%',
+  cursor: 'initial',
 }
 
 const buttonStyleEnabled = {
   ...buttonStyleDisabled,
-  background: 'none',
   color: black,
   cursor: 'pointer',
 }
@@ -39,17 +35,15 @@ class Removals extends Component {
       ? null
       : (
       <div style={styles} >
-        <input style={!!this.props.selectedDudeId ? buttonStyleEnabled : buttonStyleDisabled}
-          type="button"
+        <ClickableButton
+          style={!!this.props.selectedDudeId ? buttonStyleEnabled : buttonStyleDisabled}
           value={`Delete ${this.props.selectedDudeName}`}
           onClick={!this.props.selectedDudeId ? null : this.props.removeDude}
-          // onKeyPress={this.props.enter}
         />
-        <input style={!!this.props.selectedListId ? buttonStyleEnabled : buttonStyleDisabled}
-          type="button"
+        <ClickableButton
+          style={!!this.props.selectedListId ? buttonStyleEnabled : buttonStyleDisabled}
           value={`Delete ${this.props.selectedListName}`}
           onClick={this.props.removeList}
-          // onKeyPress={this.props.enter}
         />
       </div>
     )

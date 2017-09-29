@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { selectItemDescription, selectItemPrice } from './selectors'
 import { updateItemDescription, updateItemPrice, removeItem } from './actions'
 import { paper } from '../colours'
+import ClickableButton from '../dumbui/ClickableButton'
 
 const style = {
   height: '40px',
@@ -39,12 +40,7 @@ const descriptionStyle = {
 }
 
 const removeButtonStyle = {
-  background: 'none',
-  border: 'solid 1px',
-  font: 'inherit',
-  cursor: 'pointer',
   marginRight: '1%',
-  borderRadius: 5,
   padding: '0 1%'
 }
 
@@ -66,8 +62,8 @@ class Item extends Component {
           onChange={this.props.updateDescription}
           placeholder="Enter a description..."
         />
-        <input style={removeButtonStyle}
-          type="button"
+        <ClickableButton
+          style={removeButtonStyle}
           value="Delete"
           onClick={this.props.removeItem}
         />
