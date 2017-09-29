@@ -4,6 +4,7 @@ import { selectAllListIds } from './selectors'
 import { addList } from './actions'
 import { paper } from '../colours'
 import ListBadge from './ListBadge'
+import SelectedListContainer from './SelectedListContainer'
 
 const styles = {
   display: 'flex',
@@ -47,7 +48,11 @@ class ChooseList extends Component {
         {this.props.ids.length > 0 && (
           <div style={nameListStyle}>
             {this.props.ids.map(id => (
-              <ListBadge key={id} id={id} />
+              <div style={{margin: '1%'}} key={id} >
+                <SelectedListContainer>
+                  <ListBadge id={id} />
+                </SelectedListContainer>
+              </div>
             ))}
           </div>
         )}

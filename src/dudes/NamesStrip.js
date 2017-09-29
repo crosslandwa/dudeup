@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import NameBadge from './NameBadge'
+import SelectedDudeContainer from './SelectedDudeContainer'
 import { selectAllDudeIds } from './selectors'
 import { addDude } from './actions'
 import { selectListName } from '../lists/selectors'
@@ -52,7 +53,11 @@ class NamesStrip extends Component {
           {hasDudes && (
             <div style={nameListStyle}>
               {this.props.ids.map(dudeId => (
-                <NameBadge key={dudeId} dudeId={dudeId} />
+                <div style={{ margin: '1%' }} key={dudeId} >
+                  <SelectedDudeContainer>
+                    <NameBadge dudeId={dudeId} />
+                  </SelectedDudeContainer>
+                </div>
               ))}
             </div>
           )}

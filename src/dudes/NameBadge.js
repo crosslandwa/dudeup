@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectDudesName, selectSelectedDudeId } from './selectors'
+import { selectDudesName } from './selectors'
 import { selectDude, updateDudeName } from './actions'
 import { dusty, lavender } from '../colours'
 
@@ -17,8 +17,7 @@ const styles = (selected) => ({
   alignItems: 'center',
   padding: '0 4px',
   font: 'inherit',
-  textAlign: 'center',
-  margin: '1%'
+  textAlign: 'center'
 })
 
 class NameBadge extends Component {
@@ -38,9 +37,9 @@ class NameBadge extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  name: selectDudesName(state, ownProps.dudeId),
-  selected: selectSelectedDudeId(state) === ownProps.dudeId
+const mapStateToProps = (state, { dudeId, selectedDudeId }) => ({
+  name: selectDudesName(state, dudeId),
+  selected: selectedDudeId === dudeId
 })
 
 const mapDispatchToProps = (dispatch, { dudeId }) => ({

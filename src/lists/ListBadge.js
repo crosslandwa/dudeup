@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectListName, selectSelectedListId } from './selectors'
+import { selectListName } from './selectors'
 import { selectList, updateListName } from './actions'
 import { overcast, lavender } from '../colours'
 
@@ -17,8 +17,7 @@ const styles = (selected) => ({
   alignItems: 'center',
   padding: '0 4px',
   font: 'inherit',
-  textAlign: 'center',
-  margin: '1%'
+  textAlign: 'center'
 })
 
 class ListBadge extends Component {
@@ -38,9 +37,9 @@ class ListBadge extends Component {
   }
 }
 
-const mapStateToProps = (state, { id }) => ({
+const mapStateToProps = (state, { id, selectedListId }) => ({
   name: selectListName(state, id),
-  selected: selectSelectedListId(state) === id
+  selected: selectedListId === id
 })
 
 const mapDispatchToProps = (dispatch, { id }) => ({
