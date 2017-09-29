@@ -5,6 +5,7 @@ import { selectDudesName } from '../dudes/selectors'
 import { selectItemIdsForDude, selectTotalItemCostForDude } from './selectors'
 import { addItem } from './actions'
 import { dusty } from '../colours'
+import AddButton from '../dumbui/AddButton'
 
 const styles = {
   display: 'flex',
@@ -32,15 +33,8 @@ const footerStyle = {
 }
 
 const addButtonStyle = {
-  background: 'none',
-  border: 'solid 1px',
-  font: 'inherit',
-  cursor: 'pointer',
   marginLeft: '1%',
   width: '15%',
-  height: '30px',
-  fontSize: 'inherit',
-  borderRadius: 5,
 }
 
 const totalSpendStyle = {
@@ -57,8 +51,8 @@ class ItemList extends Component {
           <div style={headerStyle} >Paid for by {this.props.name || 'dude'}</div>
           {this.props.itemIds.map(itemId => <Item key={itemId} id={itemId} />)}
           <div style={footerStyle} >
-            <input style={addButtonStyle}
-              type="button"
+            <AddButton
+              style={addButtonStyle}
               value="Add"
               onClick={this.props.addItem}
             />

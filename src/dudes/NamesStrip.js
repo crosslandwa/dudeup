@@ -5,6 +5,7 @@ import SelectedDudeContainer from './SelectedDudeContainer'
 import { selectAllDudeIds } from './selectors'
 import { addDude } from './actions'
 import { selectListName } from '../lists/selectors'
+import AddButton from '../dumbui/AddButton'
 
 const styles = {
   display: 'flex',
@@ -22,15 +23,8 @@ const nameListStyle = {
 }
 
 const addButtonStyle = fullWidth => ({
-  background: 'none',
-  border: 'solid 1px',
-  font: 'inherit',
-  cursor: 'pointer',
   width: fullWidth ? '90%' : '15%',
-  height: '30px',
-  fontSize: 'inherit',
-  marginLeft: '2%',
-  borderRadius: 5
+  marginLeft: '2%'
 })
 
 const headerStyle = {
@@ -45,9 +39,9 @@ class NamesStrip extends Component {
       <div style={{width: '100%'}}>
         {hasDudes && <div style={headerStyle} >Dudes taking part in {this.props.listName || 'list'}</div>}
         <div style={styles} >
-          <input style={addButtonStyle(!hasDudes)}
-            type="button"
-            value={hasDudes ? 'Add dude:' : 'Click here to add a dude to the list'}
+          <AddButton
+            style={addButtonStyle(!hasDudes)}
+            value={hasDudes ? 'Add dude' : 'Click here to add a dude to the list'}
             onClick={this.props.addDude}
           />
           {hasDudes && (
