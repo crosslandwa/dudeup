@@ -16,11 +16,7 @@ export function itemsReducer (state = initialState, action) {
     case 'ITEM_REMOVE':
       return removeItem(state, action.id)
     case 'LIST_REMOVE':
-      return state.allIds.map(id => state.byId[id])
-        .filter(item => action.dudeIds.includes(item.dudeId))
-        .reduce((updated, item) => {
-          return removeItem(updated, item.id)
-        }, state)
+      return initialState
     case 'DUDE_REMOVE':
       return state.allIds.map(id => state.byId[id])
         .filter(item => item.dudeId === action.id)

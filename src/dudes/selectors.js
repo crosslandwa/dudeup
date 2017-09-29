@@ -12,10 +12,6 @@ export function selectAllDudeIds (state) {
   return selectDudes(state).allIds
 }
 
-export function selectAllDudeIdsForList(state, listId) {
-  return selectListById(state, listId).dudeIds
-}
-
 export function selectDudesName (state, id) {
   return selectDudeById(state,id).name
 }

@@ -1,8 +1,7 @@
 import { clone } from '../reducers'
 import SettleUp from 'settleup'
 
-import { selectAllDudeIdsForList } from '../dudes/selectors'
-import { selectSelectedListId } from '../lists/selectors'
+import { selectAllDudeIds } from '../dudes/selectors'
 import { selectItemIdsForDude, selectItemPrice } from '../items/selectors'
 
 const initialState = {
@@ -23,9 +22,9 @@ export function settleUpReducer (state = initialState, action) {
 }
 
 export function settleUpCalculationsReducer (state, action) {
-  if (actionsThatDoNotAffectPrices.includes(action.type) || !selectSelectedListId(state)) return state
+  if (actionsThatDoNotAffectPrices.includes(action.type)) return state
 
-  const formatted = selectAllDudeIdsForList(state, selectSelectedListId(state))
+  const formatted = selectAllDudeIds(state)
     .reduce((acc, dudeId) => {
       acc[dudeId] = selectItemIdsForDude(state, dudeId)
         .reduce((prices, itemId) => {

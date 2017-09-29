@@ -28,7 +28,7 @@ export function dudesReducer (state = initialState, action) {
     case 'DUDE_REMOVE':
       return removeDude(state, action.id)
     case 'LIST_REMOVE':
-      return action.dudeIds.reduce((updated, dudeId) => removeDude(updated, dudeId), state)
+      return initialState
     default:
       return state
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { selectListName } from './lists/selectors'
-import { selectDudesName, selectAllDudeIdsForList } from './dudes/selectors'
+import { selectDudesName } from './dudes/selectors'
 import { removeDude } from './dudes/actions'
 import { removeList } from './lists/actions'
 import { black, overcast, paper } from './colours'
@@ -48,7 +48,7 @@ class Removals extends Component {
         <input style={!!this.props.selectedListId ? buttonStyleEnabled : buttonStyleDisabled}
           type="button"
           value={`Delete ${this.props.selectedListName}`}
-          onClick={() => {if (this.props.selectedListId) this.props.removeList(this.props.selectedListDudeIds)}}
+          onClick={this.props.removeList}
           // onKeyPress={this.props.enter}
         />
       </div>
@@ -58,13 +58,12 @@ class Removals extends Component {
 
 const mapStateToProps = (state, { selectedDudeId, selectedListId }) => ({
   selectedDudeName: selectedDudeId ? selectDudesName(state, selectedDudeId) || 'Dude' : 'Dude',
-  selectedListName: selectedListId ? selectListName(state, selectedListId) || 'List' : 'List',
-  selectedListDudeIds: selectedListId ? selectAllDudeIdsForList(state, selectedListId) : []
+  selectedListName: selectedListId ? selectListName(state, selectedListId) || 'List' : 'List'
 })
 
 const mapDispatchToProps = (dispatch, { selectedDudeId, selectedListId }) => ({
   removeDude: () => dispatch(removeDude(selectedDudeId)),
-  removeList: (dudeIds) => dispatch(removeList(selectedListId, dudeIds))
+  removeList: () => { if (selectedListId) dispatch(removeList(selectedListId)) }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Removals)
