@@ -15,3 +15,11 @@ export function updateListName (id, name) {
 export function removeList (id) {
   return { type: 'LIST_REMOVE', id }
 }
+
+export function loadListsSummary (userId) {
+  return { type: 'LIST_SUMMARY_LOAD', userId }
+}
+
+export function listSummaryLoaded () {
+  return { type: 'LIST_SUMMARY_LOADED' }
+}

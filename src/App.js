@@ -5,7 +5,7 @@ import SelectedDudeContainer from './dudes/SelectedDudeContainer'
 import SelectedListContainer from './lists/SelectedListContainer'
 import Items from './items/Items'
 import SettleUpSummary from './settleup/SettleUpSummary'
-import ChooseList from './lists/ChooseList'
+import ListsSection from './lists/ListsSection'
 import Removals from './Removals'
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
       <div className="App" >
         <div className="App-header">
           <h2 style={{marginBottom: 0}}>Dude Up</h2>
-          <ChooseList />
+          <ListsSection />
         </div>
         <SelectedListContainer>
           <Dudes />

@@ -17,3 +17,7 @@ export function selectListName (state, id) {
 export function selectSelectedListId (state) {
   return state.selectedListId
 }
+
+export function selectAreListsLoading (state) {
+  return state.loading.lists
+}

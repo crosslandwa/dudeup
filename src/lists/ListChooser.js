@@ -9,11 +9,8 @@ import SelectedListContainer from './SelectedListContainer'
 const styles = {
   display: 'flex',
   width: '100%',
-  minHeight: 62,
   justifyContent: 'space-around',
-  height: '100%',
   alignItems: 'center',
-  lineHeight: 'initial'
 }
 
 const nameListStyle = {
@@ -36,7 +33,7 @@ const addButtonStyle = (fullWidth) => ({
   color: paper
 })
 
-class ChooseList extends Component {
+class ListChooser extends Component {
   render() {
     return (
       <div style={styles} >
@@ -67,4 +64,4 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = { addList }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChooseList)
+export default connect(mapStateToProps, mapDispatchToProps)(ListChooser)

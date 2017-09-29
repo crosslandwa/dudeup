@@ -5,6 +5,17 @@ const initialState = {
   allIds: []
 }
 
+export function listLoadedReduced (state = true, action) {
+  switch (action.type) {
+    case 'LIST_SUMMARY_LOAD':
+      return true
+    case 'LIST_SUMMARY_LOADED':
+      return false
+    default:
+      return state
+  }
+}
+
 export function selectedListReducer (state = null, action) {
   switch (action.type) {
     case 'LIST_ADD':
