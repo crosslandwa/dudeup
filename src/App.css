@@ -31,11 +31,6 @@ input::placeholder {
   width: 600px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
 .App-header {
   background-color: #333333; /*black*/
   line-height: 60px;
@@ -44,15 +39,6 @@ input::placeholder {
   padding-bottom: 4px;
 }
 
-.App-intro {
-  font-size: large;
-}
-
 .App-group {
   margin: 10px 0;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
