@@ -12,7 +12,7 @@ const styles = {
 
 const noop = () => {}
 
-class AddButton extends Component {
+class ClickableButton extends Component {
   render() {
     return (
       <input style={{...styles, ...this.props.style}}
@@ -24,4 +24,4 @@ class AddButton extends Component {
   }
 }
 
-export default AddButton
+export default ClickableButton

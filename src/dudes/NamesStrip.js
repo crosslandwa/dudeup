@@ -5,7 +5,7 @@ import SelectedDudeContainer from './SelectedDudeContainer'
 import { selectAllDudeIds } from './selectors'
 import { addDude } from './actions'
 import { selectListName } from '../lists/selectors'
-import AddButton from '../dumbui/AddButton'
+import ClickableButton from '../dumbui/ClickableButton'
 
 const styles = {
   display: 'flex',
@@ -22,7 +22,7 @@ const nameListStyle = {
   justifyContent: 'center'
 }
 
-const addButtonStyle = fullWidth => ({
+const ClickableButtonStyle = fullWidth => ({
   width: fullWidth ? '90%' : '15%',
   marginLeft: '2%'
 })
@@ -39,8 +39,8 @@ class NamesStrip extends Component {
       <div style={{width: '100%'}}>
         {hasDudes && <div style={headerStyle} >Dudes taking part in {this.props.listName || 'list'}</div>}
         <div style={styles} >
-          <AddButton
-            style={addButtonStyle(!hasDudes)}
+          <ClickableButton
+            style={ClickableButtonStyle(!hasDudes)}
             value={hasDudes ? 'Add dude' : 'Click here to add a dude to the list'}
             onClick={this.props.addDude}
           />
