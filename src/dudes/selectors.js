@@ -1,5 +1,3 @@
-import { selectListById } from '../lists/selectors'
-
 function selectDudes (state) {
   return state.entities.dudes
 }
