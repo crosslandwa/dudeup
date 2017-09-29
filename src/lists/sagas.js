@@ -1,6 +1,4 @@
-import { delay } from 'redux-saga'
 import { put, takeLatest } from 'redux-saga/effects'
-import { selectNormalisedList } from './selectors'
 import { listSummaryLoaded } from './actions'
 
 function fetchListSummary (userId) {
