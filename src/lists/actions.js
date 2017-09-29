@@ -20,6 +20,6 @@ export function loadListsSummary (userId) {
   return { type: 'LIST_SUMMARY_LOAD', userId }
 }
 
-export function listSummaryLoaded () {
-  return { type: 'LIST_SUMMARY_LOADED' }
+export function listSummaryLoaded (record) {
+  return { type: 'LIST_SUMMARY_LOADED', record }
 }

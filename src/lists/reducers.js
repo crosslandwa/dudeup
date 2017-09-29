@@ -22,6 +22,7 @@ export function selectedListReducer (state = null, action) {
     case 'LIST_SELECT':
       return action.id
     case 'LIST_REMOVE':
+    case 'LIST_SUMMARY_LOADED':
       return null
     default:
       return state
@@ -36,18 +37,17 @@ export function listsReducer (state = initialState, action) {
       return updateName(state, action.id, action.name)
     case 'LIST_REMOVE':
       return removeList(state, action.id)
-    case 'DUDE_NEW':
-      return addDude(state, action.listId, action.id)
-    case 'DUDE_REMOVE':
-      return removeDude(state, action.id)
+    case 'LIST_SUMMARY_LOADED':
+      return action.record.lists
+        .reduce((updated, { id, name }) => addList(updated, id, name), state)
     default:
       return state
   }
 }
 
-function addList (state, id) {
+function addList (state, id, name = '') {
   const updated = clone(state)
-  updated.byId[id] = { id, name: '', dudeIds: [] }
+  updated.byId[id] = { id, name }
   if (!updated.allIds.includes(id)) {
     updated.allIds = updated.allIds.concat(id)
   }
@@ -57,20 +57,6 @@ function addList (state, id) {
 function updateName (state, id, name) {
   const updated = clone(state)
   updated.byId[id].name = name
-  return updated
-}
-
-function addDude (state, listId, dudeId) {
-  const updated = clone(state)
-  updated.byId[listId].dudeIds = updated.byId[listId].dudeIds.concat(dudeId)
-  return updated
-}
-
-function removeDude (state, removedDudeId) {
-  const updated = clone(state)
-  updated.allIds.forEach(id => {
-    updated.byId[id].dudeIds = updated.byId[id].dudeIds.filter(dudeId => dudeId !== removedDudeId)
-  })
   return updated
 }
 
