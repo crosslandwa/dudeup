@@ -15,6 +15,33 @@ function fetchListSummary (userId) {
   })
 }
 
+function fetchListRecord (id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({
+        "schema": "1.0.0",
+        "list": {
+          "id": "list-73",
+          "name": "myList",
+          "dudes": [
+            {
+              "id": "dude-1111",
+              "name": "Cool Dude",
+              "items": [
+                {
+                  "id": "item-111",
+                  "description": "Well swell thing",
+                  "price": 100.00
+                }
+              ]
+            }
+          ]
+        }
+      })
+    }, 1000)
+  })
+}
+
 function* loadListSummaryGenerator(action) {
   const data = yield fetchListSummary(action.userId)
   yield put(listSummaryLoaded(data))
@@ -26,7 +53,7 @@ export function* fetchListSummarySaga() {
 
 function* loadListRecordGenerator(action) {
   yield put(loadListRecord())
-  const data = yield fetchListSummary(action.id) // use this now as a cheap 1s delay
+  const data = yield fetchListRecord(action.id)
   yield put(listRecordLoaded(data))
 }
 

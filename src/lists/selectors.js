@@ -1,3 +1,6 @@
+import { selectAllDudeIds, selectDudesName } from '../dudes/selectors'
+import { selectItemIdsForDude, selectItemDescription, selectItemPrice } from '../items/selectors'
+
 function selectLists (state) {
   return state.entities.lists
 }
@@ -24,4 +27,24 @@ export function selectAreListsLoading (state) {
 
 export function selectIsListRecordLoading (state) {
   return state.loading.listRecord
+}
+
+// TODO write schema that defines this
+export function selectListRecord (state, id) {
+  return {
+    schemaVersion: '1.0.0',
+    list: {
+      id,
+      name: selectListName(state, id),
+      dudes: selectAllDudeIds(state, id).map(dudeId => ({
+        id: dudeId,
+        name: selectDudesName(state, dudeId),
+        items: selectItemIdsForDude(state, dudeId).map(itemId => ({
+          id: itemId,
+          description: selectItemDescription(state, itemId),
+          price: selectItemPrice(state, itemId)
+        }))
+      }))
+    }
+  }
 }

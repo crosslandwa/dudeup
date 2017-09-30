@@ -23,6 +23,8 @@ export function itemsReducer (state = initialState, action) {
         .reduce((updated, item) => {
           return removeItem(updated, item.id)
         }, state)
+    case 'LIST_RECORD_LOADED':
+      return loadItemsFromV1ListRecord(action.record)
     default:
       return state
   }
@@ -54,4 +56,21 @@ function removeItem (state, id) {
   delete updated.byId[id]
   updated.allIds = updated.allIds.filter(other => other !== id)
   return updated
+}
+
+function loadItemsFromV1ListRecord (record) {
+  return {
+    byId: record.list.dudes.reduce((acc, dude) => {
+      dude.items.forEach(item => {
+        acc[item.id] = {
+          id: item.id,
+          description: item.description,
+          price: item.price,
+          dudeId: dude.id
+        }
+      })
+      return acc
+    }, {}),
+    allIds: record.list.dudes.reduce((acc, dude) => acc.concat(dude.items.map(item => item.id)), [])
+  }
 }

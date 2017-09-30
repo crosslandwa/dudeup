@@ -13,6 +13,7 @@ export function selectedDudeReducer (state = null, action) {
     case 'DUDE_REMOVE':
     case 'LIST_SELECT':
     case 'LIST_REMOVE':
+    case 'LIST_RECORD_LOADED':
       return null
     default:
       return state
@@ -29,6 +30,8 @@ export function dudesReducer (state = initialState, action) {
       return removeDude(state, action.id)
     case 'LIST_REMOVE':
       return initialState
+    case 'LIST_RECORD_LOADED':
+      return loadDudesFromV1ListRecord(action.record)
     default:
       return state
   }
@@ -54,4 +57,14 @@ function removeDude (state, id) {
   delete updated.byId[id]
   updated.allIds = updated.allIds.filter(other => other !== id)
   return updated
+}
+
+function loadDudesFromV1ListRecord (record) {
+  return {
+    byId: record.list.dudes.reduce((acc, dude) => {
+      acc[dude.id] = { id: dude.id, name: dude.name }
+      return acc
+    }, {}),
+    allIds: record.list.dudes.map(dude => dude.id)
+  }
 }
