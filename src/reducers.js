@@ -3,7 +3,12 @@ import reduceReducers from 'reduce-reducers'
 import { dudesReducer, selectedDudeReducer } from './dudes/reducers'
 import { itemsReducer } from './items/reducers'
 import { settleUpReducer, settleUpCalculationsReducer } from './settleup/reducers'
-import { listsReducer, listLoadedReduced, selectedListReducer } from './lists/reducers'
+import {
+  listsReducer,
+  listLoadedReduced,
+  listRecordLoadedReduced,
+  selectedListReducer
+} from './lists/reducers'
 
 export function uniqueId (prefix) {
   // TODO UUID or something more guaranteed not to clash
@@ -19,7 +24,8 @@ export default reduceReducers(
     selectedDudeId: selectedDudeReducer,
     selectedListId: selectedListReducer,
     loading: combineReducers({
-      lists: listLoadedReduced
+      lists: listLoadedReduced,
+      listRecord: listRecordLoadedReduced
     }),
     settleUp: settleUpReducer,
     entities: combineReducers({

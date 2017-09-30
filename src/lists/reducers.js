@@ -16,6 +16,17 @@ export function listLoadedReduced (state = true, action) {
   }
 }
 
+export function listRecordLoadedReduced (state = true, action) {
+  switch (action.type) {
+    case 'LIST_RECORD_LOAD':
+      return true
+    case 'LIST_RECORD_LOADED':
+      return false
+    default:
+      return state
+  }
+}
+
 export function selectedListReducer (state = null, action) {
   switch (action.type) {
     case 'LIST_ADD':

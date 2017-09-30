@@ -21,3 +21,7 @@ export function selectSelectedListId (state) {
 export function selectAreListsLoading (state) {
   return state.loading.lists
 }
+
+export function selectIsListRecordLoading (state) {
+  return state.loading.listRecord
+}

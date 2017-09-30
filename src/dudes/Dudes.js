@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import NamesStrip from './NamesStrip'
 import GroupSummary from './GroupSummary'
+import LoadingBadge from '../dumbui/LoadingBadge'
 import { overcast } from '../colours'
+import { selectIsListRecordLoading } from '../lists/selectors'
 
 const styles = {
   borderRadius: 5,
@@ -13,15 +16,24 @@ const styles = {
 
 class Dudes extends Component {
   render() {
-    return this.props.selectedListId
+    if (!this.props.selectedListId) return null
+
+    return this.props.loading
       ? (
+        <div style={styles} className="App-group">
+          <LoadingBadge />
+        </div>
+      ) : (
         <div style={styles} className="App-group">
           <NamesStrip selectedListId={this.props.selectedListId} />
           <GroupSummary />
         </div>
       )
-      : null
   }
 }
 
-export default Dudes
+const mapStateToProps = (state) => ({
+  loading: selectIsListRecordLoading(state)
+})
+
+export default connect(mapStateToProps)(Dudes)

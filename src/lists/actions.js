@@ -23,3 +23,11 @@ export function loadListsSummary (userId) {
 export function listSummaryLoaded (record) {
   return { type: 'LIST_SUMMARY_LOADED', record }
 }
+
+export function loadListRecord (userId) {
+  return { type: 'LIST_RECORD_LOAD', userId }
+}
+
+export function listRecordLoaded (record) {
+  return { type: 'LIST_RECORD_LOADED', record }
+}

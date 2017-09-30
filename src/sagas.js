@@ -1,9 +1,10 @@
 import { all } from 'redux-saga/effects'
 
-import { fetchListSummarySaga } from './lists/sagas'
+import { fetchListSummarySaga, fetchListRecordSaga } from './lists/sagas'
 
 export default function* rootSaga() {
   yield all([
-    fetchListSummarySaga()
+    fetchListSummarySaga(),
+    fetchListRecordSaga()
   ])
 }
