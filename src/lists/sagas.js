@@ -3,6 +3,8 @@ import { put, select, takeLatest } from 'redux-saga/effects'
 import { listSummaryLoaded, loadListRecord, listRecordLoaded } from './actions'
 import { selectCurrentListRecord } from './selectors'
 
+const storageKey = 'dude-up-local-storage'
+
 function fetchListSummary (userId) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -17,14 +19,22 @@ function fetchListSummary (userId) {
   })
 }
 
+function fetchRecordSet () {
+  let recordSet = window.localStorage.getItem(storageKey)
+  return recordSet ? JSON.parse(recordSet) : {}
+}
+
+function storeRecord (id, record) {
+  const updated = fetchRecordSet()
+  updated[id] = record
+  window.localStorage.setItem(storageKey, JSON.stringify(updated))
+}
+
 function fetchListRecord (id) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const raw = window.localStorage.getItem(id)
-      return resolve(raw
-        ? JSON.parse(raw)
-        : { schema: '1.0.0', list: { id, dudes: [] } } // TODO handle error case
-      )
+      // TODO handle error case
+      return resolve(fetchRecordSet()[id] || { schema: '1.0.0', list: { id, dudes: [] } })
     }, 1000)
   })
 }
@@ -52,7 +62,7 @@ export function* fetchListRecordSaga() {
 function* updateStoredListRecord (action) {
   const record = yield select(selectCurrentListRecord)
   yield delay(1000) // debounce rapid edits
-  window.localStorage.setItem(record.list.id, JSON.stringify(record))
+  storeRecord(record.list.id, record)
 }
 
 export function* storeListRecordEditsSaga () {
