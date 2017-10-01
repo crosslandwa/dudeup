@@ -30,12 +30,12 @@ export function selectIsListRecordLoading (state) {
 }
 
 // TODO write schema that defines this
-export function selectListRecord (state, id) {
+export function selectCurrentListRecord (state) {
+  const id = selectSelectedListId(state)
   return {
     schemaVersion: '1.0.0',
     list: {
       id,
-      name: selectListName(state, id),
       dudes: selectAllDudeIds(state, id).map(dudeId => ({
         id: dudeId,
         name: selectDudesName(state, dudeId),

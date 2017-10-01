@@ -1,5 +1,7 @@
-import { put, takeLatest } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
+import { put, select, takeLatest } from 'redux-saga/effects'
 import { listSummaryLoaded, loadListRecord, listRecordLoaded } from './actions'
+import { selectCurrentListRecord } from './selectors'
 
 function fetchListSummary (userId) {
   return new Promise((resolve, reject) => {
@@ -18,26 +20,11 @@ function fetchListSummary (userId) {
 function fetchListRecord (id) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve({
-        "schema": "1.0.0",
-        "list": {
-          "id": "list-73",
-          "name": "myList",
-          "dudes": [
-            {
-              "id": "dude-1111",
-              "name": "Cool Dude",
-              "items": [
-                {
-                  "id": "item-111",
-                  "description": "Well swell thing",
-                  "price": 100.00
-                }
-              ]
-            }
-          ]
-        }
-      })
+      const raw = window.localStorage.getItem(id)
+      return resolve(raw
+        ? JSON.parse(raw)
+        : { schema: '1.0.0', list: { id, dudes: [] } } // TODO handle error case
+      )
     }, 1000)
   })
 }
@@ -59,4 +46,15 @@ function* loadListRecordGenerator(action) {
 
 export function* fetchListRecordSaga() {
   yield takeLatest('LIST_SELECT', loadListRecordGenerator)
+}
+
+
+function* updateStoredListRecord (action) {
+  const record = yield select(selectCurrentListRecord)
+  yield delay(1000) // debounce rapid edits
+  window.localStorage.setItem(record.list.id, JSON.stringify(record))
+}
+
+export function* storeListRecordEditsSaga () {
+  yield takeLatest(['LIST_UPDATE_NAME', 'DUDE_UPDATE_NAME'], updateStoredListRecord)
 }
