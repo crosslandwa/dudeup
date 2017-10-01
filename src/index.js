@@ -7,7 +7,6 @@ import registerServiceWorker from './registerServiceWorker';
 import reducer from './reducers'
 import { Provider } from 'react-redux'
 import { applyMiddleware, createStore, compose } from 'redux'
-import persistState from 'redux-localstorage'
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from './sagas'
 
@@ -19,8 +18,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
   reducer,
   composeEnhancers(
-    applyMiddleware(sagaMiddleware)//,
-    // persistState('entities', {  key: 'dude-up' })
+    applyMiddleware(sagaMiddleware)
   )
 )
 
