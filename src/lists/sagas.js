@@ -66,5 +66,10 @@ function* updateStoredListRecord (action) {
 }
 
 export function* storeListRecordEditsSaga () {
-  yield takeLatest(['LIST_UPDATE_NAME', 'DUDE_UPDATE_NAME'], updateStoredListRecord)
+  yield takeLatest([
+      'DUDE_NEW', 'DUDE_UPDATE_NAME', 'DUDE_REMOVE',
+      'ITEM_UPDATE_DESCRIPTION', 'ITEM_UPDATE_PRICE', 'ITEM_REMOVE'
+    ],
+    updateStoredListRecord
+  )
 }
