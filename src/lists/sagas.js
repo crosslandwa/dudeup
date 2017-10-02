@@ -69,7 +69,6 @@ export function* storeListRecordEditsSaga () {
 function* updateStoredListSummaryRecord (action) {
   const record = yield select(selectCurrentListSummaryRecord)
   yield delay(1000) // debounce rapid edits
-  console.log(record)
   storeRecord(record.userId, record)
 }
 
