@@ -20,3 +20,27 @@ const result = DudeUp({
   personD: [257.83]
 })
 ```
+
+Which will output (JSONified)
+```json
+{
+  "averageAmountPerGroupMember": 232.48,
+  "groupTotal": 929.9,
+  "amountOwedByGroupMember": {
+    "personA": {},
+    "personB": {},
+    "personC": {
+      "personA": 18.13,
+      "personB": 102.98,
+      "personD": 25.35
+    },
+    "personD": {}
+  },
+  "totalPaidPerGroupMember": {
+    "personA": 250.61,
+    "personB": 335.46,
+    "personC": 86,
+    "personD": 257.83
+  }
+}
+```

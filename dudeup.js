@@ -7,12 +7,11 @@ const initial = () => ({
 
 const entries = map => Object.keys(map).map(key => [key, map[key]])
 const sum = values => values.reduce((total, x) => rounded(total + x), 0)
-const totalPaid = memberPayments => sum(entries(memberPayments).map(([item, amount]) => amount))
 const rounded = amount => Math.round(amount * 1e2) / 1e2
 
 function DudeUp (groupMemberPayments) {
   const result = Object.keys(groupMemberPayments).reduce((acc, name) => {
-    acc.totalPaidPerGroupMember[name] = totalPaid(groupMemberPayments[name])
+    acc.totalPaidPerGroupMember[name] = sum(groupMemberPayments[name])
     acc.amountOwedByGroupMember[name] = {}
     return acc
   }, initial())
