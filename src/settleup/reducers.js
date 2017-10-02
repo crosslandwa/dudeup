@@ -1,5 +1,5 @@
 import { clone } from '../reducers'
-import SettleUp from 'settleup'
+import SettleUp from 'dudeup'
 
 import { selectAllDudeIds } from '../dudes/selectors'
 import { selectItemIdsForDude, selectItemPrice } from '../items/selectors'
@@ -26,11 +26,7 @@ export function settleUpCalculationsReducer (state, action) {
 
   const formatted = selectAllDudeIds(state)
     .reduce((acc, dudeId) => {
-      acc[dudeId] = selectItemIdsForDude(state, dudeId)
-        .reduce((prices, itemId) => {
-          prices[itemId] = selectItemPrice(state, itemId)
-          return prices
-        }, {})
+      acc[dudeId] = selectItemIdsForDude(state, dudeId).map(itemId => selectItemPrice(state, itemId))
       return acc
     }, {})
 
