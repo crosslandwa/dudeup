@@ -1,8 +1,8 @@
 {
-  "name": "settleup",
+  "name": "dudeup",
   "version": "1.0.0",
   "description": "Settle up shared hoiday costs",
-  "main": "settleup.js",
+  "main": "dudeup.js",
   "scripts": {
     "lint": "eslint *.js **/*.js",
     "test": "jasmine"

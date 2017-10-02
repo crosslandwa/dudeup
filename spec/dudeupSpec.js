@@ -1,4 +1,4 @@
-const SettleUp = require('../settleup')
+const DudeUp = require('../dudeup')
 
 const noPayments = () => ({ })
 const compareAsJson = (a, b) => {
@@ -11,7 +11,7 @@ describe('Settle Up', () => {
     const sAndW = noPayments()
 
     compareAsJson(
-      SettleUp({ eAndG, sAndW }).totalPaidPerGroupMember,
+      DudeUp({ eAndG, sAndW }).totalPaidPerGroupMember,
       { eAndG: 0, sAndW: 0 }
     )
 
@@ -20,7 +20,7 @@ describe('Settle Up', () => {
     sAndW['c'] = 0.5
 
     compareAsJson(
-      SettleUp({ eAndG, sAndW }).totalPaidPerGroupMember,
+      DudeUp({ eAndG, sAndW }).totalPaidPerGroupMember,
       { eAndG: 3, sAndW: 0.5 }
     )
   })
@@ -28,42 +28,42 @@ describe('Settle Up', () => {
   it('calculates the total paid by the group', () => {
     const eAndG = noPayments()
     const sAndW = noPayments()
-    expect(SettleUp({ eAndG, sAndW }).groupTotal).toEqual(0)
+    expect(DudeUp({ eAndG, sAndW }).groupTotal).toEqual(0)
 
     eAndG['a'] = 1
     eAndG['b'] = 2
     sAndW['c'] = 0.5
-    expect(SettleUp({ eAndG, sAndW }).groupTotal).toEqual(3.5)
+    expect(DudeUp({ eAndG, sAndW }).groupTotal).toEqual(3.5)
   })
 
   it('calculates the average amount owed per group member', () => {
     const eAndG = noPayments()
     const sAndW = noPayments()
-    expect(SettleUp({ eAndG, sAndW }).averageAmountPerGroupMember).toEqual(0)
+    expect(DudeUp({ eAndG, sAndW }).averageAmountPerGroupMember).toEqual(0)
 
     eAndG['a'] = 1
     eAndG['b'] = 2
     sAndW['c'] = 0.5
-    expect(SettleUp({ eAndG, sAndW }).averageAmountPerGroupMember).toEqual(1.75)
+    expect(DudeUp({ eAndG, sAndW }).averageAmountPerGroupMember).toEqual(1.75)
   })
 
   it('calculates the amount group members should pay to others (in a group of 2) to settle up', () => {
     const eAndG = noPayments()
     const sAndW = noPayments()
     compareAsJson(
-      SettleUp({ eAndG, sAndW }).amountOwedByGroupMember,
+      DudeUp({ eAndG, sAndW }).amountOwedByGroupMember,
       { eAndG: {}, sAndW: {} }
     )
 
     eAndG['a'] = 2
     compareAsJson(
-      SettleUp({ eAndG, sAndW }).amountOwedByGroupMember,
+      DudeUp({ eAndG, sAndW }).amountOwedByGroupMember,
       { eAndG: {}, sAndW: { eAndG: 1 } }
     )
 
     sAndW['b'] = 3
     compareAsJson(
-      SettleUp({ eAndG, sAndW }).amountOwedByGroupMember,
+      DudeUp({ eAndG, sAndW }).amountOwedByGroupMember,
       { eAndG: { sAndW: 0.5 }, sAndW: {} }
     )
   })
@@ -77,7 +77,7 @@ describe('Settle Up', () => {
     a['aLovelyThing'] = 4
     b['anotherLovelyThing'] = 2
     compareAsJson(
-      SettleUp({ a, b, c, d }).amountOwedByGroupMember,
+      DudeUp({ a, b, c, d }).amountOwedByGroupMember,
       { a: {}, b: {}, c: { a: 1.5 }, d: { a: 1, b: 0.5 } }
     )
   })
