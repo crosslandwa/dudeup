@@ -1,5 +1,4 @@
 const initial = () => ({
-  averageAmountPerGroupMember: 0,
   amountOwedByGroupMember: {}
 })
 
@@ -21,10 +20,10 @@ function DudeUp (groupMemberPayments) {
   }, initial())
 
   const numberOfGroupMembers = Object.keys(groupMemberPayments).length
-  result.averageAmountPerGroupMember = rounded(groupTotal / Math.max(1, numberOfGroupMembers))
+  const averageAmountPerGroupMember = rounded(groupTotal / Math.max(1, numberOfGroupMembers))
 
   const balances = Object.keys(groupMemberPayments).reduce((acc, name) => {
-    acc[name] = rounded(totalPaidPerGroupMember[name] - result.averageAmountPerGroupMember)
+    acc[name] = rounded(totalPaidPerGroupMember[name] - averageAmountPerGroupMember)
     return acc
   }, {})
 
@@ -46,7 +45,7 @@ function DudeUp (groupMemberPayments) {
   }
 
   return {
-    averageAmountPerGroupMember: result.averageAmountPerGroupMember,
+    averageAmountPerGroupMember,
     groupTotal,
     amountOwedByGroupMember: result.amountOwedByGroupMember,
     totalPaidPerGroupMember
