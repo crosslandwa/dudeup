@@ -1,23 +1,9 @@
 import { delay } from 'redux-saga'
 import { put, select, takeLatest } from 'redux-saga/effects'
 import { listSummaryLoaded, loadListRecord, listRecordLoaded } from './actions'
-import { selectCurrentListRecord } from './selectors'
+import { selectCurrentListRecord, selectCurrentListSummaryRecord } from './selectors'
 
 const storageKey = 'dude-up-local-storage'
-
-function fetchListSummary (userId) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({
-        schemaVersion: '1.0.0',
-        lists: [
-          { id: 'list-73', name: 'A' },
-          { id: 'list-243', name: 'B' }
-        ]
-      })
-    }, 1000)
-  })
-}
 
 function fetchRecordSet () {
   let recordSet = window.localStorage.getItem(storageKey)
@@ -30,17 +16,24 @@ function storeRecord (id, record) {
   window.localStorage.setItem(storageKey, JSON.stringify(updated))
 }
 
+function fetchListSummaryRecord (id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      return resolve(fetchRecordSet()[id] || { schema: { type: 'listSummaryRecord', version: '1.0.0' }, lists: [] })
+    }, 1000)
+  })
+}
+
 function fetchListRecord (id) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      // TODO handle error case
-      return resolve(fetchRecordSet()[id] || { schema: '1.0.0', list: { id, dudes: [] } })
+      return resolve(fetchRecordSet()[id] || { schema: { type: 'listRecord', version: '1.0.0' }, list: { id, dudes: [] } })
     }, 1000)
   })
 }
 
 function* loadListSummaryGenerator(action) {
-  const data = yield fetchListSummary(action.userId)
+  const data = yield fetchListSummaryRecord(action.userId)
   yield put(listSummaryLoaded(data))
 }
 
@@ -58,7 +51,6 @@ export function* fetchListRecordSaga() {
   yield takeLatest('LIST_SELECT', loadListRecordGenerator)
 }
 
-
 function* updateStoredListRecord (action) {
   const record = yield select(selectCurrentListRecord)
   yield delay(1000) // debounce rapid edits
@@ -71,5 +63,19 @@ export function* storeListRecordEditsSaga () {
       'ITEM_UPDATE_DESCRIPTION', 'ITEM_UPDATE_PRICE', 'ITEM_REMOVE'
     ],
     updateStoredListRecord
+  )
+}
+
+function* updateStoredListSummaryRecord (action) {
+  const record = yield select(selectCurrentListSummaryRecord)
+  yield delay(1000) // debounce rapid edits
+  console.log(record)
+  storeRecord(record.userId, record)
+}
+
+export function* storeListSummaryRecordEditsSaga () {
+  yield takeLatest(
+    ['LIST_ADD', 'LIST_UPDATE_NAME', 'LIST_REMOVE'],
+    updateStoredListSummaryRecord
   )
 }

@@ -29,11 +29,15 @@ export function selectIsListRecordLoading (state) {
   return state.loading.listRecord
 }
 
-// TODO write schema that defines this
+// TODO write schema that define these
 export function selectCurrentListRecord (state) {
   const id = selectSelectedListId(state)
   return {
-    schemaVersion: '1.0.0',
+    schema: {
+      type: 'listRecord',
+      version: '1.0.0'
+    },
+    lastUpdated: Date.now(),
     list: {
       id,
       dudes: selectAllDudeIds(state, id).map(dudeId => ({
@@ -46,5 +50,17 @@ export function selectCurrentListRecord (state) {
         }))
       }))
     }
+  }
+}
+
+export function selectCurrentListSummaryRecord (state) {
+  return {
+    schema: {
+      type: 'listSummaryRecord',
+      version: '1.0.0'
+    },
+    lastUpdated: Date.now(),
+    userId: 'local-user', // TODO logged in user?
+    lists: selectAllListIds(state).map(id => ({ id, name: selectListName(state, id) }))
   }
 }

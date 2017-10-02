@@ -32,4 +32,4 @@ registerServiceWorker();
 
 sagaMiddleware.run(rootSaga)
 
-store.dispatch(loadListsSummary())
+store.dispatch(loadListsSummary('local-user'))
