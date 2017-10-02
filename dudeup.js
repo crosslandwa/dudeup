@@ -10,6 +10,11 @@ const sum = values => values.reduce((total, x) => rounded(total + x), 0)
 const rounded = amount => Math.round(amount * 1e2) / 1e2
 
 function DudeUp (groupMemberPayments) {
+  const totalPaidPerGroupMember = Object.keys(groupMemberPayments).reduce((acc, name) => {
+    acc[name] = sum(groupMemberPayments[name])
+    return acc
+  }, {})
+
   const result = Object.keys(groupMemberPayments).reduce((acc, name) => {
     acc.totalPaidPerGroupMember[name] = sum(groupMemberPayments[name])
     acc.amountOwedByGroupMember[name] = {}
@@ -43,7 +48,12 @@ function DudeUp (groupMemberPayments) {
     }
   }
 
-  return result
+  return {
+    averageAmountPerGroupMember: result.averageAmountPerGroupMember,
+    groupTotal: result.groupTotal,
+    amountOwedByGroupMember: result.amountOwedByGroupMember,
+    totalPaidPerGroupMember
+  }
 }
 
 module.exports = DudeUp
