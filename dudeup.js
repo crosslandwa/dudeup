@@ -10,7 +10,7 @@ const sum = values => values.reduce((total, x) => rounded(total + x), 0)
 const totalPaid = memberPayments => sum(entries(memberPayments).map(([item, amount]) => amount))
 const rounded = amount => Math.round(amount * 1e2) / 1e2
 
-function SettleUp (groupMemberPayments) {
+function DudeUp (groupMemberPayments) {
   const result = Object.keys(groupMemberPayments).reduce((acc, name) => {
     acc.totalPaidPerGroupMember[name] = totalPaid(groupMemberPayments[name])
     acc.amountOwedByGroupMember[name] = {}
@@ -47,4 +47,4 @@ function SettleUp (groupMemberPayments) {
   return result
 }
 
-module.exports = SettleUp
+module.exports = DudeUp
