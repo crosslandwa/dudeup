@@ -41,7 +41,7 @@ class NamesStrip extends Component {
         <div style={styles} >
           <ClickableButton
             style={ClickableButtonStyle(!hasDudes)}
-            value={hasDudes ? 'Add dude' : 'Click here to add a dude to the list'}
+            value={hasDudes ? 'Add dude' : `Click here to add a dude to ${this.props.listName || 'the list'}`}
             onClick={this.props.addDude}
           />
           {hasDudes && (
