@@ -31,7 +31,7 @@ class App extends Component {
           <ul>
             <li>Create a new list</li>
             <li>Add one or more dudes to the list</li>
-            <li>Add the items (and price) each dude paid for</li>
+            <li>Add the items each dude paid for</li>
           </ul>
           <p>
             Dude Up will work some magic and tell each dude what they owe the others, and/or what the others owe them, ensuring everyone has paid the same overall. Marvellous!
