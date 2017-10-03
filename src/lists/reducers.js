@@ -29,7 +29,6 @@ export function listRecordLoadedReduced (state = true, action) {
 
 export function selectedListReducer (state = null, action) {
   switch (action.type) {
-    case 'LIST_ADD':
     case 'LIST_SELECT':
       return action.id
     case 'LIST_REMOVE':

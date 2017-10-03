@@ -31,7 +31,6 @@ class ListBadge extends Component {
         onClick={this.props.select}
         placeholder="New list..."
         onKeyPress={this.props.enter}
-        autoFocus
       />
     )
   }

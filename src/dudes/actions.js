@@ -1,7 +1,7 @@
 import { uniqueId } from '../reducers'
 
 export function addDude (listId) {
-  return { type: 'DUDE_NEW', id: uniqueId('dude'), listId }
+  return { type: 'DUDE_ADD', id: uniqueId('dude'), listId }
 }
 
 export function selectDude (id) {
