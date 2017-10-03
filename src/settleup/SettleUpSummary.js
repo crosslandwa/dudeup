@@ -15,32 +15,20 @@ const styles = {
   minHeight: 30
 }
 
-const listStyle = {
-  marginTop: '5px',
-  marginBottom: '5px'
-}
-
 class SettleUpSummary extends Component {
   render() {
     return this.props.selectedDudeId
       ? (
         <div className="App-group" style={styles} >
-          <div style={listStyle}>
-            {(this.props.amountsYouOwe.length === 0) && (
-              <div>You don't owe anything!</div>
-            )}
-            {this.props.amountsYouOwe.map(({dudeName, amount}, index) => (
-              <div key={index} >You owe {dudeName || 'someone'} {amount.toFixed(2)}</div>
-            ))}
-            <div style={listStyle}>
-              {(this.props.amountsOwedToYou.length === 0) && (
-                <div>You aren't owed anything...</div>
-              )}
-              {this.props.amountsOwedToYou.map(({dudeName, amount}, index) => (
-                <div key={index} >{dudeName || 'Someone'} owes you {amount.toFixed(2)}</div>
-              ))}
-            </div>
-          </div>
+          {(this.props.amountsYouOwe.length === 0) && (this.props.amountsOwedToYou.length === 0) && (
+            <div>Dude, you all square!</div>
+          )}
+          {this.props.amountsYouOwe.map(({dudeName, amount}, index) => (
+            <div key={index} >You owe {dudeName || 'someone'} {amount.toFixed(2)}</div>
+          ))}
+          {this.props.amountsOwedToYou.map(({dudeName, amount}, index) => (
+            <div key={index} >{dudeName || 'Someone'} owes you {amount.toFixed(2)}</div>
+          ))}
         </div>
       )
       : null
