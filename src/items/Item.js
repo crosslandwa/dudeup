@@ -27,7 +27,7 @@ const inputStyle = {
 
 const priceStyle = {
   width: '12%',
-  marginLeft: '1%',
+  marginLeft: '2%',
   marginRight: '1%',
   padding: '0 1%'
 }
@@ -40,7 +40,7 @@ const descriptionStyle = {
 }
 
 const removeButtonStyle = {
-  marginRight: '1%',
+  marginRight: '2%',
   padding: '0 1%'
 }
 

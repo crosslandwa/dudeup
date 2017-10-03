@@ -33,7 +33,7 @@ const footerStyle = {
 }
 
 const ClickableButtonStyle = {
-  marginLeft: '1%',
+  marginLeft: '2%',
   width: '15%',
 }
 
