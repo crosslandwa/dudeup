@@ -29,6 +29,10 @@ export function selectIsListRecordLoading (state) {
   return state.loading.listRecord
 }
 
+export function selectLoggedInUser (state) {
+  return state.loggedInUser
+}
+
 // TODO write schema that define these
 export function selectCurrentListRecord (state) {
   const id = selectSelectedListId(state)
@@ -37,9 +41,10 @@ export function selectCurrentListRecord (state) {
       type: 'listRecord',
       version: '1.0.0'
     },
-    lastUpdated: Date.now(),
+    lastUpdated: new Date().toISOString(),
     list: {
       id,
+      name: selectListName(state, id),
       dudes: selectAllDudeIds(state, id).map(dudeId => ({
         id: dudeId,
         name: selectDudesName(state, dudeId),
@@ -59,8 +64,8 @@ export function selectCurrentListSummaryRecord (state) {
       type: 'listSummaryRecord',
       version: '1.0.0'
     },
-    lastUpdated: Date.now(),
-    userId: 'local-user', // TODO logged in user?
+    lastUpdated: new Date().toISOString(),
+    userId: selectLoggedInUser(state),
     lists: selectAllListIds(state).map(id => ({ id, name: selectListName(state, id) }))
   }
 }

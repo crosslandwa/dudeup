@@ -19,8 +19,13 @@ export function clone (x) {
   return JSON.parse(JSON.stringify(x))
 }
 
+export function loggedInUser (state = 'local-user') {
+  return state
+}
+
 export default reduceReducers(
   combineReducers({
+    loggedInUser,
     selectedDudeId: selectedDudeReducer,
     selectedListId: selectedListReducer,
     loading: combineReducers({

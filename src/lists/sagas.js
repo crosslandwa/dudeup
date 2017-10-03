@@ -1,7 +1,7 @@
 import { delay } from 'redux-saga'
 import { put, select, takeLatest } from 'redux-saga/effects'
 import { listSummaryLoaded, loadListRecord, listRecordLoaded } from './actions'
-import { selectCurrentListRecord, selectCurrentListSummaryRecord } from './selectors'
+import { selectCurrentListRecord, selectCurrentListSummaryRecord, selectLoggedInUser } from './selectors'
 
 const storageKey = 'dude-up-local-storage'
 
@@ -33,7 +33,8 @@ function fetchListRecord (id) {
 }
 
 function* loadListSummaryGenerator(action) {
-  const data = yield fetchListSummaryRecord(action.userId)
+  const userId = yield select(selectLoggedInUser)
+  const data = yield fetchListSummaryRecord(userId)
   yield put(listSummaryLoaded(data))
 }
 

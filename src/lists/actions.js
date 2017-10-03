@@ -16,8 +16,8 @@ export function removeList (id) {
   return { type: 'LIST_REMOVE', id }
 }
 
-export function loadListsSummary (userId) {
-  return { type: 'LIST_SUMMARY_LOAD', userId }
+export function loadListsSummary () {
+  return { type: 'LIST_SUMMARY_LOAD' }
 }
 
 export function listSummaryLoaded (record) {
