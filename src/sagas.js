@@ -4,7 +4,8 @@ import {
   fetchListSummarySaga,
   fetchListRecordSaga,
   storeListRecordEditsSaga,
-  storeListSummaryRecordEditsSaga
+  storeListSummaryRecordEditsSaga,
+  triggerFetchListRecordSaga
 } from './lists/sagas'
 
 export default function* rootSaga() {
@@ -12,6 +13,7 @@ export default function* rootSaga() {
     fetchListSummarySaga(),
     fetchListRecordSaga(),
     storeListRecordEditsSaga(),
-    storeListSummaryRecordEditsSaga()
+    storeListSummaryRecordEditsSaga(),
+    triggerFetchListRecordSaga()
   ])
 }

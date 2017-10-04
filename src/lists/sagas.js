@@ -32,30 +32,25 @@ function fetchListRecord (id) {
   })
 }
 
-function* loadListSummaryGenerator(action) {
-  const userId = yield select(selectLoggedInUser)
-  const data = yield fetchListSummaryRecord(userId)
-  yield put(listSummaryLoaded(data))
-}
-
 export function* fetchListSummarySaga() {
-  yield takeLatest('LIST_SUMMARY_LOAD', loadListSummaryGenerator)
+  yield takeLatest('LIST_SUMMARY_LOAD', function* (action) {
+    const userId = yield select(selectLoggedInUser)
+    const data = yield fetchListSummaryRecord(userId)
+    yield put(listSummaryLoaded(data))
+  })
 }
 
-function* loadListRecordGenerator(action) {
-  yield put(loadListRecord())
-  const data = yield fetchListRecord(action.id)
-  yield put(listRecordLoaded(data))
+export function* triggerFetchListRecordSaga () {
+  yield takeLatest('LIST_SELECT', function* (action) {
+    yield put(loadListRecord(action.id))
+  })
 }
 
-export function* fetchListRecordSaga() {
-  yield takeLatest('LIST_SELECT', loadListRecordGenerator)
-}
-
-function* updateStoredListRecord (action) {
-  const record = yield select(selectCurrentListRecord)
-  yield delay(1000) // debounce rapid edits
-  storeRecord(record.list.id, record)
+export function* fetchListRecordSaga () {
+  yield takeLatest('LIST_RECORD_LOAD', function* (action) {
+    const data = yield fetchListRecord(action.id)
+    yield put(listRecordLoaded(data))
+  })
 }
 
 export function* storeListRecordEditsSaga () {
@@ -63,19 +58,21 @@ export function* storeListRecordEditsSaga () {
       'DUDE_ADD', 'DUDE_UPDATE_NAME', 'DUDE_REMOVE',
       'ITEM_UPDATE_DESCRIPTION', 'ITEM_UPDATE_PRICE', 'ITEM_REMOVE'
     ],
-    updateStoredListRecord
+    function* (action) {
+      const record = yield select(selectCurrentListRecord)
+      yield delay(1000) // debounce rapid edits
+      storeRecord(record.list.id, record)
+    }
   )
-}
-
-function* updateStoredListSummaryRecord (action) {
-  const record = yield select(selectCurrentListSummaryRecord)
-  yield delay(1000) // debounce rapid edits
-  storeRecord(record.userId, record)
 }
 
 export function* storeListSummaryRecordEditsSaga () {
   yield takeLatest(
     ['LIST_ADD', 'LIST_UPDATE_NAME', 'LIST_REMOVE'],
-    updateStoredListSummaryRecord
+    function* (action) {
+      const record = yield select(selectCurrentListSummaryRecord)
+      yield delay(1000) // debounce rapid edits
+      storeRecord(record.userId, record)
+    }
   )
 }
