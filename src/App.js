@@ -19,9 +19,9 @@ class App extends Component {
         <Dudes />
         <Items />
         <SettleUpSummary />
+        <Removals />
         <SelectedListContainer>
           <SelectedDudeContainer>
-            <Removals />
           </SelectedDudeContainer>
         </SelectedListContainer>
         <div className="App-group" style={{ textAlign: 'left' }}>
