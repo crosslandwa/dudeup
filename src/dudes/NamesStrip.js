@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import NameBadge from './NameBadge'
-import SelectedDudeContainer from './SelectedDudeContainer'
-import { selectAllDudeIds } from './selectors'
+import { selectAllDudeIds, selectSelectedDudeId } from './selectors'
 import { addDude } from './actions'
 import { selectListName } from '../lists/selectors'
 import ClickableButton from '../dumbui/ClickableButton'
@@ -48,9 +47,7 @@ class NamesStrip extends Component {
             <div style={nameListStyle}>
               {this.props.ids.map(dudeId => (
                 <div style={{ margin: '1%' }} key={dudeId} >
-                  <SelectedDudeContainer>
-                    <NameBadge dudeId={dudeId} />
-                  </SelectedDudeContainer>
+                  <NameBadge dudeId={dudeId} selected={dudeId === this.props.selectedDudeId}/>
                 </div>
               ))}
             </div>
@@ -63,7 +60,8 @@ class NamesStrip extends Component {
 
 const mapStateToProps = (state, { selectedListId }) => ({
   ids: selectAllDudeIds(state),
-  listName: selectListName(state, selectedListId)
+  listName: selectListName(state, selectedListId),
+  selectedDudeId: selectSelectedDudeId(state)
 })
 
 const mapDispatchToProps = ({ addDude })

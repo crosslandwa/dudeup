@@ -36,9 +36,8 @@ class NameBadge extends Component {
   }
 }
 
-const mapStateToProps = (state, { dudeId, selectedDudeId }) => ({
-  name: selectDudesName(state, dudeId),
-  selected: selectedDudeId === dudeId
+const mapStateToProps = (state, { dudeId }) => ({
+  name: selectDudesName(state, dudeId)
 })
 
 const mapDispatchToProps = (dispatch, { dudeId }) => ({
