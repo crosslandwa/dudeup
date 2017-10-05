@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
 import Dudes from './dudes/Dudes'
-import SelectedDudeContainer from './dudes/SelectedDudeContainer'
-import SelectedListContainer from './lists/SelectedListContainer'
 import Items from './items/Items'
 import SettleUpSummary from './settleup/SettleUpSummary'
 import ListsSection from './lists/ListsSection'
@@ -20,10 +18,6 @@ class App extends Component {
         <Items />
         <SettleUpSummary />
         <Removals />
-        <SelectedListContainer>
-          <SelectedDudeContainer>
-          </SelectedDudeContainer>
-        </SelectedListContainer>
         <div className="App-group" style={{ textAlign: 'left' }}>
           <p>
             Square up shared expenses between a bunch of dudes. Split the cost of last night's several rounds of drinks, the wild holiday kitty, communal bills in a shared home, etc. Simply:
