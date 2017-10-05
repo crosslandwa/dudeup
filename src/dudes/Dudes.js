@@ -4,7 +4,7 @@ import NamesStrip from './NamesStrip'
 import GroupSummary from './GroupSummary'
 import LoadingBadge from '../dumbui/LoadingBadge'
 import { overcast } from '../colours'
-import { selectIsListRecordLoading } from '../lists/selectors'
+import { selectIsListRecordLoading, selectSelectedListId } from '../lists/selectors'
 
 const styles = {
   borderRadius: 5,
@@ -33,7 +33,8 @@ class Dudes extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  loading: selectIsListRecordLoading(state)
+  loading: selectIsListRecordLoading(state),
+  selectedListId: selectSelectedListId(state)
 })
 
 export default connect(mapStateToProps)(Dudes)

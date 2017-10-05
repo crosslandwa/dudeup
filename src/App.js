@@ -16,8 +16,8 @@ class App extends Component {
           <h2 style={{marginBottom: 0}}>Dude Up</h2>
           <ListsSection />
         </div>
+        <Dudes />
         <SelectedListContainer>
-          <Dudes />
           <SelectedDudeContainer>
             <Items />
             <SettleUpSummary />
