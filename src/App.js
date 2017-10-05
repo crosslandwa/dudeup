@@ -17,9 +17,9 @@ class App extends Component {
           <ListsSection />
         </div>
         <Dudes />
+        <Items />
         <SelectedListContainer>
           <SelectedDudeContainer>
-            <Items />
             <SettleUpSummary />
             <Removals />
           </SelectedDudeContainer>
