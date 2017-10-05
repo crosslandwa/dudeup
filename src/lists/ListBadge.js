@@ -36,9 +36,8 @@ class ListBadge extends Component {
   }
 }
 
-const mapStateToProps = (state, { id, selectedListId }) => ({
-  name: selectListName(state, id),
-  selected: selectedListId === id
+const mapStateToProps = (state, { id }) => ({
+  name: selectListName(state, id)
 })
 
 const mapDispatchToProps = (dispatch, { id }) => ({

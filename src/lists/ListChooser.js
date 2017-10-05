@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { selectAllListIds } from './selectors'
+import { selectAllListIds, selectSelectedListId } from './selectors'
 import { addList } from './actions'
 import { paper } from '../colours'
 import ListBadge from './ListBadge'
-import SelectedListContainer from './SelectedListContainer'
 import ClickableButton from '../dumbui/ClickableButton'
 
 const styles = {
@@ -41,9 +40,7 @@ class ListChooser extends Component {
           <div style={nameListStyle}>
             {this.props.ids.map(id => (
               <div style={{margin: '1%'}} key={id} >
-                <SelectedListContainer>
-                  <ListBadge id={id} />
-                </SelectedListContainer>
+                <ListBadge id={id} selected={this.props.selectedListId === id}/>
               </div>
             ))}
           </div>
@@ -55,6 +52,7 @@ class ListChooser extends Component {
 
 const mapStateToProps = (state) => ({
   ids: selectAllListIds(state),
+  selectedListId: selectSelectedListId(state)
 })
 
 const mapDispatchToProps = { addList }
