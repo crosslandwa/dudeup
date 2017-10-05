@@ -66,8 +66,6 @@ const mapStateToProps = (state, { selectedListId }) => ({
   listName: selectListName(state, selectedListId)
 })
 
-const mapDispatchToProps = (dispatch, { selectedListId }) => ({
-  addDude: () => dispatch(addDude(selectedListId))
-})
+const mapDispatchToProps = ({ addDude })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NamesStrip)
