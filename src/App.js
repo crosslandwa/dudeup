@@ -18,9 +18,9 @@ class App extends Component {
         </div>
         <Dudes />
         <Items />
+        <SettleUpSummary />
         <SelectedListContainer>
           <SelectedDudeContainer>
-            <SettleUpSummary />
             <Removals />
           </SelectedDudeContainer>
         </SelectedListContainer>
