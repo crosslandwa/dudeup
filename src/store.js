@@ -1,7 +1,12 @@
-import { createStore, applyMiddleware, compose } from 'redux'
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import persistState from 'redux-localstorage'
+import { reducer as dudes } from './DudeList/interactions'
 
-const reducer = (state = {}, action) => state
+const reducer = combineReducers({
+  persisted: combineReducers({
+    dudes
+  })
+})
 const naturalEnhancer = (createStore) => (...args) => createStore(...args)
 
 const localStorageAvailable = !!(window && window.localStorage)
