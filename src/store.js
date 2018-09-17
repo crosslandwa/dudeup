@@ -18,7 +18,7 @@ function createAppStore () {
     reducer,
     composeEnhancers(
       applyMiddleware(...middlewares),
-      localStorageAvailable ? persistState() : naturalEnhancer
+      localStorageAvailable ? persistState('persisted', { key: 'dude-up' }) : naturalEnhancer
     )
   )
 }

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
 // ------ACTIONS------
-export const addDude = name => ({ type: 'DUDELIST_ADD_DUDE', id: name.toLowerCase().replace('/s+/g', '_'), name })
+export const addDude = (name = 'The other guy') => ({ type: 'DUDELIST_ADD_DUDE', id: name.toLowerCase().replace(/\s+/g, '_'), name })
 
 // ------SELECTORS------
 export const dudeIdsSelector = state => state.persisted.dudes.allIds
