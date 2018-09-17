@@ -8,20 +8,31 @@ A webapp to record and settle up up shared expenses (i.e. a kitty)
 
 I went on a holiday with friends. We had a shared kitty and a run in with a scorpion. When I got home I thought it would be fun to write some code to calculate who owed what to whom.
 
-Writing that logic (https://github.com/crosslandwa/dudeup) was fairly easy, and I realised it would be fun/an opportunity to learn/practice another (React) webapp
+[Writing that logic](https://github.com/crosslandwa/dudeup) was fairly easy, and I realised it would be fun/an opportunity to learn/practice another (React) webapp
 
-## Run
+### Build
 
-Run locally (via webpack devserver)
+```bash
+npm run build
+# or
+npm run build -- --watch #automatically re-build whenever changes are made
 ```
-npm install
-npm start
+
+### Run
+
+Open `dist/index.html` in your browser
+
+### Tests
+
+```bash
+npm test
+```
+Tests are run with [Jest](https://facebook.github.io/jest/)
+
+### Linting
+
+```bash
+npm run lint
 ```
 
-## Technologies
-
-- [React](https://reactjs.org/)
-- [Redux](http://redux.js.org/docs/introduction/)
-- [Redux saga](https://github.com/redux-saga/redux-saga)
-  - I read [this article](https://blog.matters.tech/10-redux-tips-from-the-trenches-55e06ed1c0a8) and agreed with the statements about [redux-thunk](https://github.com/gaearon/redux-thunk) (which I'd used previously)
-- This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+Linting is done with [ESLint](https://eslint.org/) and is configured to conform code to https://standardjs.com/

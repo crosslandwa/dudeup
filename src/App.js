@@ -1,39 +1,15 @@
-import React, { Component } from 'react'
-import './App.css'
-import Dudes from './dudes/Dudes'
-import Items from './items/Items'
-import SettleUpSummary from './settleup/SettleUpSummary'
-import ListsSection from './lists/ListsSection'
-import Removals from './Removals'
+import React from 'react'
+import { connect } from 'react-redux'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App" >
-        <div className="App-header">
-          <h2 style={{marginBottom: 0}}>Dude Up</h2>
-          <ListsSection />
-        </div>
-        <Dudes />
-        <Items />
-        <SettleUpSummary />
-        <Removals />
-        <div className="App-group" style={{ textAlign: 'left' }}>
-          <p>
-            Square up shared expenses between a bunch of dudes. Split the cost of last night's several rounds of drinks, the wild holiday kitty, communal bills in a shared home, etc. Simply:
-          </p>
-          <ul>
-            <li>Create a new list</li>
-            <li>Add one or more dudes to the list</li>
-            <li>Add the items each dude paid for</li>
-          </ul>
-          <p>
-            Dude Up will work some magic and tell each dude what they owe the others, and/or what the others owe them, ensuring everyone has paid the same overall. Marvellous!
-          </p>
-        </div>
-      </div>
-    )
-  }
-}
+const mapStateToProps = state => ({})
+const mapDispatchToProps = {}
 
-export default App
+const App = props => (
+  <div style={{
+    fontFamily: 'sans-serif'
+  }}>
+    <span>Your Rollup-React-Redux app goes here!</span>
+  </div>
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
