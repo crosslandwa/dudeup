@@ -3,16 +3,21 @@ import { combineReducers } from 'redux'
 // ------ACTIONS------
 export const addItem = () => ({ type: 'ITEMLIST_ADD_ITEM' })
 export const updateItemDescription = (id, description) => ({ type: 'ITEMLIST_UPDATE_ITEM_DESCRIPTION', id, description })
+export const updateItemPrice = (id, price) => ({ type: 'ITEMLIST_UPDATE_ITEM_PRICE', id, price })
 
 // ------SELECTORS------
 export const itemIdsSelector = state => state.persisted.items.allIds
-export const itemDescriptionSelector = (state, id) => state.persisted.items.byId[id].description
+const itemSelector = (state, id) => state.persisted.items.byId[id]
+export const itemDescriptionSelector = (state, id) => itemSelector(state, id).description
+export const itemPriceSelector = (state, id) => itemSelector(state, id).price
 
 // ------REDUCERS------
-const item = (state = { description: '' }, action) => {
+const item = (state = { description: '', price: 0 }, action) => {
   switch (action.type) {
     case 'ITEMLIST_UPDATE_ITEM_DESCRIPTION':
       return { ...state, description: action.description }
+    case 'ITEMLIST_UPDATE_ITEM_PRICE':
+      return { ...state, price: action.price }
   }
   return state
 }
