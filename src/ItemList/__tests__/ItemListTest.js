@@ -2,6 +2,7 @@ import createStore from '../../store'
 import {
   addItem, itemIdsSelector,
   updateItemDescription, itemDescriptionSelector,
+  updateItemDude, itemDudeSelector,
   updateItemPrice, itemPriceSelector
 } from '../interactions'
 
@@ -42,5 +43,17 @@ describe('Item List', () => {
     store.dispatch(updateItemPrice(itemId, 99.99))
 
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(99.99)
+  })
+
+  it('can have the dude that bought an item updated', () => {
+    const store = createStore()
+    const itemId = addItemAndReturnId(store)
+    const dudeId = 'the_lonely_guy'
+
+    expect(itemDudeSelector(store.getState(), itemId)).toEqual(undefined)
+
+    store.dispatch(updateItemDude(itemId, dudeId))
+
+    expect(itemDudeSelector(store.getState(), itemId)).toEqual(dudeId)
   })
 })
