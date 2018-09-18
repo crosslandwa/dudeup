@@ -45,6 +45,17 @@ describe('Item List', () => {
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(99.99)
   })
 
+  it('restricts item price to 2dp rounded down', () => {
+    const store = createStore()
+    const itemId = addItemAndReturnId(store)
+
+    expect(itemPriceSelector(store.getState(), itemId)).toEqual(0)
+
+    store.dispatch(updateItemPrice(itemId, 1.057))
+
+    expect(itemPriceSelector(store.getState(), itemId)).toEqual(1.05)
+  })
+
   it('can have the dude that bought an item updated', () => {
     const store = createStore()
     const itemId = addItemAndReturnId(store)
