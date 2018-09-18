@@ -9,13 +9,18 @@ const mapStateToProps = state => ({
 const Dude = connect((state, { id }) => ({
   name: dudeNameSelector(state, id)
 }))(props => (
-  <option value={props.id}>{props.name}</option>
+  <option
+    value={props.id}
+    selected={props.selected}
+  >
+    {props.name}
+  </option>
 ))
 
 const DudeList = props => (
-  <select>
+  <select onChange={props.onChange}>
     <option />
-    {props.ids.map(id => <Dude id={id} />)}
+    {props.ids.map(id => <Dude id={id} selected={id === props.selectedId}/>)}
   </select>
 )
 

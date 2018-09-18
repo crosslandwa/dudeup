@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import DudeList from './DudeList'
+import ItemList from './ItemList'
 import DudeManagement from './DudeManagement'
 import AddDudeModal from './AddDudeModal'
 
@@ -13,7 +13,7 @@ const App = props => (
   }}>
     <AddDudeModal />
     <DudeManagement />
-    <DudeList />
+    <ItemList />
   </div>
 )
 

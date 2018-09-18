@@ -17,9 +17,9 @@ const item = (state = { description: '', price: 0 }, action) => {
     case 'ITEMLIST_UPDATE_ITEM_DESCRIPTION':
       return { ...state, description: action.description }
     case 'ITEMLIST_UPDATE_ITEM_PRICE':
-      return { ...state, price: action.price }
+      return { ...state, price: parseInt(action.price * 100) / 100 }
     case 'ITEMLIST_UPDATE_ITEM_DUDE':
-      return { ...state, dudeId: action.dudeId }
+      return { ...state, dudeId: action.dudeId || undefined }
   }
   return state
 }
@@ -34,7 +34,7 @@ export const reducer = (state = { allIds: [], byId: {} }, action) => {
         byId: { ...state.byId, [id]: item(state.byId[id], action) }
       }
   }
-  return action.id
+  return (action.type.startsWith('ITEMLIST_') && action.id)
     ? { ...state, byId: { ...state.byId, [action.id]: item(state.byId[action.id], action) } }
     : state
 }
