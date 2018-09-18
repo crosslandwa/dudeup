@@ -4,6 +4,7 @@ export const openModal = id => ({ type: 'MODAL_OPEN', id })
 
 // ------SELECTORS------
 export const modalIdSelector = state => state.modal.id
+export const isModalOpenSelector = (state, id) => modalIdSelector(state) === id
 
 // ------REDUCERS------
 export const reducer = (state = { id: undefined }, action) => {
