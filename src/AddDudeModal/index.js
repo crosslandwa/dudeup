@@ -37,12 +37,19 @@ class AddDudeModal extends React.Component {
     return this.props.isOpen
       ? (
         <Modal>
-          <label>
-            Name:
-            <input type="textbox" onChange={this.handleTextInput}/>
-          </label>
-          <input type="button" value="Cancel" onClick={this.props.closeModal} />
-          <AddDudeButton name={this.state.name} />
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            <label>
+              Name:
+              <input type="textbox" onChange={this.handleTextInput}/>
+            </label>
+            <div>
+              <input type="button" value="Cancel" onClick={this.props.closeModal} />
+              <AddDudeButton name={this.state.name} />
+            </div>
+          </div>
         </Modal>
       ) : (
         <input type="button" value="Add Dude" onClick={this.props.openModal} />
