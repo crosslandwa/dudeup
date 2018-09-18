@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import DudeList from './DudeList'
+import DudeManagement from './DudeManagement'
 import AddDudeModal from './AddDudeModal'
 
 const mapStateToProps = state => ({})
@@ -11,6 +12,7 @@ const App = props => (
     fontFamily: 'sans-serif'
   }}>
     <AddDudeModal />
+    <DudeManagement />
     <DudeList />
   </div>
 )

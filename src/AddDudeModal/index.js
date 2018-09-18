@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { closeModal } from '../Modal/interactions'
-import { isAddDudeModalOpenSelector, openModal } from './interactions'
+import { isAddDudeModalOpenSelector } from './interactions'
 import Modal from '../Modal'
 import { addDude } from '../DudeList/interactions'
 
@@ -20,7 +20,7 @@ const AddDudeButton = connect(
 const mapStateToProps = state => ({
   isOpen: isAddDudeModalOpenSelector(state)
 })
-const mapDispatchToProps = { closeModal, openModal }
+const mapDispatchToProps = { closeModal }
 
 class AddDudeModal extends React.Component {
   constructor (props) {
@@ -34,26 +34,23 @@ class AddDudeModal extends React.Component {
   }
 
   render () {
-    return this.props.isOpen
-      ? (
-        <Modal>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column'
-          }}>
-            <label>
-              Name:
-              <input type="textbox" onChange={this.handleTextInput}/>
-            </label>
-            <div>
-              <input type="button" value="Cancel" onClick={this.props.closeModal} />
-              <AddDudeButton name={this.state.name} />
-            </div>
+    return this.props.isOpen && (
+      <Modal>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
+          <label>
+            Name:
+            <input type="textbox" onChange={this.handleTextInput}/>
+          </label>
+          <div>
+            <input type="button" value="Cancel" onClick={this.props.closeModal} />
+            <AddDudeButton name={this.state.name} />
           </div>
-        </Modal>
-      ) : (
-        <input type="button" value="Add Dude" onClick={this.props.openModal} />
-      )
+        </div>
+      </Modal>
+    )
   }
 }
 
