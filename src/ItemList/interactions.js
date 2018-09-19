@@ -10,6 +10,8 @@ const itemSelector = (state, id) => state.persisted.items.byId[id]
 export const itemDescriptionSelector = (state, id) => itemSelector(state, id).description
 export const itemPriceSelector = (state, id) => itemSelector(state, id).price
 export const itemDudeSelector = (state, id) => itemSelector(state, id).dudeId
+export const itemIdsForDudeSelector = (state, dudeId) => itemIdsSelector(state)
+  .filter(itemId => itemDudeSelector(state, itemId) === dudeId)
 
 // ------REDUCERS------
 const item = (state = { description: '', price: 0 }, action) => {
