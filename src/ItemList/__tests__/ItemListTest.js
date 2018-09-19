@@ -1,6 +1,6 @@
 import createStore from '../../store'
 import {
-  addItem, itemIdsSelector,
+  addItem, removeItem, itemIdsSelector,
   updateItemDescription, itemDescriptionSelector,
   updateItemDude, itemDudeSelector,
   updateItemPrice, itemPriceSelector
@@ -12,7 +12,7 @@ const addItemAndReturnId = store => {
 }
 
 describe('Item List', () => {
-  it('can have Items added', () => {
+  it('can have items added', () => {
     const store = createStore()
 
     expect(itemIdsSelector(store.getState())).toHaveLength(0)
@@ -23,6 +23,17 @@ describe('Item List', () => {
     const itemIds = itemIdsSelector(store.getState())
 
     expect(itemIds).toHaveLength(2)
+  })
+
+  it('can have items removed', () => {
+    const store = createStore()
+
+    expect(itemIdsSelector(store.getState())).toHaveLength(0)
+
+    const itemId = addItemAndReturnId(store)
+    store.dispatch(removeItem(itemId))
+
+    expect(itemIdsSelector(store.getState())).toHaveLength(0)
   })
 
   it('can have the description of an item updated', () => {
