@@ -41,7 +41,7 @@ class AddDudeModal extends React.Component {
         }}>
           <label>
             Name:
-            <input type="textbox" onChange={this.handleTextInput}/>
+            <input autoFocus type="textbox" onChange={this.handleTextInput}/>
           </label>
           <div>
             <input type="button" value="Cancel" onClick={this.props.closeModal} />
