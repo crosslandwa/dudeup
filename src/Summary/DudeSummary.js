@@ -1,15 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { debtsForDudeSelector } from './interactions'
 import { dudeNameSelector } from '../DudeList/interactions'
-import DudeList from '../DudeList'
 
 const mapStateToProps = (state, { id }) => ({
-  name: dudeNameSelector(state, id)
+  name: dudeNameSelector(state, id),
+  debts: debtsForDudeSelector(state, id).map(({ dudeId, amount }) => ({
+    name: dudeNameSelector(state, dudeId), amount
+  }))
 })
 
 const DudeSummary = props => (
-  <div>
-    {props.name} owes...
+  <div style={{
+    display: 'flex',
+    flexDirection: 'column'
+  }}>
+    <div>{props.name} owes...</div>
+    {props.debts.map(({ name, amount }) => (
+      <div>{amount} to {name}</div>
+    ))}
   </div>
 )
 

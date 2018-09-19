@@ -1,7 +1,7 @@
 import createStore from '../../store'
 import { addDude } from '../../DudeList/interactions'
 import { addItem, updateItemDude, updateItemPrice, itemIdsSelector } from '../../ItemList/interactions'
-import { dudesInDebitIdSelector } from '../interactions'
+import { debtsForDudeSelector, dudesInDebtIdSelector } from '../interactions'
 
 const addItemAndReturnId = store => {
   store.dispatch(addItem())
@@ -17,7 +17,7 @@ describe('Summary', () => {
     store.dispatch(addDude(dude1))
     store.dispatch(addDude(dude2))
 
-    expect(dudesInDebitIdSelector(store.getState())).toHaveLength(0)
+    expect(dudesInDebtIdSelector(store.getState())).toHaveLength(0)
   })
 
   it('lists amounts owed when shared items have been bought', () => {
@@ -34,6 +34,8 @@ describe('Summary', () => {
     store.dispatch(updateItemDude(itemId, dude1))
     store.dispatch(updateItemPrice(itemId, 9))
 
-    expect(dudesInDebitIdSelector(store.getState())).toHaveLength(2)
+    expect(dudesInDebtIdSelector(store.getState())).toHaveLength(2)
+
+    expect(debtsForDudeSelector(store.getState(), dude2)).toEqual([{ dudeId: 'dude1', amount: 3 }])
   })
 })
