@@ -27,7 +27,7 @@ const item = (state = { description: '', price: 0 }, action) => {
   return state
 }
 
-export const reducer = (state = { allIds: [], byId: {} }, action) => {
+export const reducer = (state = { allIds: [1], byId: { 1: item(undefined, {}) } }, action) => {
   switch (action.type) {
     case 'ITEMLIST_ADD_ITEM':
       const id = (state.allIds.length ? Math.max(...state.allIds) : 0) + 1
@@ -55,6 +55,13 @@ export function middleware (store) {
       case 'DUDELIST_REMOVE_DUDE':
         itemIdsForDudeSelector(store.getState(), action.id)
           .map(itemId => next(updateItemDude(itemId, undefined)))
+        break
+      case 'ITEMLIST_REMOVE_ITEM':
+        next(action)
+        if (!itemIdsSelector(store.getState()).length) {
+          next(addItem())
+        }
+        return
     }
     next(action)
   }
