@@ -4,11 +4,11 @@ import {
   isModalOpenSelector as isModalOpenGeneric
 } from '../Modal/interactions'
 
-export const ADD_DUDE_MODAL_ID = 'add-dude-modal'
+export const REMOVE_DUDE_MODAL_ID = 'remove-dude-modal'
 
 // ------ACTIONS------
-export const openModal = () => openModalGeneric(ADD_DUDE_MODAL_ID)
+export const openModal = () => openModalGeneric(REMOVE_DUDE_MODAL_ID)
 export const closeModal = closeModalGeneric
 
 // ------SELECTORS------
-export const isModalOpenSelector = state => isModalOpenGeneric(state, ADD_DUDE_MODAL_ID)
+export const isModalOpenSelector = state => isModalOpenGeneric(state, REMOVE_DUDE_MODAL_ID)

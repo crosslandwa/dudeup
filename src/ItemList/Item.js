@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch, { id }) => ({
 
 const Item = props => (
   <div>
-    <DudeList selectedId={props.dudeId} onChange={props.updateDude} />
+    <DudeList includeEmptyOption={true} selectedId={props.dudeId} onChange={props.updateDude} />
     <input placeholder="item description" value={props.description} onChange={props.updateDescription} />
     <input type="number" step="0.01" onChange={props.updatePrice} value={props.price} />
     <input type="button" value="remove" onClick={props.remove} />

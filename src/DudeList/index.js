@@ -19,7 +19,7 @@ const Dude = connect((state, { id }) => ({
 
 const DudeList = props => (
   <select onChange={props.onChange}>
-    <option />
+    {props.includeEmptyOption && <option />}
     {props.ids.map(id => <Dude id={id} selected={id === props.selectedId}/>)}
   </select>
 )

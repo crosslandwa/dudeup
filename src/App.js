@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import ItemList from './ItemList'
 import DudeManagement from './DudeManagement'
 import AddDudeModal from './AddDudeModal'
+import RemoveDudeModal from './RemoveDudeModal'
 import Summary from './Summary'
 
 const mapStateToProps = state => ({})
@@ -13,6 +14,7 @@ const App = props => (
     fontFamily: 'sans-serif'
   }}>
     <AddDudeModal />
+    <RemoveDudeModal />
     <DudeManagement />
     <ItemList />
     <Summary />

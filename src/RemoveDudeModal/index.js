@@ -2,13 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { closeModal, isModalOpenSelector } from './interactions'
 import Modal from '../Modal'
-import { addDude } from '../DudeList/interactions'
+import { removeDude } from '../DudeList/interactions'
+import DudeList from '../DudeList'
 
-const AddDudeButton = connect(
+const RemoveDudeButton = connect(
   null,
   (dispatch, { name }) => ({
     addDude: event => {
-      dispatch(addDude(name || undefined))
+      dispatch(removeDude(name))
       dispatch(closeModal())
     }
   })
@@ -21,7 +22,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = { closeModal }
 
-class AddDudeModal extends React.Component {
+class RemoveDudeModal extends React.Component {
   constructor (props) {
     super(props)
 
@@ -40,12 +41,12 @@ class AddDudeModal extends React.Component {
           flexDirection: 'column'
         }}>
           <label>
-            Name:
-            <input type="textbox" onChange={this.handleTextInput}/>
+            Remove:
+            <DudeList />
           </label>
           <div>
             <input type="button" value="Cancel" onClick={this.props.closeModal} />
-            <AddDudeButton name={this.state.name} />
+            <RemoveDudeButton name={this.state.name} />
           </div>
         </div>
       </Modal>
@@ -53,4 +54,4 @@ class AddDudeModal extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddDudeModal)
+export default connect(mapStateToProps, mapDispatchToProps)(RemoveDudeModal)
