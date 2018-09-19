@@ -13,6 +13,7 @@ const Summary = props => (
     flexDirection: 'column'
   }}>
     <div>
+      {!props.ids.length && <div>Everyone is all square!</div>}
       {props.ids.map(id => <DudeSummary id={id} />)}
     </div>
   </div>
