@@ -5,6 +5,7 @@ import {
   updateItemDude, itemDudeSelector,
   updateItemPrice, itemPriceSelector
 } from '../interactions'
+import { addDude, removeDude, dudeIdsSelector } from '../../DudeList/interactions'
 
 const addItemAndReturnId = store => {
   store.dispatch(addItem())
@@ -77,5 +78,19 @@ describe('Item List', () => {
     store.dispatch(updateItemDude(itemId, dudeId))
 
     expect(itemDudeSelector(store.getState(), itemId)).toEqual(dudeId)
+  })
+
+  it('dissociates a removed dude from any items', () => {
+    const store = createStore()
+    const itemId = addItemAndReturnId(store)
+
+    store.dispatch(addDude('A man'))
+
+    const dudeId = dudeIdsSelector(store.getState())[0]
+    store.dispatch(updateItemDude(itemId, dudeId))
+
+    store.dispatch(removeDude(dudeId))
+
+    expect(itemDudeSelector(store.getState(), itemId)).toEqual(undefined)
   })
 })

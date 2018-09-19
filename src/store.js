@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import persistState from 'redux-localstorage'
 import { reducer as dudes } from './DudeList/interactions'
-import { reducer as items } from './ItemList/interactions'
+import { reducer as items, middleware as itemsMiddleware } from './ItemList/interactions'
 import { reducer as modal } from './Modal/interactions'
 
 const reducer = combineReducers({
@@ -18,7 +18,7 @@ const localStorageAvailable = !!(isBrowser && window.localStorage)
 const composeEnhancers = (isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
 
 function createAppStore () {
-  const middlewares = []
+  const middlewares = [itemsMiddleware]
   return createStore(
     reducer,
     composeEnhancers(
