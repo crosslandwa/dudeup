@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import ItemList from './ItemList'
 import DudeManagement from './DudeManagement'
 import AddDudeModal from './AddDudeModal'
+import Summary from './Summary'
 
 const mapStateToProps = state => ({})
 const mapDispatchToProps = {}
@@ -14,6 +15,7 @@ const App = props => (
     <AddDudeModal />
     <DudeManagement />
     <ItemList />
+    <Summary />
   </div>
 )
 
