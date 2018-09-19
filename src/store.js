@@ -3,14 +3,15 @@ import persistState from 'redux-localstorage'
 import { reducer as dudes } from './DudeList/interactions'
 import { reducer as items, middleware as itemsMiddleware } from './ItemList/interactions'
 import { reducer as modal } from './Modal/interactions'
+import { resetingReducer } from './Clear/interactions'
 
-const reducer = combineReducers({
+const reducer = resetingReducer(combineReducers({
   persisted: combineReducers({
     dudes,
     items
   }),
   modal
-})
+}))
 
 const naturalEnhancer = (createStore) => (...args) => createStore(...args)
 const isBrowser = typeof window !== 'undefined'
