@@ -11,10 +11,11 @@ const reducer = combineReducers({
   }),
   modal
 })
-const naturalEnhancer = (createStore) => (...args) => createStore(...args)
 
-const localStorageAvailable = !!(window && window.localStorage) // TODO window is defined when tests run so state is persisted between store instantiations! (needs fixing in bootstrapper too)
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const naturalEnhancer = (createStore) => (...args) => createStore(...args)
+const isBrowser = typeof window !== 'undefined'
+const localStorageAvailable = !!(isBrowser && window.localStorage)
+const composeEnhancers = (isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
 
 function createAppStore () {
   const middlewares = []

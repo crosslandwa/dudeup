@@ -1,5 +1,6 @@
 // ------ACTIONS------
 export const addItem = () => ({ type: 'ITEMLIST_ADD_ITEM' })
+export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
 export const updateItemDescription = (id, description) => ({ type: 'ITEMLIST_UPDATE_ITEM_DESCRIPTION', id, description })
 export const updateItemPrice = (id, price) => ({ type: 'ITEMLIST_UPDATE_ITEM_PRICE', id, price })
 export const updateItemDude = (id, dudeId) => ({ type: 'ITEMLIST_UPDATE_ITEM_DUDE', id, dudeId })
@@ -31,12 +32,18 @@ export const reducer = (state = { allIds: [], byId: {} }, action) => {
     case 'ITEMLIST_ADD_ITEM':
       const id = (state.allIds.length ? Math.max(...state.allIds) : 0) + 1
       return {
-        ...state,
         allIds: state.allIds.concat(state.allIds.includes(id) ? [] : id),
         byId: { ...state.byId, [id]: item(state.byId[id], action) }
       }
+    case 'ITEMLIST_REMOVE_ITEM':
+      const updatedIds = [...state.allIds]
+      updatedIds.splice(state.allIds.indexOf(action.id), 1)
+      return {
+        allIds: updatedIds,
+        byId: { ...state.byId, [action.id]: undefined }
+      }
   }
-  return (action.type.startsWith('ITEMLIST_') && action.id)
+  return (action.type.startsWith('ITEMLIST_UPDATE_ITEM') && action.id)
     ? { ...state, byId: { ...state.byId, [action.id]: item(state.byId[action.id], action) } }
     : state
 }
