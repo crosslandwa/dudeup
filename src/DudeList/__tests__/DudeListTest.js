@@ -1,5 +1,5 @@
 import createStore from '../../store'
-import { addDude, dudeIdsSelector, dudeNameSelector } from '../interactions'
+import { addDude, removeDude, dudeIdsSelector, dudeNameSelector } from '../interactions'
 
 describe('Dude List', () => {
   it('can have Dudes added', () => {
@@ -16,5 +16,17 @@ describe('Dude List', () => {
 
     const lastAddedId = dudeIds.slice(-1)
     expect(dudeNameSelector(store.getState(), lastAddedId)).toEqual('person 2')
+  })
+
+  it('can have Dudes removed', () => {
+    const store = createStore()
+
+    store.dispatch(addDude('person 1'))
+
+    const dudeId = dudeIdsSelector(store.getState()).slice(-1)
+
+    store.dispatch(removeDude(dudeId))
+
+    expect(dudeIdsSelector(store.getState())).toHaveLength(0)
   })
 })
