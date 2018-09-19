@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Clear from './Clear'
 import ItemList from './ItemList'
 import DudeManagement from './DudeManagement'
 import AddDudeModal from './AddDudeModal'
@@ -13,6 +14,7 @@ const App = props => (
   <div style={{
     fontFamily: 'sans-serif'
   }}>
+    <Clear />
     <AddDudeModal />
     <RemoveDudeModal />
     <DudeManagement />
