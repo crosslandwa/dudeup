@@ -1,11 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { dudesInDebtIdSelector } from './interactions'
+import { dudesInDebtSummarySelector } from './interactions'
 import DudeSummary from './DudeSummary'
 
-const mapStateToProps = state => ({
-  ids: dudesInDebtIdSelector(state)
-})
+const mapStateToProps = state => {
+  const summary = dudesInDebtSummarySelector(state)
+  return {
+    averageAmountPerDude: summary.averageAmountPerDude.toFixed(2),
+    ids: summary.dudeIds,
+    debts: summary.debts,
+    groupTotal: summary.groupTotal.toFixed(2)
+  }
+}
 
 const Summary = props => (
   <div style={{
@@ -13,8 +19,9 @@ const Summary = props => (
     flexDirection: 'column'
   }}>
     <div>
+      <div>Group total: {props.groupTotal} ({props.averageAmountPerDude} per Dude)</div>
       {!props.ids.length && <div>Everyone is all square!</div>}
-      {props.ids.map(id => <DudeSummary id={id} />)}
+      {props.ids.map(id => <DudeSummary id={id} debts={props.debts[id]} />)}
     </div>
   </div>
 )

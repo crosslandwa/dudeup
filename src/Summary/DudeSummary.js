@@ -1,11 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { debtsForDudeSelector } from './interactions'
 import { dudeNameSelector } from '../DudeList/interactions'
 
-const mapStateToProps = (state, { id }) => ({
+const mapStateToProps = (state, { id, debts }) => ({
   name: dudeNameSelector(state, id),
-  debts: debtsForDudeSelector(state, id).map(({ dudeId, amount }) => ({
+  debts: debts.map(({ dudeId, amount }) => ({
     name: dudeNameSelector(state, dudeId), amount
   }))
 })
