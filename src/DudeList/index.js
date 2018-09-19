@@ -18,7 +18,7 @@ const Dude = connect((state, { id }) => ({
 ))
 
 const DudeList = props => (
-  <select onChange={props.onChange}>
+  <select autoFocus onChange={props.onChange}>
     {props.includeEmptyOption && <option>Select a dude...</option>}
     {props.ids.map(id => <Dude id={id} selected={id === props.selectedId}/>)}
   </select>
