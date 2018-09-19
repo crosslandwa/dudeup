@@ -47,3 +47,15 @@ export const reducer = (state = { allIds: [], byId: {} }, action) => {
     ? { ...state, byId: { ...state.byId, [action.id]: item(state.byId[action.id], action) } }
     : state
 }
+
+// ------MIDDLEWARE------
+export function middleware (store) {
+  return (next) => (action) => {
+    switch (action.type) {
+      case 'DUDELIST_REMOVE_DUDE':
+        itemIdsForDudeSelector(store.getState(), action.id)
+          .map(itemId => next(updateItemDude(itemId, undefined)))
+    }
+    next(action)
+  }
+}
