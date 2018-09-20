@@ -14,12 +14,12 @@ const App = props => (
   <div style={{
     fontFamily: 'sans-serif'
   }}>
-    <Clear />
     <AddDudeModal />
     <RemoveDudeModal />
     <DudeManagement />
     <ItemList />
     <Summary />
+    <Clear />
   </div>
 )
 

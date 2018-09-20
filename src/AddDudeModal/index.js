@@ -1,25 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { closeModal, isModalOpenSelector } from './interactions'
+import { modalAddDude, isModalOpenSelector } from './interactions'
 import Modal from '../Modal'
-import { addDude } from '../DudeList/interactions'
-
-const AddDudeButton = connect(
-  null,
-  (dispatch, { name }) => ({
-    addDude: event => {
-      dispatch(addDude(name || undefined))
-      dispatch(closeModal())
-    }
-  })
-)(props => (
-  <input type="button" value="OK" onClick={props.addDude} />
-))
 
 const mapStateToProps = state => ({
   isOpen: isModalOpenSelector(state)
 })
-const mapDispatchToProps = { closeModal }
+const mapDispatchToProps = { modalAddDude }
 
 class AddDudeModal extends React.Component {
   constructor (props) {
@@ -34,7 +21,7 @@ class AddDudeModal extends React.Component {
 
   render () {
     return this.props.isOpen && (
-      <Modal>
+      <Modal onSubmit={() => this.props.modalAddDude(this.state.name)} >
         <div style={{
           display: 'flex',
           flexDirection: 'column'
@@ -43,10 +30,6 @@ class AddDudeModal extends React.Component {
             Name:
             <input autoFocus type="textbox" onChange={this.handleTextInput}/>
           </label>
-          <div>
-            <input type="button" value="Cancel" onClick={this.props.closeModal} />
-            <AddDudeButton name={this.state.name} />
-          </div>
         </div>
       </Modal>
     )

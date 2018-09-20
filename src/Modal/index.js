@@ -1,4 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { closeModal } from './interactions'
+
+const mapDispatchToProps = (dispatch, { onSubmit }) => ({
+  closeModal: () => dispatch(closeModal()),
+  onSubmit: e => {
+    event.preventDefault()
+    onSubmit()
+  }
+})
 
 const Modal = props => (
   <div style={{
@@ -15,9 +25,15 @@ const Modal = props => (
       height: '50vw',
       backgroundColor: 'white'
     }}>
-      {props.children}
+      <form onSubmit={props.onSubmit} >
+        {props.children}
+        <div>
+          <input type="button" value="Cancel" onClick={props.closeModal} />
+          <input type="submit" value="OK"/>
+        </div>
+      </form>
     </div>
   </div>
 )
 
-export default Modal
+export default connect(null, mapDispatchToProps)(Modal)
