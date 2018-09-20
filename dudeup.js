@@ -12,9 +12,9 @@ function DudeUp (groupMemberPayments) {
   const totalPaidPerGroupMember = mapEachGroupMember(name => sum(groupMemberPayments[name]))
   const groupTotal = sum(entries(totalPaidPerGroupMember).map(([name, total]) => total))
   const averageAmountPerGroupMember = rounded(groupTotal / Math.max(1, groupMembers.length))
-  const amountOwedByGroupMember = owedByEachMember(mapEachGroupMember, totalPaidPerGroupMember, averageAmountPerGroupMember)
+  const { amountOwedByGroupMember, writtenOffAmounts } = owedByEachMember(mapEachGroupMember, totalPaidPerGroupMember, averageAmountPerGroupMember)
 
-  return { averageAmountPerGroupMember, groupTotal, amountOwedByGroupMember, totalPaidPerGroupMember }
+  return { averageAmountPerGroupMember, groupTotal, amountOwedByGroupMember, totalPaidPerGroupMember, writtenOffAmounts }
 }
 
 function owedByEachMember (mapEachGroupMember, totalPaidPerGroupMember, averageAmountPerGroupMember) {
@@ -22,6 +22,7 @@ function owedByEachMember (mapEachGroupMember, totalPaidPerGroupMember, averageA
   const stillOwed = () => entries(balances).filter(([name, balance]) => balance > 0)
   const stillOwing = () => entries(balances).filter(([name, balance]) => balance < 0)
   const result = mapEachGroupMember(name => ({}))
+  const writtenOffAmounts = mapEachGroupMember(name => [])
   while (stillOwed().length) {
     const [owedToName, owedToBalance] = stillOwed()[0]
     if (stillOwing().length) {
@@ -31,11 +32,11 @@ function owedByEachMember (mapEachGroupMember, totalPaidPerGroupMember, averageA
       balances[owedToName] = rounded(owedToBalance - amount)
       balances[owedByName] = rounded(owedByBalance + amount)
     } else {
-      console.log(`Dudeup - writing off ${owedToBalance} owed to ${owedToName}`)
+      writtenOffAmounts[owedToName] = [ ...writtenOffAmounts[owedToName], owedToBalance ]
       balances[owedToName] = rounded(0)
     }
   }
-  return result
+  return { amountOwedByGroupMember: result, writtenOffAmounts }
 }
 
 module.exports = DudeUp

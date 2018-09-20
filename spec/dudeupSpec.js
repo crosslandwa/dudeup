@@ -50,4 +50,11 @@ describe('Settle Up', () => {
       { a: {}, b: {}, c: { a: 1.5 }, d: { a: 1, b: 0.5 } }
     )
   })
+
+  it('will write off the odd amount when rounding occurs', () => {
+    compareAsJson(
+      DudeUp({ a: [12.02], b: [12.02], c: [] }).writtenOffAmounts,
+      { a: [], b: [0.01], c: [] }
+    )
+  })
 })

@@ -41,6 +41,12 @@ Which will output (JSONified)
     "personB": 335.46,
     "personC": 86,
     "personD": 257.83
+  },
+  "writtenOffAmounts": {
+    "personA": [],
+    "personB": [],
+    "personC": [],
+    "personD": []
   }
 }
 ```
