@@ -6,9 +6,11 @@ const mapStateToProps = state => ({
   ids: dudeIdsSelector(state)
 })
 
-const Dude = connect((state, { id }) => ({
+const mapDudeIdToName = (state, { id }) => ({
   name: dudeNameSelector(state, id)
-}))(props => (
+})
+
+const Dude = connect(mapDudeIdToName)(props => (
   <option
     value={props.id}
     selected={props.selected}
@@ -24,4 +26,22 @@ const DudeList = props => (
   </select>
 )
 
-export default connect(mapStateToProps)(DudeList)
+const RadioOption = connect(mapDudeIdToName)(props => (
+  <label>
+    {props.name}
+    <input
+      type="radio"
+      value={props.id}
+      checked={props.selected}
+    />
+  </label>
+))
+
+const DudeRadioList = props => { console.log(props); return (
+  <ul>
+    {props.ids.map(id => <li><RadioOption id={id} selected={props.selectedIds.includes(id)} /></li>)}
+  </ul>
+)}
+
+export const Select = connect(mapStateToProps)(DudeList)
+export const RadioList = connect(mapStateToProps)(DudeRadioList)
