@@ -5,6 +5,7 @@ import ItemList from './ItemList'
 import DudeManagement from './DudeManagement'
 import AddDudeModal from './AddDudeModal'
 import RemoveDudeModal from './RemoveDudeModal'
+import SplitCostModal from './SplitCostModal'
 import Summary from './Summary'
 import AnErrorOccurred from './AnErrorOccurred'
 
@@ -18,6 +19,7 @@ const App = props => (
     <AnErrorOccurred>
       <AddDudeModal />
       <RemoveDudeModal />
+      <SplitCostModal />
       <DudeManagement />
       <ItemList />
       <Summary />
