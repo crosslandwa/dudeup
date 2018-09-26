@@ -6,6 +6,7 @@ import DudeManagement from './DudeManagement'
 import AddDudeModal from './AddDudeModal'
 import RemoveDudeModal from './RemoveDudeModal'
 import Summary from './Summary'
+import AnErrorOccurred from './AnErrorOccurred'
 
 const mapStateToProps = state => ({})
 const mapDispatchToProps = {}
@@ -14,12 +15,14 @@ const App = props => (
   <div style={{
     fontFamily: 'sans-serif'
   }}>
-    <AddDudeModal />
-    <RemoveDudeModal />
-    <DudeManagement />
-    <ItemList />
-    <Summary />
-    <Clear />
+    <AnErrorOccurred>
+      <AddDudeModal />
+      <RemoveDudeModal />
+      <DudeManagement />
+      <ItemList />
+      <Summary />
+      <Clear />
+    </AnErrorOccurred>
   </div>
 )
 
