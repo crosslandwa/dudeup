@@ -26,22 +26,22 @@ const DudeList = props => (
   </select>
 )
 
-const RadioOption = connect(mapDudeIdToName)(props => (
+const CheckBoxOption = connect(mapDudeIdToName)(props => (
   <label>
     {props.name}
     <input
-      type="radio"
+      type="checkbox"
       value={props.id}
       checked={props.selected}
     />
   </label>
 ))
 
-const DudeRadioList = props => { console.log(props); return (
-  <ul>
-    {props.ids.map(id => <li><RadioOption id={id} selected={props.selectedIds.includes(id)} /></li>)}
-  </ul>
-)}
+const DudeCheckBoxList = props => (
+  <div>
+    {props.ids.map(id => <CheckBoxOption id={id} selected={props.selectedIds.includes(id)} />)}
+  </div>
+)
 
 export const Select = connect(mapStateToProps)(DudeList)
-export const RadioList = connect(mapStateToProps)(DudeRadioList)
+export const CheckBoxList = connect(mapStateToProps)(DudeCheckBoxList)
