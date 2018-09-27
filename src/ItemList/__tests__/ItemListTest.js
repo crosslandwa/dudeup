@@ -101,7 +101,6 @@ describe('Item List', () => {
     expect(itemDudeSelector(store.getState(), itemId)).toEqual(undefined)
   })
 
-
   it('splits item cost equally between involved dudes by default', () => {
     const store = createStore()
     const itemId = addItemAndReturnId(store)
@@ -131,7 +130,7 @@ describe('Item List', () => {
     const store = createStore()
     const itemId = addItemAndReturnId(store)
     const dudeId1 = addDudeAndReturnId(store, 'A man')
-    const dudeId2 = addDudeAndReturnId(store, 'Another man')
+    addDudeAndReturnId(store, 'Another man')
 
     store.dispatch(updateItemSharedByDudes(itemId, [dudeId1]))
 
@@ -145,7 +144,7 @@ describe('Item List', () => {
     const dudeId1 = addDudeAndReturnId(store, 'A man')
     store.dispatch(updateItemSharedByDudes(itemId, [dudeId1]))
 
-    const dudeId2 = addDudeAndReturnId(store, 'Another man')
+    addDudeAndReturnId(store, 'Another man')
 
     expect(itemSharedByDudeIdsSelector(store.getState(), itemId)).toEqual([dudeId1])
     expect(itemIsSharedByAllSelector(store.getState(), itemId)).toEqual(false)
