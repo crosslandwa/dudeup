@@ -7,6 +7,7 @@ export const updateItemDescription = (id, description) => ({ type: 'ITEMLIST_UPD
 export const updateItemPrice = (id, price) => ({ type: 'ITEMLIST_UPDATE_ITEM_PRICE', id, price })
 export const updateItemDude = (id, dudeId) => ({ type: 'ITEMLIST_UPDATE_ITEM_DUDE', id, dudeId })
 export const updateItemIsUnequalSplit = (id, isUnequalSplit) => ({ type: 'ITEMLIST_UPDATE_ITEM_UNEQUAL_SPLIT', id, isUnequalSplit })
+export const updateItemSharedByDudes = (id, dudeIds) => ({ type: 'ITEMLIST_UPDATE_ITEM_SHARED_BY_DUDES', id, dudeIds })
 
 // ------SELECTORS------
 export const itemIdsSelector = state => state.persisted.items.allIds
@@ -17,7 +18,7 @@ export const itemDudeSelector = (state, id) => itemSelector(state, id).dudeId
 export const itemIdsForDudeSelector = (state, dudeId) => itemIdsSelector(state)
   .filter(itemId => itemDudeSelector(state, itemId) === dudeId)
 export const itemIsUnequalSplitSelector = (state, id) => itemSelector(state, id).isUnequalSplit
-export const itemSplitBetweenDudeIdsSelector = (state, itemId) => dudeIdsSelector(state)
+export const itemSharedByDudeIdsSelector = (state, id) => itemSelector(state, id).sharedByDudes || dudeIdsSelector(state)
 
 // ------REDUCERS------
 const item = (state = { description: '', price: 0, isUnequalSplit: false }, action) => {
@@ -30,7 +31,8 @@ const item = (state = { description: '', price: 0, isUnequalSplit: false }, acti
       return { ...state, dudeId: action.dudeId || undefined }
     case 'ITEMLIST_UPDATE_ITEM_UNEQUAL_SPLIT':
       return { ...state, isUnequalSplit: !!action.isUnequalSplit }
-
+    case 'ITEMLIST_UPDATE_ITEM_SHARED_BY_DUDES':
+      return { ...state, sharedByDudes: action.dudeIds }
   }
   return state
 }
