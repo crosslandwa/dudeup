@@ -33,13 +33,14 @@ const CheckBoxOption = connect(mapDudeIdToName)(props => (
       type="checkbox"
       value={props.id}
       checked={props.selected}
+      onChange={props.onChange}
     />
   </label>
 ))
 
 const DudeCheckBoxList = props => (
   <div>
-    {props.ids.map(id => <CheckBoxOption id={id} selected={props.selectedIds.includes(id)} />)}
+    {props.ids.map(id => <CheckBoxOption id={id} selected={props.selectedIds.includes(id)} onChange={e => props.onChange(id, e.target.checked)}/>)}
   </div>
 )
 

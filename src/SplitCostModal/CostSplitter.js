@@ -6,15 +6,21 @@ import { closeModal } from './interactions'
 import {
   updateItemIsUnequalSplit, itemIsUnequalSplitSelector,
   itemDescriptionSelector,
-  itemSharedByDudeIdsSelector
+  itemDudeSelector,
+  updateItemSharedByDudes, itemSharedByDudeIdsSelector
 } from '../ItemList/interactions'
+import { dudeNameSelector } from '../DudeList/interactions'
+
+const apply = (f, x) => f(x)
 
 const mapStateToProps = (state, { itemId }) => ({
   isNonEqualSplit: itemIsUnequalSplitSelector(state, itemId),
   itemDescription: itemDescriptionSelector(state, itemId),
+  dudeName: apply(dudeId => dudeId && dudeNameSelector(state, dudeId), itemDudeSelector(state, itemId)),
   selectedIds: itemSharedByDudeIdsSelector(state, itemId)
 })
 const mapDispatchToProps = (dispatch, { itemId }) => ({
+  updateItemSharedByDudes: dudeIds => dispatch(updateItemSharedByDudes(itemId, dudeIds)),
   updateUnequalSplit: isUnequal => dispatch(updateItemIsUnequalSplit(itemId, isUnequal)),
   closeModal: () => dispatch(closeModal())
 })
@@ -25,6 +31,13 @@ class CostSplitter extends React.Component {
     this.state = {
       isNonEqualSplit: props.isNonEqualSplit,
       selectedIds: props.selectedIds
+    }
+    this.toggleDudesInvolvement = (dudeId, checked) => {
+      this.setState((state, props) => ({
+        selectedIds: checked
+          ? [...new Set(state.selectedIds.concat(dudeId))]
+          : state.selectedIds.filter(id => id !== dudeId)
+      }))
     }
     this.setEqualSplit = e => {
       if (e.target.checked) {
@@ -38,6 +51,7 @@ class CostSplitter extends React.Component {
     }
     this.submit = () => {
       this.props.updateUnequalSplit(this.state.isNonEqualSplit)
+      this.props.updateItemSharedByDudes(this.state.selectedIds)
       this.props.closeModal()
     }
   }
@@ -49,7 +63,9 @@ class CostSplitter extends React.Component {
           display: 'flex',
           flexDirection: 'column'
         }}>
-          <span>Sharing cost for "{this.props.itemDescription || <em>a mystery item</em>}"</span>
+          <span>
+            Sharing cost for "{this.props.itemDescription || <em>a mystery item</em>}" bought by {this.props.dudeName || <em>some dude</em>}
+          </span>
           <div>
             <label>
               Split equally between
@@ -60,7 +76,7 @@ class CostSplitter extends React.Component {
               <input type="radio" checked={this.state.isNonEqualSplit} onChange={this.setNonEqualSplit} />
             </label>
           </div>
-          <DudeList selectedIds={this.state.selectedIds}/>
+          <DudeList selectedIds={this.state.selectedIds} onChange={this.toggleDudesInvolvement}/>
         </div>
       </Modal>
     )
