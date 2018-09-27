@@ -1,11 +1,11 @@
 import createStore from '../../store'
 import {
   addItem, removeItem, itemIdsSelector,
-  itemSplitBetweenDudeIdsSelector,
   updateItemDescription, itemDescriptionSelector,
   updateItemDude, itemDudeSelector,
   updateItemIsUnequalSplit, itemIsUnequalSplitSelector,
-  updateItemPrice, itemPriceSelector
+  updateItemPrice, itemPriceSelector,
+  updateItemSharedByDudes, itemSharedByDudeIdsSelector,
 } from '../interactions'
 import { addDude, removeDude, dudeIdsSelector } from '../../DudeList/interactions'
 
@@ -119,13 +119,22 @@ describe('Item List', () => {
     const dudeId1 = addDudeAndReturnId(store, 'A man')
     const dudeId2 = addDudeAndReturnId(store, 'Another man')
 
-    expect(itemSplitBetweenDudeIdsSelector(store.getState(), itemId)).toEqual([dudeId1, dudeId2])
+    expect(itemSharedByDudeIdsSelector(store.getState(), itemId)).toEqual([dudeId1, dudeId2])
 
     const dudeId3 = addDudeAndReturnId(store, 'Third man')
-    expect(itemSplitBetweenDudeIdsSelector(store.getState(), itemId)).toEqual([dudeId1, dudeId2, dudeId3])
+    expect(itemSharedByDudeIdsSelector(store.getState(), itemId)).toEqual([dudeId1, dudeId2, dudeId3])
   })
 
+  it('allows item cost to be shared between specific dudes', () => {
+    const store = createStore()
+    const itemId = addItemAndReturnId(store)
+    const dudeId1 = addDudeAndReturnId(store, 'A man')
+    const dudeId2 = addDudeAndReturnId(store, 'Another man')
 
-  // allows item cost to be split between specific dudeIdsSelector
-  // does not automatically add a new dude to an already split item
+    store.dispatch(updateItemSharedByDudes(itemId, [dudeId1]))
+
+    expect(itemSharedByDudeIdsSelector(store.getState(), itemId)).toEqual([dudeId1])
+  })
+
+  // does not automatically add a new dude to an already shared item
 })
