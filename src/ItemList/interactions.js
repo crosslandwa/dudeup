@@ -6,6 +6,7 @@ export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
 export const updateItemDescription = (id, description) => ({ type: 'ITEMLIST_UPDATE_ITEM_DESCRIPTION', id, description })
 export const updateItemPrice = (id, price) => ({ type: 'ITEMLIST_UPDATE_ITEM_PRICE', id, price })
 export const updateItemDude = (id, dudeId) => ({ type: 'ITEMLIST_UPDATE_ITEM_DUDE', id, dudeId })
+export const updateItemIsUnequalSplit = (id, isUnequalSplit) => ({ type: 'ITEMLIST_UPDATE_ITEM_UNEQUAL_SPLIT', id, isUnequalSplit })
 
 // ------SELECTORS------
 export const itemIdsSelector = state => state.persisted.items.allIds
@@ -15,11 +16,11 @@ export const itemPriceSelector = (state, id) => itemSelector(state, id).price
 export const itemDudeSelector = (state, id) => itemSelector(state, id).dudeId
 export const itemIdsForDudeSelector = (state, dudeId) => itemIdsSelector(state)
   .filter(itemId => itemDudeSelector(state, itemId) === dudeId)
-export const itemIsUnequalSplitSelector = (state, itemId) => false
+export const itemIsUnequalSplitSelector = (state, id) => itemSelector(state, id).isUnequalSplit
 export const itemSplitBetweenDudeIdsSelector = (state, itemId) => dudeIdsSelector(state)
 
 // ------REDUCERS------
-const item = (state = { description: '', price: 0 }, action) => {
+const item = (state = { description: '', price: 0, isUnequalSplit: false }, action) => {
   switch (action.type) {
     case 'ITEMLIST_UPDATE_ITEM_DESCRIPTION':
       return { ...state, description: action.description }
@@ -27,6 +28,9 @@ const item = (state = { description: '', price: 0 }, action) => {
       return { ...state, price: parseInt(action.price * 100) / 100 }
     case 'ITEMLIST_UPDATE_ITEM_DUDE':
       return { ...state, dudeId: action.dudeId || undefined }
+    case 'ITEMLIST_UPDATE_ITEM_UNEQUAL_SPLIT':
+      return { ...state, isUnequalSplit: !!action.isUnequalSplit }
+
   }
   return state
 }
