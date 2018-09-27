@@ -1,3 +1,5 @@
+import { dudeIdsSelector } from '../DudeList/interactions'
+
 // ------ACTIONS------
 export const addItem = () => ({ type: 'ITEMLIST_ADD_ITEM' })
 export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
@@ -13,6 +15,8 @@ export const itemPriceSelector = (state, id) => itemSelector(state, id).price
 export const itemDudeSelector = (state, id) => itemSelector(state, id).dudeId
 export const itemIdsForDudeSelector = (state, dudeId) => itemIdsSelector(state)
   .filter(itemId => itemDudeSelector(state, itemId) === dudeId)
+export const itemIsUnequalSplitSelector = (state, itemId) => false
+export const itemSplitBetweenDudeIdsSelector = (state, itemId) => dudeIdsSelector(state)
 
 // ------REDUCERS------
 const item = (state = { description: '', price: 0 }, action) => {
