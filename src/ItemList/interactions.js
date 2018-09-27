@@ -17,6 +17,7 @@ export const itemPriceSelector = (state, id) => itemSelector(state, id).price
 export const itemDudeSelector = (state, id) => itemSelector(state, id).dudeId
 export const itemIdsForDudeSelector = (state, dudeId) => itemIdsSelector(state)
   .filter(itemId => itemDudeSelector(state, itemId) === dudeId)
+export const itemIsSharedByAllSelector = (state, id) => itemSharedByDudeIdsSelector(state, id).length == dudeIdsSelector(state).length
 export const itemIsUnequalSplitSelector = (state, id) => itemSelector(state, id).isUnequalSplit
 export const itemSharedByDudeIdsSelector = (state, id) => itemSelector(state, id).sharedByDudes || dudeIdsSelector(state)
 

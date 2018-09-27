@@ -5,7 +5,7 @@ import {
   updateItemDude, itemDudeSelector,
   updateItemIsUnequalSplit, itemIsUnequalSplitSelector,
   updateItemPrice, itemPriceSelector,
-  updateItemSharedByDudes, itemSharedByDudeIdsSelector,
+  updateItemSharedByDudes, itemSharedByDudeIdsSelector, itemIsSharedByAllSelector
 } from '../interactions'
 import { addDude, removeDude, dudeIdsSelector } from '../../DudeList/interactions'
 
@@ -120,9 +120,11 @@ describe('Item List', () => {
     const dudeId2 = addDudeAndReturnId(store, 'Another man')
 
     expect(itemSharedByDudeIdsSelector(store.getState(), itemId)).toEqual([dudeId1, dudeId2])
+    expect(itemIsSharedByAllSelector(store.getState(), itemId)).toEqual(true)
 
     const dudeId3 = addDudeAndReturnId(store, 'Third man')
     expect(itemSharedByDudeIdsSelector(store.getState(), itemId)).toEqual([dudeId1, dudeId2, dudeId3])
+    expect(itemIsSharedByAllSelector(store.getState(), itemId)).toEqual(true)
   })
 
   it('allows item cost to be shared between specific dudes', () => {
@@ -134,7 +136,20 @@ describe('Item List', () => {
     store.dispatch(updateItemSharedByDudes(itemId, [dudeId1]))
 
     expect(itemSharedByDudeIdsSelector(store.getState(), itemId)).toEqual([dudeId1])
+    expect(itemIsSharedByAllSelector(store.getState(), itemId)).toEqual(false)
   })
 
-  // does not automatically add a new dude to an already shared item
+  it('does not add newly created dudes to items already shared between specific other dudes', () => {
+    const store = createStore()
+    const itemId = addItemAndReturnId(store)
+    const dudeId1 = addDudeAndReturnId(store, 'A man')
+    store.dispatch(updateItemSharedByDudes(itemId, [dudeId1]))
+
+    const dudeId2 = addDudeAndReturnId(store, 'Another man')
+
+    expect(itemSharedByDudeIdsSelector(store.getState(), itemId)).toEqual([dudeId1])
+    expect(itemIsSharedByAllSelector(store.getState(), itemId)).toEqual(false)
+  })
+
+  // TODO delete a dude removes them from any shared items OR update UI prevents removal of dude involved with items...
 })

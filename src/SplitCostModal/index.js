@@ -34,4 +34,10 @@ const SplitCostModal = props => (
 )
 
 
+/*
+TODO:
+ - collect selected dudes in local state, dispatch single action on submit (allows user to cancel)
+ - prevent submission if no dudes selected
+*/
+
 export default connect(mapStateToProps)(SplitCostModal)

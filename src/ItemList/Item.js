@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import {
   itemDescriptionSelector, updateItemDescription,
   itemDudeSelector, updateItemDude,
+  itemIsUnequalSplitSelector,
+  itemIsSharedByAllSelector,
   itemPriceSelector, updateItemPrice,
   removeItem
 } from './interactions'
@@ -12,6 +14,8 @@ import { openModal as openSplitCostModal } from '../SplitCostModal/interactions'
 const mapStateToProps = (state, { id }) => ({
   description: itemDescriptionSelector(state, id),
   dudeId: itemDudeSelector(state, id),
+  isSharedByAll: itemIsSharedByAllSelector(state, id),
+  isUnequalSplit: itemIsUnequalSplitSelector(state, id),
   price: itemPriceSelector(state, id)
 })
 
@@ -28,7 +32,11 @@ const Item = props => (
     <DudeList selectedId={props.dudeId} onChange={props.updateDude} />
     <input placeholder="item description" value={props.description} onChange={props.updateDescription} />
     <input type="number" step="0.01" onChange={props.updatePrice} placeholder="0" value={props.price !== 0 ? props.price : ''} />
-    <input type="button" value="Split between all" onClick={props.openSplitCostModal} />
+    <input
+      type="button"
+      value={`Split ${props.isUnequalSplit ? 'unequally' : 'equally'} between ${props.isSharedByAll ? 'all' : 'some'} dudes`}
+      onClick={props.openSplitCostModal}
+    />
     <input type="button" value="remove" onClick={props.remove} />
   </div>
 )
