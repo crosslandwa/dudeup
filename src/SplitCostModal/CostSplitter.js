@@ -50,9 +50,13 @@ class CostSplitter extends React.Component {
       }
     }
     this.submit = () => {
-      this.props.updateUnequalSplit(this.state.isNonEqualSplit)
-      this.props.updateItemSharedByDudes(this.state.selectedIds)
-      this.props.closeModal()
+      if (this.state.selectedIds.length) {
+        this.props.updateUnequalSplit(this.state.isNonEqualSplit)
+        this.props.updateItemSharedByDudes(this.state.selectedIds)
+        this.props.closeModal()
+      } else {
+        this.setState({ warning: 'Warning - you need to select at least one dude' })
+      }
     }
   }
 
@@ -63,6 +67,7 @@ class CostSplitter extends React.Component {
           display: 'flex',
           flexDirection: 'column'
         }}>
+          {this.state.warning && <span>{this.state.warning}</span>}
           <span>
             Sharing cost for "{this.props.itemDescription || <em>a mystery item</em>}" bought by {this.props.dudeName || <em>some dude</em>}
           </span>
@@ -82,11 +87,5 @@ class CostSplitter extends React.Component {
     )
   }
 }
-
-/*
-TODO:
- - collect selected dudes in local state, dispatch single action on submit (allows user to cancel)
- - prevent submission if no dudes selected
-*/
 
 export default connect(mapStateToProps, mapDispatchToProps)(CostSplitter)
