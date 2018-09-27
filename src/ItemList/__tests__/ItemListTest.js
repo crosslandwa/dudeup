@@ -1,6 +1,7 @@
 import createStore from '../../store'
 import {
   addItem, removeItem, itemIdsSelector,
+  itemIsUnequalSplitSelector, itemSplitBetweenDudeIdsSelector,
   updateItemDescription, itemDescriptionSelector,
   updateItemDude, itemDudeSelector,
   updateItemPrice, itemPriceSelector
@@ -9,7 +10,12 @@ import { addDude, removeDude, dudeIdsSelector } from '../../DudeList/interaction
 
 const addItemAndReturnId = store => {
   store.dispatch(addItem())
-  return itemIdsSelector(store.getState()).slice(-1)
+  return itemIdsSelector(store.getState()).slice(-1)[0]
+}
+
+const addDudeAndReturnId = (store, name) => {
+  store.dispatch(addDude(name))
+  return dudeIdsSelector(store.getState()).slice(-1)[0]
 }
 
 describe('Item List', () => {
@@ -85,14 +91,23 @@ describe('Item List', () => {
   it('dissociates a removed dude from any items', () => {
     const store = createStore()
     const itemId = addItemAndReturnId(store)
+    const dudeId = addDudeAndReturnId(store, 'A man')
 
-    store.dispatch(addDude('A man'))
-
-    const dudeId = dudeIdsSelector(store.getState())[0]
     store.dispatch(updateItemDude(itemId, dudeId))
 
     store.dispatch(removeDude(dudeId))
 
     expect(itemDudeSelector(store.getState(), itemId)).toEqual(undefined)
+  })
+
+  it('splits items cost equally between all dudes by default', () => {
+    const store = createStore()
+    const itemId = addItemAndReturnId(store)
+    const dudeId1 = addDudeAndReturnId(store, 'A man')
+    const dudeId2 = addDudeAndReturnId(store, 'Another man')
+
+
+    expect(itemIsUnequalSplitSelector(store.getState(), itemId)).toEqual(false)
+    expect(itemSplitBetweenDudeIdsSelector(store.getState(), itemId)).toEqual([dudeId1, dudeId2])
   })
 })
