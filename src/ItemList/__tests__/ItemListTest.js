@@ -1,9 +1,10 @@
 import createStore from '../../store'
 import {
   addItem, removeItem, itemIdsSelector,
-  itemIsUnequalSplitSelector, itemSplitBetweenDudeIdsSelector,
+  itemSplitBetweenDudeIdsSelector,
   updateItemDescription, itemDescriptionSelector,
   updateItemDude, itemDudeSelector,
+  updateItemIsUnequalSplit, itemIsUnequalSplitSelector,
   updateItemPrice, itemPriceSelector
 } from '../interactions'
 import { addDude, removeDude, dudeIdsSelector } from '../../DudeList/interactions'
@@ -100,18 +101,30 @@ describe('Item List', () => {
     expect(itemDudeSelector(store.getState(), itemId)).toEqual(undefined)
   })
 
-  it('splits item cost equally between all dudes by default', () => {
+
+  it('splits item cost equally between involved dudes by default', () => {
+    const store = createStore()
+    const itemId = addItemAndReturnId(store)
+
+    expect(itemIsUnequalSplitSelector(store.getState(), itemId)).toEqual(false)
+
+    store.dispatch(updateItemIsUnequalSplit(itemId, true))
+
+    expect(itemIsUnequalSplitSelector(store.getState(), itemId)).toEqual(true)
+  })
+
+  it('shares item cost equally between all dudes by default', () => {
     const store = createStore()
     const itemId = addItemAndReturnId(store)
     const dudeId1 = addDudeAndReturnId(store, 'A man')
     const dudeId2 = addDudeAndReturnId(store, 'Another man')
 
-    expect(itemIsUnequalSplitSelector(store.getState(), itemId)).toEqual(false)
     expect(itemSplitBetweenDudeIdsSelector(store.getState(), itemId)).toEqual([dudeId1, dudeId2])
 
     const dudeId3 = addDudeAndReturnId(store, 'Third man')
     expect(itemSplitBetweenDudeIdsSelector(store.getState(), itemId)).toEqual([dudeId1, dudeId2, dudeId3])
   })
+
 
   // allows item cost to be split between specific dudeIdsSelector
   // does not automatically add a new dude to an already split item
