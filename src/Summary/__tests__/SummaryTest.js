@@ -55,21 +55,4 @@ describe('Summary', () => {
 
     expect(dudesInDebtSummarySelector(store.getState()).groupTotal).toEqual(28)
   })
-
-  it('gives average amount per dude total', () => {
-    const store = createStore()
-    const dude1 = 'dude1'
-    const dude2 = 'dude2'
-    const dude3 = 'dude3'
-
-    store.dispatch(addDude(dude1))
-    store.dispatch(addDude(dude2))
-    store.dispatch(addDude(dude3))
-
-    const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItemDude(itemId, dude1))
-    store.dispatch(updateItemPrice(itemId, 9))
-
-    expect(dudesInDebtSummarySelector(store.getState()).averageAmountPerDude).toEqual(3)
-  })
 })

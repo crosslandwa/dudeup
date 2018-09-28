@@ -17,7 +17,6 @@ export const dudesInDebtSummarySelector = state => {
     .filter(dudeId => Object.keys(summary.amountOwedByGroupMember[dudeId]).length)
 
   return {
-    averageAmountPerDude: summary.averageAmountPerGroupMember,
     dudeIds,
     debts: dudeIds.reduce((acc, dudeId) => ({
       ...acc,

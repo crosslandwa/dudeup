@@ -6,7 +6,6 @@ import DudeSummary from './DudeSummary'
 const mapStateToProps = state => {
   const summary = dudesInDebtSummarySelector(state)
   return {
-    averageAmountPerDude: summary.averageAmountPerDude.toFixed(2),
     ids: summary.dudeIds,
     debts: summary.debts,
     groupTotal: summary.groupTotal.toFixed(2)
@@ -19,7 +18,7 @@ const Summary = props => (
     flexDirection: 'column'
   }}>
     <div>
-      <div>Group total: {props.groupTotal} ({props.averageAmountPerDude} per Dude)</div>
+      <div>Group total: {props.groupTotal}</div>
       {!props.ids.length && <div>Everyone is all square!</div>}
       {props.ids.map(id => <DudeSummary id={id} debts={props.debts[id]} />)}
     </div>
