@@ -15,6 +15,7 @@ const DudeSummary = props => (
     flexDirection: 'column'
   }}>
     <div>{props.name} owes...</div>
+    {!props.debts.length && <div>nothing</div>}
     {props.debts.map(({ name, amount }) => (
       <div>{amount} to {name}</div>
     ))}

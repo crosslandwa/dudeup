@@ -2,8 +2,6 @@ import { dudeIdsSelector } from '../DudeList/interactions'
 import { itemIdsForDudeSelector, itemPriceSelector } from '../ItemList/interactions'
 import DudeUp from 'dudeup'
 
-// ------ACTIONS------
-
 // ------SELECTORS------
 
 export const dudesInDebtSummarySelector = state => {
@@ -12,19 +10,20 @@ export const dudesInDebtSummarySelector = state => {
       ...acc,
       [dudeId]: itemIdsForDudeSelector(state, dudeId).map(itemId => itemPriceSelector(state, itemId))
     }), {}))
+  // console.log(JSON.stringify(summary, null, 2))
 
-  const dudeIds = Object.keys(summary.amountOwedByGroupMember)
-    .filter(dudeId => Object.keys(summary.amountOwedByGroupMember[dudeId]).length)
+  const dudeIds = dudeIdsSelector(state)
 
   return {
     dudeIds,
     debts: dudeIds.reduce((acc, dudeId) => ({
       ...acc,
       [dudeId]: Object.keys(summary.amountOwedByGroupMember[dudeId])
-        .map(owesToDudeId => ({ dudeId: owesToDudeId, amount: summary.amountOwedByGroupMember[dudeId][owesToDudeId] }))
+        .map(owesToDudeId => ({
+          dudeId: owesToDudeId,
+          amount: summary.amountOwedByGroupMember[dudeId][owesToDudeId]
+        }))
     }), {}),
     groupTotal: summary.groupTotal
   }
 }
-
-// ------REDUCERS------
