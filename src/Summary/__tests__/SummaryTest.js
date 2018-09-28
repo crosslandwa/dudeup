@@ -1,42 +1,41 @@
 import createStore from '../../store'
-import { addDude } from '../../DudeList/interactions'
+import { addDude, dudeIdsSelector } from '../../DudeList/interactions'
 import { addItem, updateItemDude, updateItemPrice, itemIdsSelector } from '../../ItemList/interactions'
 import { dudesInDebtSummarySelector } from '../interactions'
 
+const addDudeAndReturnId = (store, name) => {
+  store.dispatch(addDude(name))
+  return dudeIdsSelector(store.getState()).slice(-1)[0]
+}
+
 const addItemAndReturnId = store => {
   store.dispatch(addItem())
-  return itemIdsSelector(store.getState()).slice(-1)
+  return itemIdsSelector(store.getState()).slice(-1)[0]
 }
 
 describe('Summary', () => {
-  it('is empty when everyone is square', () => {
+  it('shows no debts when everyone is square', () => {
     const store = createStore()
-    const dude1 = 'dude1'
-    const dude2 = 'dude2'
+    const dudeId1 = addDudeAndReturnId(store, 'dude 1')
+    const dudeId2 = addDudeAndReturnId(store, 'dude 2')
 
-    store.dispatch(addDude(dude1))
-    store.dispatch(addDude(dude2))
-
-    expect(dudesInDebtSummarySelector(store.getState()).dudeIds).toHaveLength(0)
+    expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId1]).toHaveLength(0)
+    expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId2]).toHaveLength(0)
   })
 
   it('lists amounts owed when shared items have been bought', () => {
     const store = createStore()
-    const dude1 = 'dude1'
-    const dude2 = 'dude2'
-    const dude3 = 'dude3'
-
-    store.dispatch(addDude(dude1))
-    store.dispatch(addDude(dude2))
-    store.dispatch(addDude(dude3))
+    const dudeId1 = addDudeAndReturnId(store, 'dude 1')
+    const dudeId2 = addDudeAndReturnId(store, 'dude 2')
+    const dudeId3 = addDudeAndReturnId(store, 'dude 3')
 
     const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItemDude(itemId, dude1))
+    store.dispatch(updateItemDude(itemId, dudeId1))
     store.dispatch(updateItemPrice(itemId, 9))
 
-    expect(dudesInDebtSummarySelector(store.getState()).dudeIds).toHaveLength(2)
-
-    expect(dudesInDebtSummarySelector(store.getState()).debts[dude2]).toEqual([{ dudeId: 'dude1', amount: 3 }])
+    expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId1]).toEqual([])
+    expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId2]).toEqual([{ dudeId: dudeId1, amount: 3 }])
+    expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId3]).toEqual([{ dudeId: dudeId1, amount: 3 }])
   })
 
   it('gives group total', () => {
