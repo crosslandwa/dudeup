@@ -12,49 +12,82 @@ describe('Settle Up', () => {
     )
 
     compareAsJson(
-      DudeUp({ eAndG: [1, 2], sAndW: [0.5] }).totalPaidPerGroupMember,
-      { eAndG: 3, sAndW: 0.5 }
+      DudeUp({ a: [{ amount: 1 }, { amount: 2, dudes: ['a'] }], b: [{ amount: 0.5 }] }).totalPaidPerGroupMember,
+      { a: 3, b: 0.5 }
     )
   })
 
   it('calculates the total paid by the group', () => {
     expect(DudeUp({ eAndG: [], sAndW: [] }).groupTotal).toEqual(0)
-    expect(DudeUp({ eAndG: [1, 2], sAndW: [0.5] }).groupTotal).toEqual(3.5)
+    expect(DudeUp({ eAndG: [{ amount: 1 }, { amount: 2 }], sAndW: [{ amount: 0.5 }] }).groupTotal).toEqual(3.5)
   })
 
-  it('calculates the average amount owed per group member', () => {
-    expect(DudeUp({ eAndG: [], sAndW: [] }).averageAmountPerGroupMember).toEqual(0)
-    expect(DudeUp({ eAndG: [1, 2], sAndW: [0.5] }).averageAmountPerGroupMember).toEqual(1.75)
-  })
-
-  it('calculates the amount group members should pay to others (in a group of 2) to settle up', () => {
+  it('calculates the total the group has spent on each person, taking into account where not everyone is involved in every bought item', () => {
     compareAsJson(
-      DudeUp({ eAndG: [], sAndW: [] }).amountOwedByGroupMember,
-      { eAndG: {}, sAndW: {} }
+      DudeUp({
+        a: [{ amount: 9 }],
+        b: [{ amount: 6 }],
+        c: []
+      }).totalSpentOnGroupMember,
+      { a: 5, b: 5, c: 5 }
     )
 
     compareAsJson(
-      DudeUp({ eAndG: [2], sAndW: [] }).amountOwedByGroupMember,
-      { eAndG: {}, sAndW: { eAndG: 1 } }
-    )
-
-    compareAsJson(
-      DudeUp({ eAndG: [2], sAndW: [3] }).amountOwedByGroupMember,
-      { eAndG: { sAndW: 0.5 }, sAndW: {} }
+      DudeUp({
+        a: [{ amount: 9 }],
+        b: [{ amount: 6, dudes: ['b', 'c'] }],
+        c: []
+      }).totalSpentOnGroupMember,
+      { a: 3, b: 6, c: 6 }
     )
   })
 
-  it('calculates the amount group members should pay to ohers (in a group of 3+) to settle up', () => {
+  it('calculates the amount group members should pay to others taking into account where not everyone is involved in every bought item', () => {
     compareAsJson(
-      DudeUp({ a: [4], b: [2], c: [], d: [] }).amountOwedByGroupMember,
-      { a: {}, b: {}, c: { a: 1.5 }, d: { a: 1, b: 0.5 } }
+      DudeUp({ a: [{ amount: 9 }], b: [{ amount: 6 }], c: [] }).amountOwedByGroupMember,
+      { a: {}, b: {}, c: { a: 4, b: 1 } }
+    )
+
+    compareAsJson(
+      DudeUp({ a: [{ amount: 9 }], b: [{ amount: 6, dudes: ['b'] }], c: [] }).amountOwedByGroupMember,
+      { a: {}, b: { a: 3 }, c: { a: 3 } }
+    )
+
+    compareAsJson(
+      DudeUp({
+        a: [{ amount: 9 }],
+        b: [{ amount: 6, dudes: ['b', 'c'] }],
+        c: []
+      }).amountOwedByGroupMember,
+      { a: {}, b: {}, c: { a: 6 } }
+    )
+
+    compareAsJson(
+      DudeUp({
+        a: [{ amount: 9 }], // paid 9, owes 7
+        b: [{ amount: 6, dudes: ['b', 'c'] }, { amount: 6, dudes: ['a', 'b'] }], // paid 12, owes 10
+        c: [{ amount: 3 }] // paid 3, owes 7
+      }).amountOwedByGroupMember,
+      { a: {}, b: {}, c: { a: 2, b: 2 } }
+    )
+  })
+
+  it('supports uneven splits if the client models them as separate items', () => {
+    compareAsJson(
+      DudeUp({
+        a: [{ amount: 9 }], // paid 9, owes 3
+        // b bought a 6 item, split unevenly between b and c
+        b: [{ amount: 2, dudes: ['b'] }, { amount: 4, dudes: ['c'] }], // paid 6, owes 5
+        c: [] // paid 0, owes 7
+      }).amountOwedByGroupMember,
+      { a: {}, b: {}, c: { a: 6, b: 1 } }
     )
   })
 
   it('will write off the odd amount when rounding occurs', () => {
     compareAsJson(
-      DudeUp({ a: [12.02], b: [12.02], c: [] }).writtenOffAmounts,
-      { a: [], b: [0.01], c: [] }
+      DudeUp({ a: [{ amount: 0.04 }], b: [{ amount: 0.04 }], c: [] }).writtenOffAmounts,
+      { a: [], b: [0.02], c: [] }
     )
   })
 })
