@@ -8,7 +8,8 @@ const mapStateToProps = state => {
   return {
     ids: summary.dudeIds,
     debts: summary.debts,
-    groupTotal: summary.groupTotal.toFixed(2)
+    groupTotal: summary.groupTotal.toFixed(2),
+    spentAmounts: summary.spentAmounts
   }
 }
 
@@ -19,7 +20,9 @@ const Summary = props => (
   }}>
     <div>
       <div>Group total: {props.groupTotal}</div>
-      {props.ids.map(id => <DudeSummary id={id} debts={props.debts[id]} />)}
+      {props.ids.map(id => (
+        <DudeSummary id={id} debts={props.debts[id]} amountSpent={props.spentAmounts[id]}/>
+      ))}
     </div>
   </div>
 )

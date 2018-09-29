@@ -10,7 +10,6 @@ export const dudesInDebtSummarySelector = state => {
       ...acc,
       [dudeId]: itemIdsForDudeSelector(state, dudeId).map(itemId => itemPriceSelector(state, itemId))
     }), {}))
-  // console.log(JSON.stringify(summary, null, 2))
 
   const dudeIds = dudeIdsSelector(state)
 
@@ -24,6 +23,7 @@ export const dudesInDebtSummarySelector = state => {
           amount: summary.amountOwedByGroupMember[dudeId][owesToDudeId]
         }))
     }), {}),
-    groupTotal: summary.groupTotal
+    groupTotal: summary.groupTotal,
+    spentAmounts: summary.totalPaidPerGroupMember
   }
 }

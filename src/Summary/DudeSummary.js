@@ -14,10 +14,10 @@ const DudeSummary = props => (
     display: 'flex',
     flexDirection: 'column'
   }}>
-    <div>{props.name} owes...</div>
+    <div>{props.name} has spent {props.amountSpent.toFixed(2)} and owes...</div>
     {!props.debts.length && <div>nothing</div>}
     {props.debts.map(({ name, amount }) => (
-      <div>{amount} to {name}</div>
+      <div>{amount.toFixed(2)} to {name}</div>
     ))}
   </div>
 )
