@@ -14,6 +14,17 @@ const addItemAndReturnId = store => {
 }
 
 describe('Summary', () => {
+  it('details how much each dude has spent', () => {
+    const store = createStore()
+    const dudeId1 = addDudeAndReturnId(store, 'dude 1')
+
+    const itemId = addItemAndReturnId(store)
+    store.dispatch(updateItemDude(itemId, dudeId1))
+    store.dispatch(updateItemPrice(itemId, 9))
+
+    expect(dudesInDebtSummarySelector(store.getState()).spentAmounts[dudeId1]).toEqual(9)
+  })
+
   it('shows no debts when everyone is square', () => {
     const store = createStore()
     const dudeId1 = addDudeAndReturnId(store, 'dude 1')
