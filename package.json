@@ -16,7 +16,7 @@
     "babel-preset-latest": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
-    "dudeup": "github:crosslandwa/dudeup#1.0.0",
+    "dudeup": "github:crosslandwa/dudeup#2.0.0",
     "eslint": "^5.4.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.14.0",

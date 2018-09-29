@@ -25,6 +25,17 @@ describe('Summary', () => {
     expect(dudesInDebtSummarySelector(store.getState()).spentAmounts[dudeId1]).toEqual(9)
   })
 
+  it('details how much has been spent on each dude', () => {
+    const store = createStore()
+    const dudeId1 = addDudeAndReturnId(store, 'dude 1')
+
+    const itemId = addItemAndReturnId(store)
+    store.dispatch(updateItemDude(itemId, dudeId1))
+    store.dispatch(updateItemPrice(itemId, 10))
+
+    expect(dudesInDebtSummarySelector(store.getState()).spentOnAmounts[dudeId1]).toEqual(10)
+  })
+
   it('shows no debts when everyone is square', () => {
     const store = createStore()
     const dudeId1 = addDudeAndReturnId(store, 'dude 1')
