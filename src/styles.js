@@ -1,3 +1,10 @@
+export const fauxLinkStyle = {
+  fontSize: 'inherit',
+  cursor: 'pointer',
+  textDecoration: 'underline',
+  fontStyle: 'italic'
+}
+
 export const selectButtonStyle = {
   fontSize: 'inherit',
   border: '1px solid black',
