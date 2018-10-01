@@ -6,6 +6,7 @@ import {
   updateItemIsUnequalSplit, itemIsUnequalSplitSelector,
   itemDescriptionSelector,
   itemDudeSelector,
+  itemPriceSelector,
   updateItemSharedByDudes, itemSharedByDudeIdsSelector
 } from '../ItemList/interactions'
 import { dudeIdsSelector, dudeNameSelector } from '../DudeList/interactions'
@@ -14,11 +15,12 @@ import { textInputStyle } from '../styles'
 const apply = (f, x) => f(x)
 
 const mapStateToProps = (state, { itemId }) => ({
+  allDudeIds: dudeIdsSelector(state),
+  dudeName: apply(dudeId => dudeId ? dudeNameSelector(state, dudeId) : 'some dude', itemDudeSelector(state, itemId)),
   isNonEqualSplit: itemIsUnequalSplitSelector(state, itemId),
-  itemDescription: itemDescriptionSelector(state, itemId),
-  dudeName: apply(dudeId => dudeId && dudeNameSelector(state, dudeId), itemDudeSelector(state, itemId)),
-  selectedIds: itemSharedByDudeIdsSelector(state, itemId),
-  allDudeIds: dudeIdsSelector(state)
+  itemDescription: itemDescriptionSelector(state, itemId) || 'a mystery item',
+  price: itemPriceSelector(state, itemId),
+  selectedIds: itemSharedByDudeIdsSelector(state, itemId)
 })
 const mapDispatchToProps = (dispatch, { itemId }) => ({
   updateItemSharedByDudes: dudeIds => dispatch(updateItemSharedByDudes(itemId, dudeIds)),
@@ -106,7 +108,7 @@ class CostSplitter extends React.Component {
         }}>
           {this.state.warning && <span>{this.state.warning}</span>}
           <span>
-            Sharing cost for "{this.props.itemDescription || <em>a mystery item</em>}" bought by {this.props.dudeName || <em>some dude</em>}
+            Sharing {this.props.price} for <em>{this.props.itemDescription}</em> bought by <em>{this.props.dudeName}</em>
           </span>
           <div>
             <label>
