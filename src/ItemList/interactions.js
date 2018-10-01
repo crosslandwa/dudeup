@@ -22,7 +22,15 @@ export const itemIsUnequalSplitSelector = (state, id) => itemSelector(state, id)
 export const itemSharedByDudeIdsSelector = (state, id) => itemSelector(state, id).sharedByDudes || dudeIdsSelector(state)
 
 // ------REDUCERS------
-const item = (state = { description: '', price: 0, isUnequalSplit: false }, action) => {
+const defaultItemState = {
+  description: '',
+  dudeId: undefined,
+  isUnequalSplit: false,
+  price: 0,
+  sharedByDudes: undefined
+}
+
+const item = (state = defaultItemState, action) => {
   switch (action.type) {
     case 'ITEMLIST_UPDATE_ITEM_DESCRIPTION':
       return { ...state, description: action.description }
