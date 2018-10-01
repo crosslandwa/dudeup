@@ -12,7 +12,7 @@ import {
 import { Select as DudeList } from '../DudeList'
 import { dudeNameSelector } from '../DudeList/interactions'
 import { openModal as openSplitCostModal } from '../SplitCostModal/interactions'
-import { textButtonStyle } from '../styles'
+import { textButtonStyle, textInputStyle } from '../styles'
 
 const sharingLabel = (isSharedByAll, isUnequalSplit, sharingSummary) => {
   switch (true) {
@@ -53,8 +53,8 @@ const mapDispatchToProps = (dispatch, { id }) => ({
 const Item = props => (
   <div>
     <DudeList selectedId={props.dudeId} onChange={props.updateDude} />
-    <input placeholder="item description" value={props.description} onChange={props.updateDescription} />
-    <input type="number" step="0.01" onChange={props.updatePrice} placeholder="0" value={props.price !== 0 ? props.price : ''} />
+    <input style={textInputStyle} placeholder="item description" value={props.description} onChange={props.updateDescription} />
+    <input style={textInputStyle} type="number" step="0.01" onChange={props.updatePrice} placeholder="0" value={props.price !== 0 ? props.price : ''} />
     <input style={textButtonStyle} type="button" value="remove" onClick={props.remove} />
     <div>{props.sharingLabel}<input style={textButtonStyle} type="button" value="update" onClick={props.openSplitCostModal} /></div>
   </div>
