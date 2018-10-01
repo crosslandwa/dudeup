@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Modal from '../Modal'
-import { CheckBoxList as DudeList } from '../DudeList'
 import { closeModal } from './interactions'
 import {
   updateItemIsUnequalSplit, itemIsUnequalSplitSelector,
@@ -9,7 +8,8 @@ import {
   itemDudeSelector,
   updateItemSharedByDudes, itemSharedByDudeIdsSelector
 } from '../ItemList/interactions'
-import { dudeNameSelector } from '../DudeList/interactions'
+import { dudeIdsSelector, dudeNameSelector } from '../DudeList/interactions'
+import { textInputStyle } from '../styles'
 
 const apply = (f, x) => f(x)
 
@@ -17,7 +17,8 @@ const mapStateToProps = (state, { itemId }) => ({
   isNonEqualSplit: itemIsUnequalSplitSelector(state, itemId),
   itemDescription: itemDescriptionSelector(state, itemId),
   dudeName: apply(dudeId => dudeId && dudeNameSelector(state, dudeId), itemDudeSelector(state, itemId)),
-  selectedIds: itemSharedByDudeIdsSelector(state, itemId)
+  selectedIds: itemSharedByDudeIdsSelector(state, itemId),
+  allDudeIds: dudeIdsSelector(state)
 })
 const mapDispatchToProps = (dispatch, { itemId }) => ({
   updateItemSharedByDudes: dudeIds => dispatch(updateItemSharedByDudes(itemId, dudeIds)),
@@ -25,12 +26,48 @@ const mapDispatchToProps = (dispatch, { itemId }) => ({
   closeModal: () => dispatch(closeModal())
 })
 
+const mapDudeIdToName = (state, { id }) => ({
+  name: dudeNameSelector(state, id)
+})
+
+const CheckBoxOption = connect(mapDudeIdToName)(props => (
+  <label>
+    {props.name}
+    <input
+      type="checkbox"
+      value={props.id}
+      checked={props.selected}
+      onChange={props.onChange}
+    />
+  </label>
+))
+
+const AmountInputOption = connect(mapDudeIdToName)(props => (
+  <label>
+    {props.name}
+    <input
+      style={textInputStyle}
+      type="number"
+      step="0.01"
+      onChange={props.onChange}
+      placeholder="0"
+      value={props.price !== 0 ? props.price : ''}
+    />
+  </label>
+))
+
 class CostSplitter extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       isNonEqualSplit: props.isNonEqualSplit,
-      selectedIds: props.selectedIds
+      selectedIds: props.selectedIds,
+      individualAmounts: props.allDudeIds.reduce((acc, id) => ({ ...acc, [id]: 0 }), {})
+    }
+    this.updateIndividualAmount = (dudeId, amount) => {
+      this.setState((state, props) => ({
+        individualAmounts: { ...state.individualAmounts, [dudeId]: amount }
+      }))
     }
     this.toggleDudesInvolvement = (dudeId, checked) => {
       this.setState((state, props) => ({
@@ -81,7 +118,16 @@ class CostSplitter extends React.Component {
               <input type="radio" checked={this.state.isNonEqualSplit} onChange={this.setNonEqualSplit} />
             </label>
           </div>
-          <DudeList selectedIds={this.state.selectedIds} onChange={this.toggleDudesInvolvement}/>
+          <div>
+            {this.props.allDudeIds.map(id => (
+              <div>
+                {this.state.isNonEqualSplit
+                  ? <AmountInputOption id={id} price={this.state.individualAmounts[id]} onChange={e => this.updateIndividualAmount(id, e.target.value)} />
+                  : <CheckBoxOption id={id} selected={this.state.selectedIds.includes(id)} onChange={e => this.toggleDudesInvolvement(id, e.target.checked)}/>
+                }
+              </div>
+            ))}
+          </div>
         </div>
       </Modal>
     )

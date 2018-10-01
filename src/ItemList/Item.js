@@ -9,7 +9,7 @@ import {
   itemSharedByDudeIdsSelector,
   removeItem
 } from './interactions'
-import { Select as DudeList } from '../DudeList'
+import DudeList from '../DudeList'
 import { dudeNameSelector } from '../DudeList/interactions'
 import { openModal as openSplitCostModal } from '../SplitCostModal/interactions'
 import { fauxLinkStyle, textButtonStyle, textInputStyle } from '../styles'
