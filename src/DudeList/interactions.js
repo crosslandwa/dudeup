@@ -1,5 +1,5 @@
 // ------ACTIONS------
-export const addDude = (name = 'The other guy') => ({ type: 'DUDELIST_ADD_DUDE', id: name.toLowerCase().replace(/\s+/g, '_'), name })
+export const addDude = (name = 'The other guy') => ({ type: 'DUDELIST_ADD_DUDE', name })
 export const removeDude = id => ({ type: 'DUDELIST_REMOVE_DUDE', id })
 
 // ------SELECTORS------
@@ -18,11 +18,12 @@ const dude = (state = {}, action) => {
 export const reducer = (state = { allIds: [], byId: {} }, action) => {
   switch (action.type) {
     case 'DUDELIST_ADD_DUDE':
+      const id = `dude-${(state.allIds.length ? Math.max(...state.allIds.map(x => x.replace('dude-', ''))) : 0) + 1}`
       return {
-        allIds: state.allIds.includes(action.id) ? state.allIds : state.allIds.concat(action.id),
+        allIds: state.allIds.includes(id) ? state.allIds : state.allIds.concat(id),
         byId: {
           ...state.byId,
-          [action.id]: dude(state[action.id], action)
+          [id]: dude(state[id], action)
         }
       }
     case 'DUDELIST_REMOVE_DUDE':
