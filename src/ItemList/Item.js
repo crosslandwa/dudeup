@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch, { id }) => ({
 })
 
 const Item = props => (
-  <div>
+  <div style={{ margin: '0.5em' }}>
     <DudeList selectedId={props.dudeId} onChange={props.updateDude} />
     <input style={textInputStyle} placeholder="item description" value={props.description} onChange={props.updateDescription} />
     <input style={textInputStyle} type="number" step="0.01" onChange={props.updatePrice} placeholder="0" value={props.price !== 0 ? props.price : ''} />
