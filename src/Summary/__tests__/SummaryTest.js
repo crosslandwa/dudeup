@@ -1,6 +1,9 @@
 import createStore from '../../store'
 import { addDude, dudeIdsSelector } from '../../DudeList/interactions'
-import { addItem, updateItemDude, updateItemPrice, itemIdsSelector } from '../../ItemList/interactions'
+import {
+  addItem, itemIdsSelector,
+  updateItemDude, updateItemPrice, updateItemSharedByDudes
+} from '../../ItemList/interactions'
 import { dudesInDebtSummarySelector } from '../interactions'
 
 const addDudeAndReturnId = (store, name) => {
@@ -58,6 +61,22 @@ describe('Summary', () => {
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId1]).toEqual([])
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId2]).toEqual([{ dudeId: dudeId1, amount: 3 }])
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId3]).toEqual([{ dudeId: dudeId1, amount: 3 }])
+  })
+
+  it('lists amount owed when items are shared between some but not all group members', () => {
+    const store = createStore()
+    const dudeId1 = addDudeAndReturnId(store, 'dude 1')
+    const dudeId2 = addDudeAndReturnId(store, 'dude 2')
+    const dudeId3 = addDudeAndReturnId(store, 'dude 3')
+
+    const itemId = addItemAndReturnId(store)
+    store.dispatch(updateItemDude(itemId, dudeId1))
+    store.dispatch(updateItemSharedByDudes(itemId, [dudeId1, dudeId2]))
+    store.dispatch(updateItemPrice(itemId, 9))
+
+    expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId1]).toEqual([])
+    expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId2]).toEqual([{ dudeId: dudeId1, amount: 4.5 }])
+    expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId3]).toEqual([])
   })
 
   it('gives group total', () => {
