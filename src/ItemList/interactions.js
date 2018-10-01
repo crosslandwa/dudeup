@@ -46,10 +46,10 @@ const item = (state = defaultItemState, action) => {
   return state
 }
 
-export const reducer = (state = { allIds: [1], byId: { 1: item(undefined, {}) } }, action) => {
+export const reducer = (state = { allIds: ['item-1'], byId: { 'item-1': item(undefined, {}) } }, action) => {
   switch (action.type) {
     case 'ITEMLIST_ADD_ITEM':
-      const id = (state.allIds.length ? Math.max(...state.allIds) : 0) + 1
+      const id = `item-${(state.allIds.length ? Math.max(...state.allIds.map(x => x.replace('item-', ''))) : 0) + 1}`
       return {
         allIds: state.allIds.concat(state.allIds.includes(id) ? [] : id),
         byId: { ...state.byId, [id]: item(state.byId[id], action) }

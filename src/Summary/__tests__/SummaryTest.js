@@ -81,16 +81,14 @@ describe('Summary', () => {
 
   it('gives group total', () => {
     const store = createStore()
-    const dude1 = 'dude1'
-
-    store.dispatch(addDude(dude1))
+    const dudeId1 = addDudeAndReturnId(store, 'dude 1')
 
     const itemId1 = addItemAndReturnId(store)
-    store.dispatch(updateItemDude(itemId1, dude1))
+    store.dispatch(updateItemDude(itemId1, dudeId1))
     store.dispatch(updateItemPrice(itemId1, 9))
 
     const itemId2 = addItemAndReturnId(store)
-    store.dispatch(updateItemDude(itemId2, dude1))
+    store.dispatch(updateItemDude(itemId2, dudeId1))
     store.dispatch(updateItemPrice(itemId2, 19))
 
     expect(dudesInDebtSummarySelector(store.getState()).groupTotal).toEqual(28)
