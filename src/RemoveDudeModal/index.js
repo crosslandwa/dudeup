@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { modalRemoveDude, isModalOpenSelector } from './interactions'
 import Modal from '../Modal'
-import { Select as DudeList } from '../DudeList'
+import DudeList from '../DudeList'
 
 const mapStateToProps = state => ({
   isOpen: isModalOpenSelector(state)
