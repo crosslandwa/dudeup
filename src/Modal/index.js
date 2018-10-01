@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { closeModal } from './interactions'
+import { textButtonStyle } from '../styles'
 
 const mapDispatchToProps = (dispatch, { onSubmit }) => ({
   closeModal: () => dispatch(closeModal()),
@@ -48,8 +49,8 @@ class Modal extends React.Component {
           <form onSubmit={this.props.onSubmit} >
             {this.props.children}
             <div>
-              <input type="button" value="Cancel" onClick={this.props.closeModal} />
-              <input type="submit" value="OK"/>
+              <input style={textButtonStyle} type="button" value="Cancel" onClick={this.props.closeModal} />
+              <input style={textButtonStyle} type="submit" value="OK"/>
             </div>
           </form>
         </div>

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { modalAddDude, isModalOpenSelector } from './interactions'
 import Modal from '../Modal'
+import { textInputStyle } from '../styles'
 
 const mapStateToProps = state => ({
   isOpen: isModalOpenSelector(state)
@@ -28,7 +29,7 @@ class AddDudeModal extends React.Component {
         }}>
           <label>
             Name:
-            <input autoFocus type="textbox" onChange={this.handleTextInput}/>
+            <input style={textInputStyle} autoFocus type="textbox" onChange={this.handleTextInput}/>
           </label>
         </div>
       </Modal>

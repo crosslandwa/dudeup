@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { dudeIdsSelector, dudeNameSelector } from './interactions'
+import { selectButtonStyle } from '../styles'
 
 const mapStateToProps = state => ({
   ids: dudeIdsSelector(state)
@@ -20,7 +21,7 @@ const Dude = connect(mapDudeIdToName)(props => (
 ))
 
 const DudeList = props => (
-  <select autoFocus onChange={props.onChange}>
+  <select style={selectButtonStyle} autoFocus onChange={props.onChange}>
     <option>Select a dude...</option>
     {props.ids.map(id => <Dude id={id} selected={id === props.selectedId}/>)}
   </select>
