@@ -1,11 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {
+  itemCostSplittingSelector,
   itemDescriptionSelector, updateItemDescription,
   itemDudeSelector, updateItemDude,
-  itemIsUnequalSplitSelector,
   itemPriceSelector, updateItemPrice,
-  itemSharedByDudeIdsSelector,
   removeItem
 } from './interactions'
 import DudeList from '../DudeList'
@@ -13,24 +12,15 @@ import { dudeNameSelector } from '../DudeList/interactions'
 import { openModal as openSplitCostModal } from '../SplitCostModal/interactions'
 import { fauxLinkStyle, textButtonStyle, textInputStyle } from '../styles'
 
-const sharingLabel = (isUnequalSplit, sharingSummary) => {
-  return isUnequalSplit
-    ? `Shared by ${sharingSummary.map(summary => `${summary.name} (${summary.amount.toFixed(2)})`).join(', ')}`
-    : `Shared by ${sharingSummary.map(summary => summary.name).join(', ')}`
-}
-
 const mapStateToProps = (state, { id }) => {
-  const isUnequalSplit = itemIsUnequalSplitSelector(state, id)
-  const sharedDudeIds = itemSharedByDudeIdsSelector(state, id)
-  const sharingSummary = sharedDudeIds.map(dudeId => ({
-    name: dudeNameSelector(state, dudeId),
-    amount: 0
-  }))
+  const costSplit = itemCostSplittingSelector(state, id)
   return {
     description: itemDescriptionSelector(state, id),
     dudeId: itemDudeSelector(state, id),
     price: itemPriceSelector(state, id),
-    sharingLabel: sharingLabel(isUnequalSplit, sharingSummary)
+    sharingLabel: Object.keys(costSplit).length
+      ? `Shared by ${Object.keys(costSplit).map(dudeId => `${dudeNameSelector(state, dudeId)} (${costSplit[dudeId].toFixed(2)})`).join(', ')}`
+      : 'Shared between everyone'
   }
 }
 

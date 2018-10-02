@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import Modal from '../Modal'
 import { closeModal } from './interactions'
 import {
-  updateItemIsUnequalSplit, itemIsUnequalSplitSelector,
+  itemCostSplittingSelector, updateItemCostSplitting,
+  itemIsEqualSplitSelector,
   itemDescriptionSelector,
   itemDudeSelector,
-  itemPriceSelector,
-  updateItemSharedByDudes, itemSharedByDudeIdsSelector
+  itemPriceSelector
 } from '../ItemList/interactions'
 import { dudeIdsSelector, dudeNameSelector } from '../DudeList/interactions'
 import { textInputStyle } from '../styles'
@@ -17,14 +17,13 @@ const apply = (f, x) => f(x)
 const mapStateToProps = (state, { itemId }) => ({
   allDudeIds: dudeIdsSelector(state),
   dudeName: apply(dudeId => dudeId ? dudeNameSelector(state, dudeId) : 'some dude', itemDudeSelector(state, itemId)),
-  isNonEqualSplit: itemIsUnequalSplitSelector(state, itemId),
+  isNonEqualSplit: !itemIsEqualSplitSelector(state, itemId),
   itemDescription: itemDescriptionSelector(state, itemId) || 'a mystery item',
   price: itemPriceSelector(state, itemId),
-  selectedIds: itemSharedByDudeIdsSelector(state, itemId)
+  costSplitting: itemCostSplittingSelector(state, itemId)
 })
 const mapDispatchToProps = (dispatch, { itemId }) => ({
-  updateItemSharedByDudes: dudeIds => dispatch(updateItemSharedByDudes(itemId, dudeIds)),
-  updateUnequalSplit: isUnequal => dispatch(updateItemIsUnequalSplit(itemId, isUnequal)),
+  updateItemCostSplitting: costSplit => dispatch(updateItemCostSplitting(itemId, costSplit)),
   closeModal: () => dispatch(closeModal())
 })
 
@@ -63,8 +62,8 @@ class CostSplitter extends React.Component {
     super(props)
     this.state = {
       isNonEqualSplit: props.isNonEqualSplit,
-      selectedIds: props.selectedIds,
-      individualAmounts: props.allDudeIds.reduce((acc, id) => ({ ...acc, [id]: 0 }), {})
+      selectedIds: apply(dudeIds => dudeIds.length ? dudeIds : props.allDudeIds, Object.keys(props.costSplitting)),
+      individualAmounts: props.costSplitting
     }
     this.updateIndividualAmount = (dudeId, amount) => {
       this.setState((state, props) => ({
@@ -90,8 +89,14 @@ class CostSplitter extends React.Component {
     }
     this.submit = () => {
       if (this.state.selectedIds.length) {
-        this.props.updateUnequalSplit(this.state.isNonEqualSplit)
-        this.props.updateItemSharedByDudes(this.state.selectedIds)
+        const splitCosts = this.state.isNonEqualSplit
+          ? Object.keys(this.state.individualAmounts)
+            .map(dudeId => ({ dudeId, amount: this.state.individualAmounts[dudeId] }))
+            .filter(({ amount }) => amount > 0)
+            .reduce((acc, { dudeId, amount }) => ({ ...acc, [dudeId]: amount }), {})
+          : this.state.selectedIds
+            .reduce((acc, dudeId) => ({ ...acc, [dudeId]: this.props.price / this.state.selectedIds.length }), {})
+        this.props.updateItemCostSplitting(splitCosts)
         this.props.closeModal()
       } else {
         this.setState({ warning: 'Warning - you need to select at least one dude' })

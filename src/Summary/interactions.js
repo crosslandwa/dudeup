@@ -1,6 +1,8 @@
 import { dudeIdsSelector } from '../DudeList/interactions'
-import { itemIdsForDudeSelector, itemPriceSelector, itemSharedByDudeIdsSelector } from '../ItemList/interactions'
+import { itemIdsForDudeSelector, itemPriceSelector, itemCostSplittingSelector } from '../ItemList/interactions'
 import DudeUp from 'dudeup'
+
+const apply = (f, x) => f(x)
 
 // ------SELECTORS------
 
@@ -10,7 +12,7 @@ export const dudesInDebtSummarySelector = state => {
       ...acc,
       [dudeId]: itemIdsForDudeSelector(state, dudeId).map(itemId => ({
         amount: itemPriceSelector(state, itemId),
-        dudes: itemSharedByDudeIdsSelector(state, itemId)
+        dudes: apply(dudeIds => dudeIds.length ? dudeIds : undefined, Object.keys(itemCostSplittingSelector(state, itemId)))
       }))
     }), {}))
   const dudeIds = dudeIdsSelector(state)
