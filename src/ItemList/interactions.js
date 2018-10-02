@@ -1,4 +1,5 @@
-import { dudeIdsSelector } from '../DudeList/interactions'
+const roundDown = amount => parseInt(amount * 100) / 100
+const uniques = array => [...new Set(array)]
 
 // ------ACTIONS------
 export const addItem = () => ({ type: 'ITEMLIST_ADD_ITEM' })
@@ -6,12 +7,10 @@ export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
 export const updateItemDescription = (id, description) => ({ type: 'ITEMLIST_UPDATE_ITEM_DESCRIPTION', id, description })
 export const updateItemPrice = (id, price) => ({ type: 'ITEMLIST_UPDATE_ITEM_PRICE', id, price })
 export const updateItemDude = (id, dudeId) => ({ type: 'ITEMLIST_UPDATE_ITEM_DUDE', id, dudeId })
-export const updateItemIsUnequalSplit = (id, isUnequalSplit) => ({ type: 'ITEMLIST_UPDATE_ITEM_UNEQUAL_SPLIT', id, isUnequalSplit })
-export const updateItemSharedByDudes = (id, dudeIds) => ({ type: 'ITEMLIST_UPDATE_ITEM_SHARED_BY_DUDES', id, dudeIds })
 export const updateItemCostSplitting = (id, dudeIdToAmount) => ({
   type: 'ITEMLIST_UPDATE_ITEM_COST_SPLITTING',
   id,
-  costSplitting: Object.keys(dudeIdToAmount).reduce((acc, dudeId) => ({ ...acc, [dudeId]: dudeIdToAmount[dudeId] || 0 }), {})
+  costSplitting: Object.keys(dudeIdToAmount).reduce((acc, dudeId) => ({ ...acc, [dudeId]: roundDown(dudeIdToAmount[dudeId] || 0) }), {})
 })
 
 // ------SELECTORS------
@@ -19,21 +18,22 @@ export const itemIdsSelector = state => state.persisted.items.allIds
 const itemSelector = (state, id) => state.persisted.items.byId[id]
 export const itemCostSplittingSelector = (state, id) => itemSelector(state, id).costSplitting
 export const itemDescriptionSelector = (state, id) => itemSelector(state, id).description
+export const itemIsEqualSplitSelector = (state, id) => {
+  const costSplit = itemCostSplittingSelector(state, id)
+  const sharingDudeIds = Object.keys(costSplit)
+  return (sharingDudeIds.length <= 1) || uniques(sharingDudeIds.map(dudeId => costSplit[dudeId])).length === 1
+}
 export const itemPriceSelector = (state, id) => itemSelector(state, id).price
 export const itemDudeSelector = (state, id) => itemSelector(state, id).dudeId
 export const itemIdsForDudeSelector = (state, dudeId) => itemIdsSelector(state)
   .filter(itemId => itemDudeSelector(state, itemId) === dudeId)
-export const itemIsUnequalSplitSelector = (state, id) => itemSelector(state, id).isUnequalSplit
-export const itemSharedByDudeIdsSelector = (state, id) => itemSelector(state, id).sharedByDudes || dudeIdsSelector(state)
 
 // ------REDUCERS------
 const defaultItemState = {
   costSplitting: {},
   description: '',
   dudeId: undefined,
-  isUnequalSplit: false,
-  price: 0,
-  sharedByDudes: undefined
+  price: 0
 }
 
 const item = (state = defaultItemState, action) => {
@@ -41,13 +41,9 @@ const item = (state = defaultItemState, action) => {
     case 'ITEMLIST_UPDATE_ITEM_DESCRIPTION':
       return { ...state, description: action.description }
     case 'ITEMLIST_UPDATE_ITEM_PRICE':
-      return { ...state, price: parseInt(action.price * 100) / 100 }
+      return { ...state, price: roundDown(action.price) }
     case 'ITEMLIST_UPDATE_ITEM_DUDE':
       return { ...state, dudeId: action.dudeId || undefined }
-    case 'ITEMLIST_UPDATE_ITEM_UNEQUAL_SPLIT':
-      return { ...state, isUnequalSplit: !!action.isUnequalSplit }
-    case 'ITEMLIST_UPDATE_ITEM_SHARED_BY_DUDES':
-      return { ...state, sharedByDudes: action.dudeIds }
     case 'ITEMLIST_UPDATE_ITEM_COST_SPLITTING':
       return { ...state, costSplitting: action.costSplitting }
   }

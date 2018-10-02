@@ -2,7 +2,7 @@ import createStore from '../../store'
 import { addDude, dudeIdsSelector } from '../../DudeList/interactions'
 import {
   addItem, itemIdsSelector,
-  updateItemDude, updateItemPrice, updateItemSharedByDudes
+  updateItemDude, updateItemPrice, updateItemCostSplitting
 } from '../../ItemList/interactions'
 import { dudesInDebtSummarySelector } from '../interactions'
 
@@ -71,7 +71,10 @@ describe('Summary', () => {
 
     const itemId = addItemAndReturnId(store)
     store.dispatch(updateItemDude(itemId, dudeId1))
-    store.dispatch(updateItemSharedByDudes(itemId, [dudeId1, dudeId2]))
+    store.dispatch(updateItemCostSplitting(itemId, {
+      [dudeId1]: 4.5,
+      [dudeId2]: 4.5
+    }))
     store.dispatch(updateItemPrice(itemId, 9))
 
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId1]).toEqual([])
