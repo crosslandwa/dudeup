@@ -8,10 +8,16 @@ export const updateItemPrice = (id, price) => ({ type: 'ITEMLIST_UPDATE_ITEM_PRI
 export const updateItemDude = (id, dudeId) => ({ type: 'ITEMLIST_UPDATE_ITEM_DUDE', id, dudeId })
 export const updateItemIsUnequalSplit = (id, isUnequalSplit) => ({ type: 'ITEMLIST_UPDATE_ITEM_UNEQUAL_SPLIT', id, isUnequalSplit })
 export const updateItemSharedByDudes = (id, dudeIds) => ({ type: 'ITEMLIST_UPDATE_ITEM_SHARED_BY_DUDES', id, dudeIds })
+export const updateItemCostSplitting = (id, dudeIdToAmount) => ({
+  type: 'ITEMLIST_UPDATE_ITEM_COST_SPLITTING',
+  id,
+  costSplitting: Object.keys(dudeIdToAmount).reduce((acc, dudeId) => ({ ...acc, [dudeId]: dudeIdToAmount[dudeId] || 0 }), {})
+})
 
 // ------SELECTORS------
 export const itemIdsSelector = state => state.persisted.items.allIds
 const itemSelector = (state, id) => state.persisted.items.byId[id]
+export const itemCostSplittingSelector = (state, id) => itemSelector(state, id).costSplitting
 export const itemDescriptionSelector = (state, id) => itemSelector(state, id).description
 export const itemPriceSelector = (state, id) => itemSelector(state, id).price
 export const itemDudeSelector = (state, id) => itemSelector(state, id).dudeId
@@ -22,6 +28,7 @@ export const itemSharedByDudeIdsSelector = (state, id) => itemSelector(state, id
 
 // ------REDUCERS------
 const defaultItemState = {
+  costSplitting: {},
   description: '',
   dudeId: undefined,
   isUnequalSplit: false,
@@ -41,6 +48,8 @@ const item = (state = defaultItemState, action) => {
       return { ...state, isUnequalSplit: !!action.isUnequalSplit }
     case 'ITEMLIST_UPDATE_ITEM_SHARED_BY_DUDES':
       return { ...state, sharedByDudes: action.dudeIds }
+    case 'ITEMLIST_UPDATE_ITEM_COST_SPLITTING':
+      return { ...state, costSplitting: action.costSplitting }
   }
   return state
 }
