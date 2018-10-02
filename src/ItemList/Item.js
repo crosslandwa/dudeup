@@ -4,7 +4,6 @@ import {
   itemDescriptionSelector, updateItemDescription,
   itemDudeSelector, updateItemDude,
   itemIsUnequalSplitSelector,
-  itemIsSharedByAllSelector,
   itemPriceSelector, updateItemPrice,
   itemSharedByDudeIdsSelector,
   removeItem
@@ -14,20 +13,13 @@ import { dudeNameSelector } from '../DudeList/interactions'
 import { openModal as openSplitCostModal } from '../SplitCostModal/interactions'
 import { fauxLinkStyle, textButtonStyle, textInputStyle } from '../styles'
 
-const sharingLabel = (isSharedByAll, isUnequalSplit, sharingSummary) => {
-  switch (true) {
-    case (isSharedByAll && !isUnequalSplit):
-      return 'Shared by everyone'
-    case (isSharedByAll && isUnequalSplit):
-    case (!isSharedByAll && isUnequalSplit):
-      return `Shared by ${sharingSummary.map(summary => `${summary.name} (${summary.amount.toFixed(2)})`).join(', ')}`
-    case (!isSharedByAll && !isUnequalSplit):
-      return `Shared by ${sharingSummary.map(summary => summary.name).join(', ')}`
-  }
+const sharingLabel = (isUnequalSplit, sharingSummary) => {
+  return isUnequalSplit
+    ? `Shared by ${sharingSummary.map(summary => `${summary.name} (${summary.amount.toFixed(2)})`).join(', ')}`
+    : `Shared by ${sharingSummary.map(summary => summary.name).join(', ')}`
 }
 
 const mapStateToProps = (state, { id }) => {
-  const isSharedByAll = itemIsSharedByAllSelector(state, id)
   const isUnequalSplit = itemIsUnequalSplitSelector(state, id)
   const sharedDudeIds = itemSharedByDudeIdsSelector(state, id)
   const sharingSummary = sharedDudeIds.map(dudeId => ({
@@ -38,7 +30,7 @@ const mapStateToProps = (state, { id }) => {
     description: itemDescriptionSelector(state, id),
     dudeId: itemDudeSelector(state, id),
     price: itemPriceSelector(state, id),
-    sharingLabel: sharingLabel(isSharedByAll, isUnequalSplit, sharingSummary)
+    sharingLabel: sharingLabel(isUnequalSplit, sharingSummary)
   }
 }
 
