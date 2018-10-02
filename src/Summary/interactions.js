@@ -10,13 +10,15 @@ export const dudesInDebtSummarySelector = state => {
   const summary = DudeUp(dudeIdsSelector(state)
     .reduce((acc, dudeId) => ({
       ...acc,
-      [dudeId]: itemIdsForDudeSelector(state, dudeId).map(itemId => {
-        const costSplit = itemCostSplittingSelector(state, itemId)
-        const sharingDudeIds = Object.keys(costSplit)
-        return sharingDudeIds.length
-          ? sharingDudeIds.map(sharingDudeId => ({ amount: costSplit[sharingDudeId], dudes: [sharingDudeId] }))
-          : [{ amount: itemPriceSelector(state, itemId) }]
-      }).reduce((acc, it) => acc.concat(it), [])
+      [dudeId]: itemIdsForDudeSelector(state, dudeId).map(itemId => apply(
+        costSplit => apply(
+          sharingDudeIds => sharingDudeIds.length
+            ? sharingDudeIds.map(sharingDudeId => ({ amount: costSplit[sharingDudeId], dudes: [sharingDudeId] }))
+            : [{ amount: itemPriceSelector(state, itemId) }],
+          Object.keys(costSplit)
+        ),
+        itemCostSplittingSelector(state, itemId)
+      )).reduce((acc, it) => acc.concat(it), [])
     }), {}))
   const dudeIds = dudeIdsSelector(state)
 

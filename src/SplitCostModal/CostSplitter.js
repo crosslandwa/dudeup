@@ -17,7 +17,7 @@ const apply = (f, x) => f(x)
 const mapStateToProps = (state, { itemId }) => ({
   allDudeIds: dudeIdsSelector(state),
   dudeName: apply(dudeId => dudeId ? dudeNameSelector(state, dudeId) : 'some dude', itemDudeSelector(state, itemId)),
-  isNonEqualSplit: !itemIsEqualSplitSelector(state, itemId),
+  isEqualSplit: itemIsEqualSplitSelector(state, itemId),
   itemDescription: itemDescriptionSelector(state, itemId) || 'a mystery item',
   price: itemPriceSelector(state, itemId),
   costSplitting: itemCostSplittingSelector(state, itemId)
@@ -61,7 +61,7 @@ class CostSplitter extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      isNonEqualSplit: props.isNonEqualSplit,
+      isEqualSplit: props.isEqualSplit,
       selectedIds: apply(dudeIds => dudeIds.length ? dudeIds : props.allDudeIds, Object.keys(props.costSplitting)),
       individualAmounts: props.costSplitting
     }
@@ -79,23 +79,23 @@ class CostSplitter extends React.Component {
     }
     this.setEqualSplit = e => {
       if (e.target.checked) {
-        this.setState({ isNonEqualSplit: false })
+        this.setState({ isEqualSplit: true })
       }
     }
     this.setNonEqualSplit = e => {
       if (e.target.checked) {
-        this.setState({ isNonEqualSplit: true })
+        this.setState({ isEqualSplit: false })
       }
     }
     this.submit = () => {
       if (this.state.selectedIds.length) {
-        const splitCosts = this.state.isNonEqualSplit
-          ? Object.keys(this.state.individualAmounts)
+        const splitCosts = this.state.isEqualSplit
+          ? this.state.selectedIds
+            .reduce((acc, dudeId) => ({ ...acc, [dudeId]: this.props.price / this.state.selectedIds.length }), {})
+          : Object.keys(this.state.individualAmounts)
             .map(dudeId => ({ dudeId, amount: this.state.individualAmounts[dudeId] }))
             .filter(({ amount }) => amount > 0)
             .reduce((acc, { dudeId, amount }) => ({ ...acc, [dudeId]: amount }), {})
-          : this.state.selectedIds
-            .reduce((acc, dudeId) => ({ ...acc, [dudeId]: this.props.price / this.state.selectedIds.length }), {})
         this.props.updateItemCostSplitting(splitCosts)
         this.props.closeModal()
       } else {
@@ -118,19 +118,19 @@ class CostSplitter extends React.Component {
           <div>
             <label>
               Split equally between
-              <input type="radio" checked={!this.state.isNonEqualSplit} onChange={this.setEqualSplit} />
+              <input type="radio" checked={this.state.isEqualSplit} onChange={this.setEqualSplit} />
             </label>
             <label>
               Split unequally between
-              <input type="radio" checked={this.state.isNonEqualSplit} onChange={this.setNonEqualSplit} />
+              <input type="radio" checked={!this.state.isEqualSplit} onChange={this.setNonEqualSplit} />
             </label>
           </div>
           <div>
             {this.props.allDudeIds.map(id => (
               <div>
-                {this.state.isNonEqualSplit
-                  ? <AmountInputOption id={id} price={this.state.individualAmounts[id]} onChange={e => this.updateIndividualAmount(id, e.target.value)} />
-                  : <CheckBoxOption id={id} selected={this.state.selectedIds.includes(id)} onChange={e => this.toggleDudesInvolvement(id, e.target.checked)}/>
+                {this.state.isEqualSplit
+                  ? <CheckBoxOption id={id} selected={this.state.selectedIds.includes(id)} onChange={e => this.toggleDudesInvolvement(id, e.target.checked)}/>
+                  : <AmountInputOption id={id} price={this.state.individualAmounts[id]} onChange={e => this.updateIndividualAmount(id, e.target.value)} />
                 }
               </div>
             ))}
