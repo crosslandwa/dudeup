@@ -3,7 +3,7 @@ import {
   addItem, removeItem, itemIdsSelector,
   updateItemCostSplitting, itemCostSplittingSelector, itemIsEqualSplitSelector,
   updateItemDescription, itemDescriptionSelector,
-  updateItemBoughtBy, itemDudeSelector, itemPriceSelector
+  updateItemBoughtBy, itemBoughtByDudeIdSelector, itemPriceSelector
 } from '../interactions'
 import { addDude, removeDude, dudeIdsSelector } from '../../DudeList/interactions'
 
@@ -58,12 +58,12 @@ describe('Item List', () => {
     const itemId = addItemAndReturnId(store)
     const dudeId = addDudeAndReturnId(store, 'Some dude')
 
-    expect(itemDudeSelector(store.getState(), itemId)).toEqual(undefined)
+    expect(itemBoughtByDudeIdSelector(store.getState(), itemId)).toEqual(undefined)
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(0)
 
     store.dispatch(updateItemBoughtBy(itemId, dudeId, 99.99))
 
-    expect(itemDudeSelector(store.getState(), itemId)).toEqual(dudeId)
+    expect(itemBoughtByDudeIdSelector(store.getState(), itemId)).toEqual(dudeId)
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(99.99)
   })
 
@@ -88,7 +88,7 @@ describe('Item List', () => {
 
     store.dispatch(removeDude(dudeId))
 
-    expect(itemDudeSelector(store.getState(), itemId)).toEqual(undefined)
+    expect(itemBoughtByDudeIdSelector(store.getState(), itemId)).toEqual(undefined)
   })
 
   it('shares item cost equally between all dudes by default', () => {

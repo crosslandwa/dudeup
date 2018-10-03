@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {
   itemCostSplittingSelector,
   itemDescriptionSelector, updateItemDescription,
-  itemDudeSelector, itemPriceSelector, updateItemBoughtBy,
+  itemBoughtByDudeIdSelector, itemPriceSelector, updateItemBoughtBy,
   removeItem
 } from './interactions'
 import DudeList from '../DudeList'
@@ -15,7 +15,7 @@ const mapStateToProps = (state, { id }) => {
   const costSplit = itemCostSplittingSelector(state, id)
   return {
     description: itemDescriptionSelector(state, id),
-    dudeId: itemDudeSelector(state, id),
+    dudeId: itemBoughtByDudeIdSelector(state, id),
     price: itemPriceSelector(state, id),
     sharingLabel: Object.keys(costSplit).length
       ? `Shared by ${Object.keys(costSplit).map(dudeId => `${dudeNameSelector(state, dudeId)} (${costSplit[dudeId].toFixed(2)})`).join(', ')}`

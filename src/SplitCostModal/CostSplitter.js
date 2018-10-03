@@ -6,7 +6,7 @@ import {
   itemCostSplittingSelector, updateItemCostSplitting,
   itemIsEqualSplitSelector,
   itemDescriptionSelector,
-  itemDudeSelector,
+  itemBoughtByDudeIdSelector,
   itemPriceSelector
 } from '../ItemList/interactions'
 import { dudeIdsSelector, dudeNameSelector } from '../DudeList/interactions'
@@ -16,7 +16,7 @@ const apply = (f, x) => f(x)
 
 const mapStateToProps = (state, { itemId }) => ({
   allDudeIds: dudeIdsSelector(state),
-  dudeName: apply(dudeId => dudeId ? dudeNameSelector(state, dudeId) : 'some dude', itemDudeSelector(state, itemId)),
+  dudeName: apply(dudeId => dudeId ? dudeNameSelector(state, dudeId) : 'some dude', itemBoughtByDudeIdSelector(state, itemId)),
   isEqualSplit: itemIsEqualSplitSelector(state, itemId),
   itemDescription: itemDescriptionSelector(state, itemId) || 'a mystery item',
   price: itemPriceSelector(state, itemId),

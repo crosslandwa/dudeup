@@ -1,5 +1,5 @@
 import { dudeIdsSelector } from '../DudeList/interactions'
-import { itemIdsForDudeSelector, itemPriceSelector, itemCostSplittingSelector } from '../ItemList/interactions'
+import { itemIdsBoughtByDudeSelector, itemPriceSelector, itemCostSplittingSelector } from '../ItemList/interactions'
 import DudeUp from 'dudeup'
 
 const apply = (f, x) => f(x)
@@ -10,7 +10,7 @@ export const dudesInDebtSummarySelector = state => {
   const summary = DudeUp(dudeIdsSelector(state)
     .reduce((acc, dudeId) => ({
       ...acc,
-      [dudeId]: itemIdsForDudeSelector(state, dudeId).map(itemId => apply(
+      [dudeId]: itemIdsBoughtByDudeSelector(state, dudeId).map(itemId => apply(
         costSplit => apply(
           sharingDudeIds => sharingDudeIds.length
             ? sharingDudeIds.map(sharingDudeId => ({ amount: costSplit[sharingDudeId], dudes: [sharingDudeId] }))
