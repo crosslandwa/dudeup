@@ -23,9 +23,9 @@ export const itemIsEqualSplitSelector = (state, id) => {
   return (sharingDudeIds.length <= 1) || uniques(sharingDudeIds.map(dudeId => costSplit[dudeId])).length === 1
 }
 export const itemPriceSelector = (state, id) => itemSelector(state, id).boughtBy.price
-export const itemDudeSelector = (state, id) => itemSelector(state, id).boughtBy.dudeId
-export const itemIdsForDudeSelector = (state, dudeId) => itemIdsSelector(state)
-  .filter(itemId => itemDudeSelector(state, itemId) === dudeId)
+export const itemBoughtByDudeIdSelector = (state, id) => itemSelector(state, id).boughtBy.dudeId
+export const itemIdsBoughtByDudeSelector = (state, dudeId) => itemIdsSelector(state)
+  .filter(itemId => itemBoughtByDudeIdSelector(state, itemId) === dudeId)
 
 // ------REDUCERS------
 const defaultItemState = {
@@ -75,7 +75,7 @@ export function middleware (store) {
   return (next) => (action) => {
     switch (action.type) {
       case 'DUDELIST_REMOVE_DUDE':
-        itemIdsForDudeSelector(store.getState(), action.id)
+        itemIdsBoughtByDudeSelector(store.getState(), action.id)
           .map(itemId => next(updateItemBoughtBy(itemId, undefined, itemPriceSelector(store.getState(), itemId))))
         break
       case 'ITEMLIST_REMOVE_ITEM':
