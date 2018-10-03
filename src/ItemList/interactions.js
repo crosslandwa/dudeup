@@ -4,9 +4,8 @@ const uniques = array => [...new Set(array)]
 // ------ACTIONS------
 export const addItem = () => ({ type: 'ITEMLIST_ADD_ITEM' })
 export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
+export const updateItemBoughtBy = (id, dudeId, price) => ({ type: 'ITEMLIST_UPDATE_ITEM_BOUGHT_BY', id, dudeId, price })
 export const updateItemDescription = (id, description) => ({ type: 'ITEMLIST_UPDATE_ITEM_DESCRIPTION', id, description })
-export const updateItemPrice = (id, price) => ({ type: 'ITEMLIST_UPDATE_ITEM_PRICE', id, price })
-export const updateItemDude = (id, dudeId) => ({ type: 'ITEMLIST_UPDATE_ITEM_DUDE', id, dudeId })
 export const updateItemCostSplitting = (id, dudeIdToAmount) => ({
   type: 'ITEMLIST_UPDATE_ITEM_COST_SPLITTING',
   id,
@@ -23,27 +22,27 @@ export const itemIsEqualSplitSelector = (state, id) => {
   const sharingDudeIds = Object.keys(costSplit)
   return (sharingDudeIds.length <= 1) || uniques(sharingDudeIds.map(dudeId => costSplit[dudeId])).length === 1
 }
-export const itemPriceSelector = (state, id) => itemSelector(state, id).price
-export const itemDudeSelector = (state, id) => itemSelector(state, id).dudeId
+export const itemPriceSelector = (state, id) => itemSelector(state, id).boughtBy.price
+export const itemDudeSelector = (state, id) => itemSelector(state, id).boughtBy.dudeId
 export const itemIdsForDudeSelector = (state, dudeId) => itemIdsSelector(state)
   .filter(itemId => itemDudeSelector(state, itemId) === dudeId)
 
 // ------REDUCERS------
 const defaultItemState = {
+  boughtBy: {
+    dudeId: undefined,
+    price: 0
+  },
   costSplitting: {},
-  description: '',
-  dudeId: undefined,
-  price: 0
+  description: ''
 }
 
 const item = (state = defaultItemState, action) => {
   switch (action.type) {
     case 'ITEMLIST_UPDATE_ITEM_DESCRIPTION':
       return { ...state, description: action.description }
-    case 'ITEMLIST_UPDATE_ITEM_PRICE':
-      return { ...state, price: roundDown(action.price) }
-    case 'ITEMLIST_UPDATE_ITEM_DUDE':
-      return { ...state, dudeId: action.dudeId || undefined }
+    case 'ITEMLIST_UPDATE_ITEM_BOUGHT_BY':
+      return { ...state, boughtBy: { dudeId: action.dudeId || undefined, price: roundDown(action.price) } }
     case 'ITEMLIST_UPDATE_ITEM_COST_SPLITTING':
       return { ...state, costSplitting: action.costSplitting }
   }
@@ -77,7 +76,7 @@ export function middleware (store) {
     switch (action.type) {
       case 'DUDELIST_REMOVE_DUDE':
         itemIdsForDudeSelector(store.getState(), action.id)
-          .map(itemId => next(updateItemDude(itemId, undefined)))
+          .map(itemId => next(updateItemBoughtBy(itemId, undefined, itemPriceSelector(store.getState(), itemId))))
         break
       case 'ITEMLIST_REMOVE_ITEM':
         next(action)

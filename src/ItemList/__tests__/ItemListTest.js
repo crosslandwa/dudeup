@@ -3,8 +3,7 @@ import {
   addItem, removeItem, itemIdsSelector,
   updateItemCostSplitting, itemCostSplittingSelector, itemIsEqualSplitSelector,
   updateItemDescription, itemDescriptionSelector,
-  updateItemDude, itemDudeSelector,
-  updateItemPrice, itemPriceSelector
+  updateItemBoughtBy, itemDudeSelector, itemPriceSelector
 } from '../interactions'
 import { addDude, removeDude, dudeIdsSelector } from '../../DudeList/interactions'
 
@@ -54,38 +53,30 @@ describe('Item List', () => {
     expect(itemDescriptionSelector(store.getState(), itemId)).toEqual('a lovely thing')
   })
 
-  it('can have the price of an item updated', () => {
+  it('can have the dude that bought the item and item price updated', () => {
     const store = createStore()
     const itemId = addItemAndReturnId(store)
+    const dudeId = addDudeAndReturnId(store, 'Some dude')
 
+    expect(itemDudeSelector(store.getState(), itemId)).toEqual(undefined)
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(0)
 
-    store.dispatch(updateItemPrice(itemId, 99.99))
+    store.dispatch(updateItemBoughtBy(itemId, dudeId, 99.99))
 
+    expect(itemDudeSelector(store.getState(), itemId)).toEqual(dudeId)
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(99.99)
   })
 
   it('restricts item price to 2dp rounded down', () => {
     const store = createStore()
     const itemId = addItemAndReturnId(store)
+    const dudeId = addDudeAndReturnId(store, 'Some dude')
 
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(0)
 
-    store.dispatch(updateItemPrice(itemId, 1.057))
+    store.dispatch(updateItemBoughtBy(itemId, dudeId, 1.057))
 
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(1.05)
-  })
-
-  it('can have the dude that bought an item updated', () => {
-    const store = createStore()
-    const itemId = addItemAndReturnId(store)
-    const dudeId = 'the_lonely_guy'
-
-    expect(itemDudeSelector(store.getState(), itemId)).toEqual(undefined)
-
-    store.dispatch(updateItemDude(itemId, dudeId))
-
-    expect(itemDudeSelector(store.getState(), itemId)).toEqual(dudeId)
   })
 
   it('dissociates a removed dude from any items', () => {
@@ -93,7 +84,7 @@ describe('Item List', () => {
     const itemId = addItemAndReturnId(store)
     const dudeId = addDudeAndReturnId(store, 'A man')
 
-    store.dispatch(updateItemDude(itemId, dudeId))
+    store.dispatch(updateItemBoughtBy(itemId, dudeId, 100))
 
     store.dispatch(removeDude(dudeId))
 

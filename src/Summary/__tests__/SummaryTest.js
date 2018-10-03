@@ -2,7 +2,7 @@ import createStore from '../../store'
 import { addDude, dudeIdsSelector } from '../../DudeList/interactions'
 import {
   addItem, itemIdsSelector,
-  updateItemDude, updateItemPrice, updateItemCostSplitting
+  updateItemBoughtBy, updateItemCostSplitting
 } from '../../ItemList/interactions'
 import { dudesInDebtSummarySelector } from '../interactions'
 
@@ -22,8 +22,7 @@ describe('Summary', () => {
     const dudeId1 = addDudeAndReturnId(store, 'dude 1')
 
     const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItemDude(itemId, dudeId1))
-    store.dispatch(updateItemPrice(itemId, 9))
+    store.dispatch(updateItemBoughtBy(itemId, dudeId1, 9))
 
     expect(dudesInDebtSummarySelector(store.getState()).spentAmounts[dudeId1]).toEqual(9)
   })
@@ -33,8 +32,7 @@ describe('Summary', () => {
     const dudeId1 = addDudeAndReturnId(store, 'dude 1')
 
     const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItemDude(itemId, dudeId1))
-    store.dispatch(updateItemPrice(itemId, 10))
+    store.dispatch(updateItemBoughtBy(itemId, dudeId1, 10))
 
     expect(dudesInDebtSummarySelector(store.getState()).spentOnAmounts[dudeId1]).toEqual(10)
   })
@@ -55,8 +53,7 @@ describe('Summary', () => {
     const dudeId3 = addDudeAndReturnId(store, 'dude 3')
 
     const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItemDude(itemId, dudeId1))
-    store.dispatch(updateItemPrice(itemId, 9))
+    store.dispatch(updateItemBoughtBy(itemId, dudeId1, 9))
 
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId1]).toEqual([])
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId2]).toEqual([{ dudeId: dudeId1, amount: 3 }])
@@ -70,8 +67,7 @@ describe('Summary', () => {
     const dudeId3 = addDudeAndReturnId(store, 'dude 3')
 
     const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItemDude(itemId, dudeId1))
-    store.dispatch(updateItemPrice(itemId, 9))
+    store.dispatch(updateItemBoughtBy(itemId, dudeId1, 9))
     store.dispatch(updateItemCostSplitting(itemId, {
       [dudeId1]: 4.5,
       [dudeId2]: 4.5
@@ -96,12 +92,10 @@ describe('Summary', () => {
     const dudeId1 = addDudeAndReturnId(store, 'dude 1')
 
     const itemId1 = addItemAndReturnId(store)
-    store.dispatch(updateItemDude(itemId1, dudeId1))
-    store.dispatch(updateItemPrice(itemId1, 9))
+    store.dispatch(updateItemBoughtBy(itemId1, dudeId1, 9))
 
     const itemId2 = addItemAndReturnId(store)
-    store.dispatch(updateItemDude(itemId2, dudeId1))
-    store.dispatch(updateItemPrice(itemId2, 19))
+    store.dispatch(updateItemBoughtBy(itemId2, dudeId1, 19))
 
     expect(dudesInDebtSummarySelector(store.getState()).groupTotal).toEqual(28)
   })
