@@ -22,7 +22,7 @@ const Dude = connect(mapDudeIdToName)(props => (
 
 const DudeList = props => (
   <select style={selectButtonStyle} autoFocus onChange={props.onChange}>
-    <option>Select a dude...</option>
+    <option value={''} >Select a dude...</option>
     {props.ids.map(id => <Dude id={id} selected={id === props.selectedId}/>)}
   </select>
 )
