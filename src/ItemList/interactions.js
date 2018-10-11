@@ -42,7 +42,13 @@ const item = (state = defaultItemState, action) => {
     case 'ITEMLIST_UPDATE_ITEM_DESCRIPTION':
       return { ...state, description: action.description }
     case 'ITEMLIST_UPDATE_ITEM_BOUGHT_BY':
-      return { ...state, boughtBy: { dudeId: action.dudeId || undefined, price: roundDown(action.price) } }
+      return {
+        ...state,
+        boughtBy: {
+          dudeId: action.dudeId || undefined,
+          price: action.price ? roundDown(action.price) : state.boughtBy.price
+        }
+      }
     case 'ITEMLIST_UPDATE_ITEM_COST_SPLITTING':
       return { ...state, costSplitting: action.costSplitting }
   }

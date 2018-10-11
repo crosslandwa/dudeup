@@ -6,6 +6,7 @@ import {
   itemBoughtByDudeIdSelector, itemPriceSelector, updateItemBoughtBy,
   removeItem
 } from './interactions'
+import { openModal as openAddDudeModal } from '../AddDudeModal/interactions'
 import DudeList from '../DudeList'
 import { dudeNameSelector } from '../DudeList/interactions'
 import { openModal as openSplitCostModal } from '../SplitCostModal/interactions'
@@ -27,12 +28,22 @@ const mapDispatchToProps = (dispatch, { id }) => ({
   openSplitCostModal: e => dispatch(openSplitCostModal(id)),
   remove: e => dispatch(removeItem(id)),
   updateDescription: e => dispatch(updateItemDescription(id, e.target.value)),
-  updateItemBoughtBy: (dudeId, price) => dispatch(updateItemBoughtBy(id, dudeId, price))
+  updateItemBoughtBy: (dudeId, price) => {
+    if (dudeId === '_add_dude_') {
+      dispatch(openAddDudeModal(id))
+    } else {
+      dispatch(updateItemBoughtBy(id, dudeId, price))
+    }
+  }
 })
 
 const Item = props => (
   <div style={{ margin: '0.5em' }}>
-    <DudeList selectedId={props.dudeId} onChange={e => props.updateItemBoughtBy(e.target.value, props.price)} />
+    <DudeList
+      customOptions={[{id: '_add_dude_', label: 'Add dude'}]}
+      selectedId={props.dudeId}
+      onChange={e => props.updateItemBoughtBy(e.target.value, props.price)}
+    />
     <input style={textInputStyle} placeholder="item description" value={props.description} onChange={props.updateDescription} />
     <input style={textInputStyle} type="number" step="0.01" onChange={e => props.updateItemBoughtBy(props.dudeId, e.target.value)} placeholder="0" value={props.price !== 0 ? props.price : ''} />
     <input style={textButtonStyle} type="button" value="remove" onClick={props.remove} />

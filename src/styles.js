@@ -5,7 +5,7 @@ export const fauxLinkStyle = {
   fontStyle: 'italic'
 }
 
-export const selectButtonStyle = {
+export const dropdownStyle = {
   fontSize: 'inherit',
   border: '1px solid black',
   cursor: 'pointer'

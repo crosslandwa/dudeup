@@ -1,29 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { dudeIdsSelector, dudeNameSelector } from './interactions'
-import { selectButtonStyle } from '../styles'
+import { dropdownStyle } from '../styles'
 
 const mapStateToProps = state => ({
-  ids: dudeIdsSelector(state)
+  dudes: dudeIdsSelector(state).map(id => ({ id, name: dudeNameSelector(state, id) }))
 })
 
-const mapDudeIdToName = (state, { id }) => ({
-  name: dudeNameSelector(state, id)
-})
-
-const Dude = connect(mapDudeIdToName)(props => (
-  <option
-    value={props.id}
-    selected={props.selected}
-  >
-    {props.name}
-  </option>
-))
-
-const DudeList = props => (
-  <select style={selectButtonStyle} autoFocus onChange={props.onChange}>
+const DudeList = ({ customOptions = [], dudes, onChange, selectedId }) => (
+  <select style={dropdownStyle} autoFocus onChange={onChange}>
     <option value={''} >Select a dude...</option>
-    {props.ids.map(id => <Dude id={id} selected={id === props.selectedId}/>)}
+    {dudes.map(({ id, name }) => (
+      <option
+        value={id}
+        selected={id === selectedId}
+      >
+        {name}
+      </option>
+    ))}
+    {customOptions.length && <option disabled>───────</option>}
+    {customOptions.map(({ id, label }) => <option value={id} >{label}</option>)}
   </select>
 )
 
