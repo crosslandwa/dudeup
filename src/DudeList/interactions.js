@@ -5,6 +5,7 @@ export const removeDude = id => ({ type: 'DUDELIST_REMOVE_DUDE', id })
 // ------SELECTORS------
 export const dudeIdsSelector = state => state.persisted.dudes.allIds
 export const dudeNameSelector = (state, id) => state.persisted.dudes.byId[id].name
+export const lastAddedDudeSelector = state => dudeIdsSelector(state).slice(-1)[0]
 
 // ------REDUCERS------
 const dude = (state = {}, action) => {

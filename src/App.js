@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Clear from './Clear'
 import ItemList from './ItemList'
-import DudeManagement from './DudeManagement'
 import AddDudeModal from './AddDudeModal'
 import RemoveDudeModal from './RemoveDudeModal'
 import SplitCostModal from './SplitCostModal'
@@ -20,7 +19,6 @@ const App = props => (
       <AddDudeModal />
       <RemoveDudeModal />
       <SplitCostModal />
-      <DudeManagement />
       <ItemList />
       <Summary />
       <Clear />

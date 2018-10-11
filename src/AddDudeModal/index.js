@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { modalAddDude, isModalOpenSelector } from './interactions'
+import { modalAddDude, isModalOpenSelector, modalItemIdSelector } from './interactions'
 import Modal from '../Modal'
 import { textInputStyle } from '../styles'
 
 const mapStateToProps = state => ({
-  isOpen: isModalOpenSelector(state)
+  isOpen: isModalOpenSelector(state),
+  itemId: modalItemIdSelector(state)
 })
 const mapDispatchToProps = { modalAddDude }
 
@@ -22,7 +23,7 @@ class AddDudeModal extends React.Component {
 
   render () {
     return this.props.isOpen && (
-      <Modal onSubmit={() => this.props.modalAddDude(this.state.name)} >
+      <Modal onSubmit={() => this.props.modalAddDude(this.state.name, this.props.itemId)} >
         <div style={{
           display: 'flex',
           flexDirection: 'column'
