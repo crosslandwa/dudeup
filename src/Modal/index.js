@@ -35,16 +35,18 @@ class Modal extends React.Component {
       <div style={{
         width: '100%',
         height: '100%',
-        backgroundColor: '#80808080',
+        backgroundColor: '#303030E0',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'absolute'
+        position: 'fixed'
       }}>
         <div style={{
-          width: '50vw',
-          height: '50vw',
-          backgroundColor: 'white'
+          width: '50%',
+          height: '66%',
+          backgroundColor: 'white',
+          borderRadius: '0.5em',
+          padding: '1em'
         }}>
           <form onSubmit={this.props.onSubmit} >
             {this.props.children}
