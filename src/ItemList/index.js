@@ -1,27 +1,43 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addItem, itemIdsSelector } from './interactions'
-import { openModal as openRemoveDudeModal } from '../RemoveDudeModal/interactions'
 import Item from './Item'
 import { textButtonStyle } from '../styles'
+import RemoveDudeModal from '../RemoveDudeModal'
 
 const mapStateToProps = state => ({
   ids: itemIdsSelector(state)
 })
 
-const ItemList = props => (
-  <div style={{
-    display: 'flex',
-    flexDirection: 'column'
-  }}>
-    <div>
-      {props.ids.map(id => <Item id={id} />)}
-    </div>
-    <div>
-      <input style={textButtonStyle} type="button" onClick={props.addItem} value="Add item" />
-      <input style={textButtonStyle} type="button" value="Remove Dude" onClick={props.openRemoveDudeModal} />
-    </div>
-  </div>
-)
+class ItemList extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = { modalOpen: false }
+    this.closeModal = () => {
+      this.setState({ modalOpen: false })
+    }
+    this.openModal = () => {
+      this.setState({ modalOpen: true })
+    }
+  }
 
-export default connect(mapStateToProps, { addItem, openRemoveDudeModal })(ItemList)
+  render () {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        <div>
+          {this.props.ids.map(id => <Item id={id} />)}
+        </div>
+        <div>
+          <input style={textButtonStyle} type="button" onClick={this.props.addItem} value="Add item" />
+          <input style={textButtonStyle} type="button" value="Remove Dude" onClick={this.openModal} />
+        </div>
+        {this.state.modalOpen && <RemoveDudeModal closeModal={this.closeModal} />}
+      </div>
+    )
+  }
+}
+
+export default connect(mapStateToProps, { addItem })(ItemList)
