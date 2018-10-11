@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import Clear from './Clear'
 import ItemList from './ItemList'
 import AddDudeModal from './AddDudeModal'
-import RemoveDudeModal from './RemoveDudeModal'
 import SplitCostModal from './SplitCostModal'
 import Summary from './Summary'
 import AnErrorOccurred from './AnErrorOccurred'
@@ -17,7 +16,6 @@ const App = props => (
   }}>
     <AnErrorOccurred>
       <AddDudeModal />
-      <RemoveDudeModal />
       <SplitCostModal />
       <ItemList />
       <Summary />

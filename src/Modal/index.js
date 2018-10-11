@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { closeModal } from './interactions'
 import { textButtonStyle } from '../styles'
 
-const mapDispatchToProps = (dispatch, { onSubmit }) => ({
-  closeModal: () => dispatch(closeModal()),
+const mapDispatchToProps = (dispatch, { onCancel, onSubmit }) => ({
+  closeModal: onCancel || (() => dispatch(closeModal())),
   onSubmit: event => {
     event.preventDefault()
     onSubmit()

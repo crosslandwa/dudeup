@@ -1,13 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { modalRemoveDude, isModalOpenSelector } from './interactions'
 import Modal from '../Modal'
 import DudeList from '../DudeList'
-
-const mapStateToProps = state => ({
-  isOpen: isModalOpenSelector(state)
-})
-const mapDispatchToProps = { modalRemoveDude }
+import { removeDude } from '../DudeList/interactions'
 
 class RemoveDudeModal extends React.Component {
   constructor (props) {
@@ -15,26 +10,21 @@ class RemoveDudeModal extends React.Component {
 
     this.state = { id: undefined }
 
-    this.handleInput = event => {
-      this.setState({ id: event.target.value })
+    this.removeDude = () => {
+      this.state.id && this.props.removeDude(this.state.id)
+      props.closeModal()
     }
+
+    this.selectDude = e => { this.setState({ id: e.target.value }) }
   }
 
   render () {
-    return this.props.isOpen && (
-      <Modal onSubmit={() => this.props.modalRemoveDude(this.state.id)}>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column'
-        }}>
-          <label>
-            Remove:
-            <DudeList onChange={this.handleInput} />
-          </label>
-        </div>
+    return (
+      <Modal onCancel={this.props.closeModal} onSubmit={this.removeDude}>
+        <DudeList onChange={this.selectDude} />
       </Modal>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RemoveDudeModal)
+export default connect(null, { removeDude })(RemoveDudeModal)
