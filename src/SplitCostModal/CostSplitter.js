@@ -16,7 +16,10 @@ const apply = (f, x) => f(x)
 
 const mapStateToProps = (state, { itemId }) => ({
   allDudeIds: dudeIdsSelector(state),
-  dudeName: apply(dudeId => dudeId ? dudeNameSelector(state, dudeId) : 'some dude', itemBoughtByDudeIdSelector(state, itemId)),
+  dudeName: apply(
+    dudeId => dudeId ? dudeNameSelector(state, dudeId) : 'some dude',
+    itemBoughtByDudeIdSelector(state, itemId)
+  ),
   isEqualSplit: itemIsEqualSplitSelector(state, itemId),
   itemDescription: itemDescriptionSelector(state, itemId) || 'a mystery item',
   price: itemPriceSelector(state, itemId),
@@ -113,16 +116,16 @@ class CostSplitter extends React.Component {
         }}>
           {this.state.warning && <span>{this.state.warning}</span>}
           <span>
-            Sharing {this.props.price} for <em>{this.props.itemDescription}</em> bought by <em>{this.props.dudeName}</em>
+            <strong>{this.props.itemDescription}</strong>  - bought by <em>{this.props.dudeName}</em> for {this.props.price}
           </span>
           <div>
             <label>
-              Split equally between
-              <input type="radio" checked={this.state.isEqualSplit} onChange={this.setEqualSplit} />
+              Shared by
+              <input autoFocus={this.state.isEqualSplit} type="radio" checked={this.state.isEqualSplit} onChange={this.setEqualSplit} />
             </label>
             <label>
-              Split unequally between
-              <input type="radio" checked={!this.state.isEqualSplit} onChange={this.setNonEqualSplit} />
+              Split between
+              <input autoFocus={!this.state.isEqualSplit} type="radio" checked={!this.state.isEqualSplit} onChange={this.setNonEqualSplit} />
             </label>
           </div>
           <div>
