@@ -9,7 +9,7 @@ import {
 import { openModal as openAddDudeModal } from '../AddDudeModal/interactions'
 import DudeList from '../DudeList'
 import { dudeNameSelector } from '../DudeList/interactions'
-import { openModal as openSplitCostModal } from '../SplitCostModal/interactions'
+import SplitCostModal from '../SplitCostModal'
 import { fauxLinkStyle, textButtonStyle, textInputStyle } from '../styles'
 
 const mapStateToProps = (state, { id }) => {
@@ -25,7 +25,6 @@ const mapStateToProps = (state, { id }) => {
 }
 
 const mapDispatchToProps = (dispatch, { id }) => ({
-  openSplitCostModal: e => dispatch(openSplitCostModal(id)),
   remove: e => dispatch(removeItem(id)),
   updateDescription: e => dispatch(updateItemDescription(id, e.target.value)),
   updateItemBoughtBy: (dudeId, price) => {
@@ -37,27 +36,49 @@ const mapDispatchToProps = (dispatch, { id }) => ({
   }
 })
 
-const Item = props => (
-  <div style={{ margin: '0.5em' }}>
-    <DudeList
-      customOptions={[{id: '_add_dude_', label: 'Add dude'}]}
-      selectedId={props.dudeId}
-      onChange={e => props.updateItemBoughtBy(e.target.value, props.price)}
-    />
-    <input style={textInputStyle} placeholder="item description" value={props.description} onChange={props.updateDescription} />
-    <input style={textInputStyle} type="number" step="0.01" onChange={e => props.updateItemBoughtBy(props.dudeId, e.target.value)} placeholder="0" value={props.price !== 0 ? props.price : ''} />
-    <input style={textButtonStyle} type="button" value="remove" onClick={props.remove} />
-    <div
-      style={{
-        ...fauxLinkStyle,
-        width: 'fit-content'
-      }}
-      title="Update item sharing details"
-      onClick={props.openSplitCostModal}
-    >
-      {props.sharingLabel}
-    </div>
-  </div>
-)
+class Item extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = { modalOpen: false }
+    this.closeModal = () => {
+      this.setState({ modalOpen: false })
+    }
+    this.openModal = () => {
+      this.setState({ modalOpen: true })
+    }
+  }
+
+  render () {
+    const {
+      description, dudeId, id, price, sharingLabel,
+      remove, updateDescription, updateItemBoughtBy
+    } = this.props
+    return (
+      <div style={{ margin: '0.5em' }}>
+        <DudeList
+          customOptions={[{id: '_add_dude_', label: 'Add dude'}]}
+          selectedId={dudeId}
+          onChange={e => updateItemBoughtBy(e.target.value, price)}
+        />
+        <input style={textInputStyle} placeholder="item description" value={description} onChange={updateDescription} />
+        <input style={textInputStyle} type="number" step="0.01" onChange={e => updateItemBoughtBy(dudeId, e.target.value)} placeholder="0" value={price !== 0 ? price : ''} />
+        <input style={textButtonStyle} type="button" value="remove" onClick={remove} />
+        <div
+          style={{
+            ...fauxLinkStyle,
+            width: 'fit-content'
+          }}
+          title="Update item sharing details"
+          onClick={this.openModal}
+        >
+          {sharingLabel}
+        </div>
+        {this.state.modalOpen && (
+          <SplitCostModal closeModal={this.closeModal} itemId={id} />
+        )}
+      </div>
+    )
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Item)
