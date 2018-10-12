@@ -1,14 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { modalAddDude, isModalOpenSelector, modalItemIdSelector } from './interactions'
+import { addDudeAndAssignToItem } from './interactions'
 import Modal from '../Modal'
 import { textInputStyle } from '../styles'
-
-const mapStateToProps = state => ({
-  isOpen: isModalOpenSelector(state),
-  itemId: modalItemIdSelector(state)
-})
-const mapDispatchToProps = { modalAddDude }
 
 class AddDudeModal extends React.Component {
   constructor (props) {
@@ -19,11 +13,16 @@ class AddDudeModal extends React.Component {
     this.handleTextInput = event => {
       this.setState({ name: event.target.value })
     }
+
+    this.submit = () => {
+      this.state.name && this.props.addDudeAndAssignToItem(this.state.name, this.props.itemId)
+      this.props.closeModal()
+    }
   }
 
   render () {
-    return this.props.isOpen && (
-      <Modal onSubmit={() => this.props.modalAddDude(this.state.name, this.props.itemId)} >
+    return (
+      <Modal onCancel={this.props.closeModal} onSubmit={this.submit} >
         <div style={{
           display: 'flex',
           flexDirection: 'column'
@@ -38,4 +37,4 @@ class AddDudeModal extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddDudeModal)
+export default connect(null, { addDudeAndAssignToItem })(AddDudeModal)

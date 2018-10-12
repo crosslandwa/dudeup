@@ -6,7 +6,7 @@ import {
   itemBoughtByDudeIdSelector, itemPriceSelector, updateItemBoughtBy,
   removeItem
 } from './interactions'
-import { openModal as openAddDudeModal } from '../AddDudeModal/interactions'
+import AddDudeModal from './AddDudeModal'
 import DudeList from '../DudeList'
 import { dudeNameSelector } from '../DudeList/interactions'
 import SplitCostModal from '../SplitCostModal'
@@ -27,24 +27,33 @@ const mapStateToProps = (state, { id }) => {
 const mapDispatchToProps = (dispatch, { id }) => ({
   remove: e => dispatch(removeItem(id)),
   updateDescription: e => dispatch(updateItemDescription(id, e.target.value)),
-  updateItemBoughtBy: (dudeId, price) => {
-    if (dudeId === '_add_dude_') {
-      dispatch(openAddDudeModal(id))
-    } else {
-      dispatch(updateItemBoughtBy(id, dudeId, price))
-    }
-  }
+  updateItemBoughtBy: (dudeId, price) => dispatch(updateItemBoughtBy(id, dudeId, price))
 })
 
 class Item extends React.Component {
   constructor (props) {
     super(props)
     this.state = { modalOpen: false }
+
+    const openModal = id => {
+      this.setState({ modalOpen: id })
+    }
+
     this.closeModal = () => {
       this.setState({ modalOpen: false })
     }
-    this.openModal = () => {
-      this.setState({ modalOpen: true })
+
+    this.openSplitCostModal = () => {
+      openModal('splitCost')
+    }
+
+    this.updateItemDude = e => {
+      const dudeId = e.target.value
+      if (dudeId === '_add_dude_') {
+        openModal('addDude')
+      } else {
+        this.props.updateItemBoughtBy(dudeId, this.props.price)
+      }
     }
   }
 
@@ -58,7 +67,7 @@ class Item extends React.Component {
         <DudeList
           customOptions={[{id: '_add_dude_', label: 'Add dude'}]}
           selectedId={dudeId}
-          onChange={e => updateItemBoughtBy(e.target.value, price)}
+          onChange={this.updateItemDude}
         />
         <input style={textInputStyle} placeholder="item description" value={description} onChange={updateDescription} />
         <input style={textInputStyle} type="number" step="0.01" onChange={e => updateItemBoughtBy(dudeId, e.target.value)} placeholder="0" value={price !== 0 ? price : ''} />
@@ -69,12 +78,15 @@ class Item extends React.Component {
             width: 'fit-content'
           }}
           title="Update item sharing details"
-          onClick={this.openModal}
+          onClick={this.openSplitCostModal}
         >
           {sharingLabel}
         </div>
-        {this.state.modalOpen && (
+        {this.state.modalOpen === 'splitCost' && (
           <SplitCostModal closeModal={this.closeModal} itemId={id} />
+        )}
+        {this.state.modalOpen === 'addDude' && (
+          <AddDudeModal closeModal={this.closeModal} itemId={id} />
         )}
       </div>
     )
