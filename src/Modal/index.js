@@ -1,10 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { closeModal } from './interactions'
 import { textButtonStyle } from '../styles'
 
 const mapDispatchToProps = (dispatch, { onCancel, onSubmit }) => ({
-  closeModal: onCancel || (() => dispatch(closeModal())),
   onSubmit: event => {
     event.preventDefault()
     onSubmit()
@@ -17,7 +15,7 @@ class Modal extends React.Component {
 
     this.escFunction = event => {
       if (event.keyCode === 27) {
-        this.props.closeModal()
+        this.props.onCancel()
       }
     }
   }
@@ -53,7 +51,7 @@ class Modal extends React.Component {
           <form onSubmit={this.props.onSubmit} >
             {this.props.children}
             <div>
-              <input style={textButtonStyle} type="button" value="Cancel" onClick={this.props.closeModal} />
+              <input style={textButtonStyle} type="button" value="Cancel" onClick={this.props.onCancel} />
               <input style={textButtonStyle} type="submit" value="OK"/>
             </div>
           </form>
