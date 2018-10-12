@@ -90,6 +90,7 @@ export function middleware (store) {
       case 'ITEMLIST_ADD_DUDE':
         next(addDude(action.name))
         next(updateItemBoughtBy(action.itemId, lastAddedDudeSelector(store.getState())))
+        break
       case 'ITEMLIST_REMOVE_ITEM':
         next(action)
         if (!itemIdsSelector(store.getState()).length) {

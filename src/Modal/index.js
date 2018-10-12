@@ -39,7 +39,9 @@ class Modal extends React.Component {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'fixed'
+        position: 'fixed',
+        top: 0,
+        left: 0
       }}>
         <div style={{
           width: '50%',
