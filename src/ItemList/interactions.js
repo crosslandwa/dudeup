@@ -1,7 +1,10 @@
+import { addDude, lastAddedDudeSelector } from '../DudeList/interactions'
+
 const roundDown = amount => parseInt(amount * 100) / 100
 const uniques = array => [...new Set(array)]
 
 // ------ACTIONS------
+export const addDudeAndAssignToItem = (name, itemId) => ({ type: 'ITEMLIST_ADD_DUDE', name, itemId })
 export const addItem = () => ({ type: 'ITEMLIST_ADD_ITEM' })
 export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
 export const updateItemBoughtBy = (id, dudeId, price) => ({ type: 'ITEMLIST_UPDATE_ITEM_BOUGHT_BY', id, dudeId, price })
@@ -84,6 +87,9 @@ export function middleware (store) {
         itemIdsBoughtByDudeSelector(store.getState(), action.id)
           .map(itemId => next(updateItemBoughtBy(itemId, undefined, itemPriceSelector(store.getState(), itemId))))
         break
+      case 'ITEMLIST_ADD_DUDE':
+        next(addDude(action.name))
+        next(updateItemBoughtBy(action.itemId, lastAddedDudeSelector(store.getState())))
       case 'ITEMLIST_REMOVE_ITEM':
         next(action)
         if (!itemIdsSelector(store.getState()).length) {
