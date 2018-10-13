@@ -6,8 +6,7 @@ import {
   itemBoughtByDudeIdSelector, itemPriceSelector, updateItemBoughtBy,
   removeItem
 } from './interactions'
-import AddDudeModal from './AddDudeModal'
-import DudeList from '../DudeList'
+import SelectOrAddDude from './SelectOrAddDude'
 import { dudeNameSelector } from '../DudeList/interactions'
 import SplitCostModal from '../SplitCostModal'
 import { fauxLinkStyle, textButtonStyle, textInputStyle } from '../styles'
@@ -35,42 +34,33 @@ class Item extends React.Component {
     super(props)
     this.state = { modalOpen: false }
 
-    const openModal = id => {
-      this.setState({ modalOpen: id })
+    this.openModal = () => {
+      this.setState({ modalOpen: true })
     }
 
     this.closeModal = () => {
       this.setState({ modalOpen: false })
     }
 
-    this.openSplitCostModal = () => {
-      openModal('splitCost')
+    this.updateItemBoughtByDude = dudeId => {
+      this.props.updateItemBoughtBy(dudeId, this.props.price)
     }
 
-    this.updateItemDude = e => {
-      const dudeId = e.target.value
-      if (dudeId === '_add_dude_') {
-        openModal('addDude')
-      } else {
-        this.props.updateItemBoughtBy(dudeId, this.props.price)
-      }
+    this.updateItemPrice = e => {
+      this.props.updateItemBoughtBy(this.props.dudeId, e.target.value)
     }
   }
 
   render () {
     const {
       description, dudeId, id, price, sharingLabel,
-      remove, updateDescription, updateItemBoughtBy
+      remove, updateDescription
     } = this.props
     return (
       <div style={{ margin: '0.5em' }}>
-        <DudeList
-          customOptions={[{id: '_add_dude_', label: 'Add dude'}]}
-          selectedId={dudeId}
-          onChange={this.updateItemDude}
-        />
+        <SelectOrAddDude itemId={id} selectedId={dudeId} onChange={this.updateItemBoughtByDude}/>
         <input style={textInputStyle} placeholder="item description" value={description} onChange={updateDescription} />
-        <input style={textInputStyle} type="number" step="0.01" onChange={e => updateItemBoughtBy(dudeId, e.target.value)} placeholder="0" value={price !== 0 ? price : ''} />
+        <input style={textInputStyle} type="number" step="0.01" onChange={this.updateItemPrice} placeholder="0" value={price !== 0 ? price : ''} />
         <input style={textButtonStyle} type="button" value="remove" onClick={remove} />
         <div
           style={{
@@ -78,16 +68,11 @@ class Item extends React.Component {
             width: 'fit-content'
           }}
           title="Update item sharing details"
-          onClick={this.openSplitCostModal}
+          onClick={this.openModal}
         >
           {sharingLabel}
         </div>
-        {this.state.modalOpen === 'splitCost' && (
-          <SplitCostModal closeModal={this.closeModal} itemId={id} />
-        )}
-        {this.state.modalOpen === 'addDude' && (
-          <AddDudeModal closeModal={this.closeModal} itemId={id} />
-        )}
+        {this.state.modalOpen && <SplitCostModal closeModal={this.closeModal} itemId={id} />}
       </div>
     )
   }
