@@ -1,34 +1,42 @@
-import { addDude, lastAddedDudeSelector } from '../DudeList/interactions'
+import { addDude, dudeNameSelector, lastAddedDudeSelector } from '../DudeList/interactions'
 
 const roundDown = amount => parseInt(amount * 100) / 100
-const uniques = array => [...new Set(array)]
+const apply = (f, x) => f(x)
 
 // ------ACTIONS------
 export const addDudeAndAssignToItem = (name, itemId) => ({ type: 'ITEMLIST_ADD_DUDE', name, itemId })
 export const addItem = () => ({ type: 'ITEMLIST_ADD_ITEM' })
 export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
+export const shareItemBetweenDudes = (id, dudeIds) => ({ type: 'ITEMLIST_UPDATE_ITEM_SHARING', id, dudeIds })
+export const splitItemBetweenDudes = (id, dudeIdToAmount) => ({
+  type: 'ITEMLIST_UPDATE_ITEM_SPLIT',
+  id,
+  itemSplit: Object.keys(dudeIdToAmount).reduce((acc, dudeId) => ({ ...acc, [dudeId]: roundDown(dudeIdToAmount[dudeId]) || 0 }), {})
+})
 export const updateItemBoughtBy = (id, dudeId, price) => ({ type: 'ITEMLIST_UPDATE_ITEM_BOUGHT_BY', id, dudeId, price })
 export const updateItemDescription = (id, description) => ({ type: 'ITEMLIST_UPDATE_ITEM_DESCRIPTION', id, description })
-export const updateItemCostSplitting = (id, dudeIdToAmount) => ({
-  type: 'ITEMLIST_UPDATE_ITEM_COST_SPLITTING',
-  id,
-  costSplitting: Object.keys(dudeIdToAmount).reduce((acc, dudeId) => ({ ...acc, [dudeId]: roundDown(dudeIdToAmount[dudeId] || 0) }), {})
-})
 
 // ------SELECTORS------
+export const isItemExplicitlySplitSelector = (state, id) => !!Object.keys(itemCostSplitSelector(state, id)).length
 export const itemIdsSelector = state => state.persisted.items.allIds
 const itemSelector = (state, id) => state.persisted.items.byId[id]
-export const itemCostSplittingSelector = (state, id) => itemSelector(state, id).costSplitting
 export const itemDescriptionSelector = (state, id) => itemSelector(state, id).description
-export const itemIsEqualSplitSelector = (state, id) => {
-  const costSplit = itemCostSplittingSelector(state, id)
-  const sharingDudeIds = Object.keys(costSplit)
-  return (sharingDudeIds.length <= 1) || uniques(sharingDudeIds.map(dudeId => costSplit[dudeId])).length === 1
-}
 export const itemPriceSelector = (state, id) => itemSelector(state, id).boughtBy.price
 export const itemBoughtByDudeIdSelector = (state, id) => itemSelector(state, id).boughtBy.dudeId
+export const itemCostSplitSelector = (state, id) => itemSelector(state, id).itemSplit
 export const itemIdsBoughtByDudeSelector = (state, dudeId) => itemIdsSelector(state)
   .filter(itemId => itemBoughtByDudeIdSelector(state, itemId) === dudeId)
+export const itemSharedByDudeIdsSelector = (state, id) => itemSelector(state, id).itemSharedByDudes
+export const itemSharingLabelSelector = (state, id) => apply(
+  dudeIds => dudeIds.length
+    ? apply(
+      itemSplit => Object.keys(itemSplit).length
+        ? `Split between ${dudeIds.map(dudeId => `${dudeNameSelector(state, dudeId)}(${itemSplit[dudeId].toFixed(2)})`).join(', ')}`
+        : `Shared by ${dudeIds.map(dudeId => dudeNameSelector(state, dudeId)).join(', ')}`,
+      itemCostSplitSelector(state, id)
+    ) : 'Shared by everyone',
+  itemSharedByDudeIdsSelector(state, id)
+)
 export const lastAddedItemIdSelector = state => itemIdsSelector(state).slice(-1)[0]
 
 // ------REDUCERS------
@@ -37,8 +45,9 @@ const defaultItemState = {
     dudeId: undefined,
     price: 0
   },
-  costSplitting: {},
-  description: ''
+  description: '',
+  itemSharedByDudes: [],
+  itemSplit: {}
 }
 
 const item = (state = defaultItemState, action) => {
@@ -53,8 +62,10 @@ const item = (state = defaultItemState, action) => {
           price: action.price ? roundDown(action.price) : state.boughtBy.price
         }
       }
-    case 'ITEMLIST_UPDATE_ITEM_COST_SPLITTING':
-      return { ...state, costSplitting: action.costSplitting }
+    case 'ITEMLIST_UPDATE_ITEM_SHARING':
+      return { ...state, itemSharedByDudes: action.dudeIds, itemSplit: {} }
+    case 'ITEMLIST_UPDATE_ITEM_SPLIT':
+      return { ...state, itemSharedByDudes: Object.keys(action.itemSplit), itemSplit: action.itemSplit }
   }
   return state
 }

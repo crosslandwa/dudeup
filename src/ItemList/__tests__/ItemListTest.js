@@ -3,7 +3,6 @@ import {
   addDudeAndAssignToItem,
   addItem, removeItem, itemIdsSelector,
   lastAddedItemIdSelector,
-  updateItemCostSplitting, itemCostSplittingSelector, itemIsEqualSplitSelector,
   updateItemDescription, itemDescriptionSelector,
   updateItemBoughtBy, itemBoughtByDudeIdSelector, itemPriceSelector
 } from '../interactions'
@@ -91,54 +90,6 @@ describe('Item List', () => {
     store.dispatch(removeDude(dudeId))
 
     expect(itemBoughtByDudeIdSelector(store.getState(), itemId)).toEqual(undefined)
-  })
-
-  it('shares item cost equally between all dudes by default', () => {
-    const store = createStore()
-    const itemId = addItemAndReturnId(store)
-    addDudeAndReturnId(store, 'A man')
-    addDudeAndReturnId(store, 'Another man')
-
-    expect(Object.keys(itemCostSplittingSelector(store.getState(), itemId))).toHaveLength(0)
-
-    addDudeAndReturnId(store, 'Third man')
-    expect(Object.keys(itemCostSplittingSelector(store.getState(), itemId))).toHaveLength(0)
-  })
-
-  it('allows item cost to be split between specific dudes', () => {
-    const store = createStore()
-    const itemId = addItemAndReturnId(store)
-    const dudeId1 = addDudeAndReturnId(store, 'A man')
-    const dudeId2 = addDudeAndReturnId(store, 'Another man')
-    addDudeAndReturnId(store, 'Third man, not involved')
-
-    store.dispatch(updateItemCostSplitting(itemId, {
-      [dudeId1]: 25,
-      [dudeId2]: 25
-    }))
-    expect(itemIsEqualSplitSelector(store.getState(), itemId)).toEqual(true)
-
-    store.dispatch(updateItemCostSplitting(itemId, {
-      [dudeId1]: 30,
-      [dudeId2]: 20
-    }))
-
-    expect(itemCostSplittingSelector(store.getState(), itemId)).toEqual({
-      [dudeId1]: 30,
-      [dudeId2]: 20
-    })
-    expect(itemIsEqualSplitSelector(store.getState(), itemId)).toEqual(false)
-  })
-
-  it('does not add newly created dudes to items already shared between specific other dudes', () => {
-    const store = createStore()
-    const itemId = addItemAndReturnId(store)
-    const dudeId1 = addDudeAndReturnId(store, 'A man')
-    store.dispatch(updateItemCostSplitting(itemId, { [dudeId1]: 100 }))
-
-    addDudeAndReturnId(store, 'Another man')
-
-    expect(Object.keys(itemCostSplittingSelector(store.getState(), itemId))).toEqual([dudeId1])
   })
 
   it('can create a new dude and assigns them to the specified item in one go', () => {

@@ -1,18 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { itemCostSplittingSelector } from '../ItemList/interactions'
-import { dudeNameSelector } from '../DudeList/interactions'
+import { itemSharingLabelSelector } from '../ItemList/interactions'
 import { fauxLinkStyle } from '../styles'
 import SplitCostModal from './SplitCostModal'
 
-const mapStateToProps = (state, { id }) => {
-  const costSplit = itemCostSplittingSelector(state, id)
-  return {
-    sharingLabel: Object.keys(costSplit).length
-      ? `Shared by ${Object.keys(costSplit).map(dudeId => `${dudeNameSelector(state, dudeId)} (${costSplit[dudeId].toFixed(2)})`).join(', ')}`
-      : 'Shared between everyone'
-  }
-}
+const mapStateToProps = (state, { id }) => ({
+  sharingLabel: itemSharingLabelSelector(state, id)
+})
 
 class ItemSharing extends React.Component {
   constructor (props) {
