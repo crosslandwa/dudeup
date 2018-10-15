@@ -1,12 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { dudeIdsSelector, dudeNameSelector } from '../DudeList/interactions'
 import AddDudeModal from './AddDudeModal'
-import { dropdownStyle } from '../styles'
-
-const mapStateToProps = state => ({
-  dudes: dudeIdsSelector(state).map(id => ({ id, name: dudeNameSelector(state, id) }))
-})
+import DudeList from '../DudeList'
 
 class SelectOrAddDude extends React.Component {
   constructor (props) {
@@ -32,15 +26,14 @@ class SelectOrAddDude extends React.Component {
   }
 
   render () {
-    const { dudes, itemId, selectedId = '' } = this.props
+    const { itemId, selectedId } = this.props
     return (
       <div style={{ display: 'inline-block' }}>
-        <select style={dropdownStyle} value={selectedId} autoFocus onChange={this.onChange}>
-          <option value={''} disabled >Select a dude...</option>
-          {dudes.map(({ id, name }) => <option value={id}>{name}</option>)}
-          <option disabled>───────</option>
-          <option value="_add_dude_" >Add dude</option>
-        </select>
+        <DudeList
+          customActions={[{ id: '_add_dude_', label: 'Add dude' }]}
+          selectedId={selectedId}
+          onChange={this.onChange}
+        />
         {this.state.modalOpen && (
           <AddDudeModal closeModal={this.closeModal} itemId={itemId} />
         )}
@@ -49,4 +42,4 @@ class SelectOrAddDude extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(SelectOrAddDude)
+export default SelectOrAddDude
