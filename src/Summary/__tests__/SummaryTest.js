@@ -1,8 +1,7 @@
 import createStore from '../../store'
-import { addDude, dudeIdsSelector, lastAddedDudeSelector } from '../../DudeList/interactions'
+import { addDude, lastAddedDudeSelector } from '../../DudeList/interactions'
 import {
-  addItem, itemIdsSelector,
-  lastAddedItemIdSelector,
+  addItem, lastAddedItemIdSelector,
   updateItemBoughtBy, updateItemCostSplitting
 } from '../../ItemList/interactions'
 import { dudesInDebtSummarySelector } from '../interactions'
