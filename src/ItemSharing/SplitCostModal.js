@@ -56,7 +56,7 @@ class SplitCostModal extends React.Component {
     }
     this.updateIndividualAmount = (dudeId, amount) => {
       this.setState((state, props) => ({
-        individualAmounts: { ...state.individualAmounts, [dudeId]: amount }
+        individualAmounts: { ...state.individualAmounts, [dudeId]: parseFloat(amount || 0) }
       }))
     }
     this.toggleDudesInvolvement = (dudeId, checked) => {
@@ -94,18 +94,23 @@ class SplitCostModal extends React.Component {
         this.setState({ warning: 'Warning - you need to select at least one dude' })
       }
     }
+    this.splitTotal = () => Object.keys(this.state.individualAmounts)
+      .map(dudeId => this.state.individualAmounts[dudeId])
+      .filter(x => x)
+      .reduce((a, b) => a + b, 0)
   }
 
   render () {
+    const { allDudeIds, closeModal, dudeName, itemDescription, price } = this.props
     return (
-      <Modal onCancel={this.props.closeModal} onSubmit={this.submit} >
+      <Modal onCancel={closeModal} onSubmit={this.submit} >
         <div style={{
           display: 'flex',
           flexDirection: 'column'
         }}>
           {this.state.warning && <span>{this.state.warning}</span>}
           <span>
-            <strong>{this.props.itemDescription}</strong>  - bought by <em>{this.props.dudeName}</em> for {this.props.price}
+            <strong>{itemDescription}</strong>  - bought by <em>{dudeName}</em> for {price}
           </span>
           <div>
             <label>
@@ -118,7 +123,7 @@ class SplitCostModal extends React.Component {
             </label>
           </div>
           <div>
-            {this.props.allDudeIds.map(id => (
+            {allDudeIds.map(id => (
               <div>
                 {this.state.isEqualSplit
                   ? <CheckBoxOption id={id} selected={this.state.selectedIds.includes(id)} onChange={e => this.toggleDudesInvolvement(id, e.target.checked)}/>
@@ -126,6 +131,9 @@ class SplitCostModal extends React.Component {
                 }
               </div>
             ))}
+            {!this.state.isEqualSplit && (
+              <div>You have {price - this.splitTotal()} left to divvy up</div>
+            )}
           </div>
         </div>
       </Modal>
