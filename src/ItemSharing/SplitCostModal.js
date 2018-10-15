@@ -9,7 +9,7 @@ import {
   itemPriceSelector
 } from '../ItemList/interactions'
 import { dudeIdsSelector, dudeNameSelector } from '../DudeList/interactions'
-import { textInputStyle } from '../styles'
+import PriceInput from '../GenericUi/PriceInput'
 
 const apply = (f, x) => f(x)
 
@@ -42,17 +42,7 @@ const CheckBoxOption = connect(mapDudeIdToName)(props => (
 ))
 
 const AmountInputOption = connect(mapDudeIdToName)(props => (
-  <label>
-    {props.name}
-    <input
-      style={textInputStyle}
-      type="number"
-      step="0.01"
-      onChange={props.onChange}
-      placeholder="0"
-      value={props.price !== 0 ? props.price : ''}
-    />
-  </label>
+  <label>{props.name}<PriceInput {...props} /></label>
 ))
 
 class SplitCostModal extends React.Component {
