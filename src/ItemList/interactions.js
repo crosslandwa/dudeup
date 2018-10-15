@@ -29,6 +29,7 @@ export const itemPriceSelector = (state, id) => itemSelector(state, id).boughtBy
 export const itemBoughtByDudeIdSelector = (state, id) => itemSelector(state, id).boughtBy.dudeId
 export const itemIdsBoughtByDudeSelector = (state, dudeId) => itemIdsSelector(state)
   .filter(itemId => itemBoughtByDudeIdSelector(state, itemId) === dudeId)
+export const lastAddedItemIdSelector = state => itemIdsSelector(state).slice(-1)[0]
 
 // ------REDUCERS------
 const defaultItemState = {

@@ -2,6 +2,7 @@ import createStore from '../../store'
 import {
   addDudeAndAssignToItem,
   addItem, removeItem, itemIdsSelector,
+  lastAddedItemIdSelector,
   updateItemCostSplitting, itemCostSplittingSelector, itemIsEqualSplitSelector,
   updateItemDescription, itemDescriptionSelector,
   updateItemBoughtBy, itemBoughtByDudeIdSelector, itemPriceSelector
@@ -10,7 +11,7 @@ import { addDude, removeDude, dudeIdsSelector, lastAddedDudeSelector } from '../
 
 const addItemAndReturnId = store => {
   store.dispatch(addItem())
-  return itemIdsSelector(store.getState()).slice(-1)[0]
+  return lastAddedItemIdSelector(store.getState())
 }
 
 const addDudeAndReturnId = (store, name) => {

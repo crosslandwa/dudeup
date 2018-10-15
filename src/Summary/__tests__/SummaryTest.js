@@ -1,19 +1,20 @@
 import createStore from '../../store'
-import { addDude, dudeIdsSelector } from '../../DudeList/interactions'
+import { addDude, dudeIdsSelector, lastAddedDudeSelector } from '../../DudeList/interactions'
 import {
   addItem, itemIdsSelector,
+  lastAddedItemIdSelector,
   updateItemBoughtBy, updateItemCostSplitting
 } from '../../ItemList/interactions'
 import { dudesInDebtSummarySelector } from '../interactions'
 
 const addDudeAndReturnId = (store, name) => {
   store.dispatch(addDude(name))
-  return dudeIdsSelector(store.getState()).slice(-1)[0]
+  return lastAddedDudeSelector(store.getState())
 }
 
 const addItemAndReturnId = store => {
   store.dispatch(addItem())
-  return itemIdsSelector(store.getState()).slice(-1)[0]
+  return lastAddedItemIdSelector(store.getState())
 }
 
 describe('Summary', () => {
