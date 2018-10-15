@@ -7,6 +7,7 @@ import {
 } from './interactions'
 import SelectOrAddDude from './SelectOrAddDude'
 import ItemSharing from '../ItemSharing'
+import PriceInput from '../GenericUi/PriceInput'
 import { textButtonStyle, textInputStyle } from '../styles'
 
 const mapStateToProps = (state, { id }) => ({
@@ -43,7 +44,7 @@ class Item extends React.Component {
       <div style={{ margin: '0.5em' }}>
         <SelectOrAddDude itemId={id} selectedId={dudeId} onChange={this.updateItemBoughtByDude}/>
         <input style={textInputStyle} placeholder="item description" value={description} onChange={updateDescription} />
-        <input style={textInputStyle} type="number" step="0.01" onChange={this.updateItemPrice} placeholder="0" value={price !== 0 ? price : ''} />
+        <PriceInput onChange={this.updateItemPrice} price={price} />
         <input style={textButtonStyle} type="button" value="remove" onClick={remove} />
         <ItemSharing id={id} />
       </div>
