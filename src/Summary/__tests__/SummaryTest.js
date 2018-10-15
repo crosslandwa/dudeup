@@ -2,7 +2,8 @@ import createStore from '../../store'
 import { addDude, lastAddedDudeSelector } from '../../DudeList/interactions'
 import {
   addItem, lastAddedItemIdSelector,
-  updateItemBoughtBy, updateItemCostSplitting
+  updateItemBoughtBy,
+  shareItemBetweenDudes, splitItemBetweenDudes
 } from '../../ItemList/interactions'
 import { dudesInDebtSummarySelector } from '../interactions'
 
@@ -68,16 +69,13 @@ describe('Summary', () => {
 
     const itemId = addItemAndReturnId(store)
     store.dispatch(updateItemBoughtBy(itemId, dudeId1, 9))
-    store.dispatch(updateItemCostSplitting(itemId, {
-      [dudeId1]: 4.5,
-      [dudeId2]: 4.5
-    }))
+    store.dispatch(shareItemBetweenDudes(itemId, [dudeId1, dudeId2]))
 
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId1]).toEqual([])
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId2]).toEqual([{ dudeId: dudeId1, amount: 4.5 }])
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId3]).toEqual([])
 
-    store.dispatch(updateItemCostSplitting(itemId, {
+    store.dispatch(splitItemBetweenDudes(itemId, {
       [dudeId1]: 3,
       [dudeId2]: 6
     }))
