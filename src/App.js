@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Clear from './Clear'
 import ItemList from './ItemList'
+import Notifications from './Notifications'
 import Summary from './Summary'
 import AnErrorOccurred from './AnErrorOccurred'
 
@@ -13,6 +14,7 @@ const App = props => (
     fontFamily: 'sans-serif'
   }}>
     <AnErrorOccurred>
+      <Notifications />
       <ItemList />
       <Summary />
       <Clear />

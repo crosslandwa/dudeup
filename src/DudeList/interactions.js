@@ -24,7 +24,7 @@ export const reducer = (state = { allIds: [], byId: {} }, action) => {
         allIds: state.allIds.includes(id) ? state.allIds : state.allIds.concat(id),
         byId: {
           ...state.byId,
-          [id]: dude(state[id], action)
+          [id]: dude(state.byId[id], action)
         }
       }
     case 'DUDELIST_REMOVE_DUDE':
