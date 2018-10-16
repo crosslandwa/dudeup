@@ -1,3 +1,5 @@
+import { addNotification } from '../Notifications/interactions'
+
 // ------ACTIONS------
 export const addDude = (name = 'The other guy') => ({ type: 'DUDELIST_ADD_DUDE', name })
 export const removeDude = id => ({ type: 'DUDELIST_REMOVE_DUDE', id })
@@ -36,4 +38,17 @@ export const reducer = (state = { allIds: [], byId: {} }, action) => {
       }
   }
   return state
+}
+
+// ------MIDDLEWARE------
+export function middleware (store) {
+  return (next) => (action) => {
+    switch (action.type) {
+      case 'DUDELIST_ADD_DUDE':
+        next(action)
+        next(addNotification(`Added new dude '${action.name}'`))
+        return
+    }
+    next(action)
+  }
 }

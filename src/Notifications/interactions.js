@@ -1,5 +1,5 @@
 // ------ACTIONS------
-export const addNotification = (text, timeoutSeconds = 4) => ({ type: 'NOTIFICATIONS_ADD', text, timeoutSeconds })
+export const addNotification = (text, timeoutSeconds = 3) => ({ type: 'NOTIFICATIONS_ADD', text, timeoutSeconds })
 const removeNotification = id => ({ type: 'NOTIFICATIONS_REMOVE', id })
 
 // ------SELECTORS------
@@ -47,7 +47,7 @@ export function middleware (store) {
         const id = lastAddedNotificationIdSelctor(store.getState())
         setTimeout(() => {
           next(removeNotification(id))
-        }, action.timeout * 1000)
+        }, action.timeoutSeconds * 1000)
         return
     }
     next(action)

@@ -13,13 +13,13 @@ describe('Notifications', () => {
 
   it('are automatically removed after a specified timeout (defaults to 4s)', done => {
     const store = createStore()
-    store.dispatch(addNotification(0.1))
+    store.dispatch(addNotification('some text', 0.1))
 
     expect(notificationIdsSelector(store.getState())).toHaveLength(1)
 
     setTimeout(() => {
       expect(notificationIdsSelector(store.getState())).toHaveLength(0)
       done()
-    }, 0.2)
+    }, 200)
   })
 })
