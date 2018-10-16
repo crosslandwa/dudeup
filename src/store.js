@@ -2,13 +2,15 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import persistState from 'redux-localstorage'
 import { reducer as dudes } from './DudeList/interactions'
 import { reducer as items, middleware as itemsMiddleware } from './ItemList/interactions'
+import { reducer as notifications, middleware as notificationsMiddleware } from './Notifications/interactions'
 import { resetingReducer } from './Clear/interactions'
 
 const reducer = resetingReducer(combineReducers({
   persisted: combineReducers({
     dudes,
     items
-  })
+  }),
+  notifications
 }))
 
 const naturalEnhancer = (createStore) => (...args) => createStore(...args)
@@ -17,7 +19,7 @@ const localStorageAvailable = !!(isBrowser && window.localStorage)
 const composeEnhancers = (isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
 
 function createAppStore () {
-  const middlewares = [itemsMiddleware]
+  const middlewares = [itemsMiddleware, notificationsMiddleware]
   return createStore(
     reducer,
     composeEnhancers(
