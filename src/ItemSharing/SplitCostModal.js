@@ -30,16 +30,14 @@ const mapDudeIdToName = (state, { id }) => ({
   name: dudeNameSelector(state, id)
 })
 
-const CheckBoxOption = connect(mapDudeIdToName)(props => (
+const CheckBox = ({ id, label, onChange, selected }) => (
   <label>
-    {props.name}
-    <input
-      type="checkbox"
-      value={props.id}
-      checked={props.selected}
-      onChange={props.onChange}
-    />
+    {label}
+    <input type="checkbox" value={id} checked={selected} onChange={onChange} />
   </label>
+)
+const CheckBoxOption = connect(mapDudeIdToName)(props => (
+  <CheckBox {...props} label={props.name} />
 ))
 
 const AmountInputOption = connect(mapDudeIdToName)(props => (
@@ -51,7 +49,7 @@ class SplitCostModal extends React.Component {
     super(props)
     this.state = {
       isEqualSplit: props.isEqualSplit,
-      selectedIds: props.itemSharedByDudeIds.length ? props.itemSharedByDudeIds : props.allDudeIds,
+      selectedIds: props.itemSharedByDudeIds,
       individualAmounts: props.costSplitting
     }
     this.updateIndividualAmount = (dudeId, amount) => {
@@ -66,6 +64,9 @@ class SplitCostModal extends React.Component {
           : state.selectedIds.filter(id => id !== dudeId)
       }))
     }
+    this.shareByEveryone = () => {
+      this.setState({ selectedIds: [] })
+    }
     this.setEqualSplit = e => {
       if (e.target.checked) {
         this.setState({ isEqualSplit: true })
@@ -77,22 +78,18 @@ class SplitCostModal extends React.Component {
       }
     }
     this.submit = () => {
-      if (this.state.selectedIds.length) {
-        if (this.state.isEqualSplit) {
-          this.props.shareItemBetweenDudes(this.props.itemId, this.state.selectedIds)
-        } else {
-          this.props.splitItemBetweenDudes(
-            this.props.itemId,
-            Object.keys(this.state.individualAmounts)
-              .map(dudeId => ({ dudeId, amount: this.state.individualAmounts[dudeId] }))
-              .filter(({ amount }) => amount > 0)
-              .reduce((acc, { dudeId, amount }) => ({ ...acc, [dudeId]: amount }), {})
-          )
-        }
-        this.props.closeModal()
+      if (this.state.isEqualSplit) {
+        this.props.shareItemBetweenDudes(this.props.itemId, this.state.selectedIds)
       } else {
-        this.setState({ warning: 'Warning - you need to select at least one dude' })
+        this.props.splitItemBetweenDudes(
+          this.props.itemId,
+          Object.keys(this.state.individualAmounts)
+            .map(dudeId => ({ dudeId, amount: this.state.individualAmounts[dudeId] }))
+            .filter(({ amount }) => amount > 0)
+            .reduce((acc, { dudeId, amount }) => ({ ...acc, [dudeId]: amount }), {})
+        )
       }
+      this.props.closeModal()
     }
     this.splitTotal = () => Object.keys(this.state.individualAmounts)
       .map(dudeId => this.state.individualAmounts[dudeId])
@@ -108,7 +105,6 @@ class SplitCostModal extends React.Component {
           display: 'flex',
           flexDirection: 'column'
         }}>
-          {this.state.warning && <span>{this.state.warning}</span>}
           <span>
             <strong>{itemDescription}</strong>  - bought by <em>{dudeName}</em> for {price}
           </span>
@@ -131,6 +127,9 @@ class SplitCostModal extends React.Component {
                 }
               </div>
             ))}
+            {this.state.isEqualSplit && (
+              <div><CheckBox id="_everyone_" label="Everyone" onChange={this.shareByEveryone} selected={!this.state.selectedIds.length} /></div>
+            )}
             {!this.state.isEqualSplit && (
               <div>You have {price - this.splitTotal()} left to divvy up</div>
             )}
