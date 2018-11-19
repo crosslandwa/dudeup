@@ -6,9 +6,9 @@ import {
   updateItemDescription, itemDescriptionSelector,
   updateItemBoughtBy, itemBoughtByDudeIdSelector, itemPriceSelector
 } from '../interactions'
-import { addDude, removeDude, dudeIdsSelector, lastAddedDudeSelector } from '../../DudeList/interactions'
+import { addDude, dudeIdsSelector, lastAddedDudeSelector } from '../../DudeList/interactions'
 
-const addItemAndReturnId = store => {
+export const addItemAndReturnId = store => {
   store.dispatch(addItem())
   return lastAddedItemIdSelector(store.getState())
 }
@@ -80,18 +80,6 @@ describe('Item List', () => {
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(1.05)
   })
 
-  it('dissociates a removed dude from any items', () => {
-    const store = createStore()
-    const itemId = addItemAndReturnId(store)
-    const dudeId = addDudeAndReturnId(store, 'A man')
-
-    store.dispatch(updateItemBoughtBy(itemId, dudeId, 100))
-
-    store.dispatch(removeDude(dudeId))
-
-    expect(itemBoughtByDudeIdSelector(store.getState(), itemId)).toEqual(undefined)
-  })
-
   it('can create a new dude and assigns them to the specified item in one go', () => {
     const store = createStore()
     const itemId = addItemAndReturnId(store)
@@ -102,6 +90,4 @@ describe('Item List', () => {
     expect(lastAddedDudeSelector(store.getState()))
       .toEqual(itemBoughtByDudeIdSelector(store.getState(), itemId))
   })
-
-  // TODO delete a dude removes them from any shared items OR update UI prevents removal of dude involved with items...
 })

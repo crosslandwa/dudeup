@@ -1,10 +1,12 @@
 import { addNotification } from '../Notifications/interactions'
+import { isDudeInvoledInAnyItemsSelector } from '../ItemList/interactions'
 
 // ------ACTIONS------
 export const addDude = (name = 'The other guy') => ({ type: 'DUDELIST_ADD_DUDE', name })
 export const removeDude = id => ({ type: 'DUDELIST_REMOVE_DUDE', id })
 
 // ------SELECTORS------
+export const dudeCanBeRemovedSelector = (state, id) => !isDudeInvoledInAnyItemsSelector(state, id)
 export const dudeIdsSelector = state => state.persisted.dudes.allIds
 export const dudeNameSelector = (state, id) => state.persisted.dudes.byId[id].name
 export const lastAddedDudeSelector = state => dudeIdsSelector(state).slice(-1)[0]

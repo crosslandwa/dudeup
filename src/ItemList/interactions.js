@@ -19,6 +19,8 @@ export const updateItemDescription = (id, description) => ({ type: 'ITEMLIST_UPD
 
 // ------SELECTORS------
 export const isItemExplicitlySplitSelector = (state, id) => !!Object.keys(itemCostSplitSelector(state, id)).length
+export const isDudeInvoledInAnyItemsSelector = (state, dudeId) => !!itemIdsBoughtByDudeSelector(state, dudeId).length ||
+  itemIdsSelector(state).reduce((acc, itemId) => acc.concat(itemSharedByDudeIdsSelector(state, itemId)), []).includes(dudeId)
 export const itemIdsSelector = state => state.persisted.items.allIds
 const itemSelector = (state, id) => state.persisted.items.byId[id]
 export const itemDescriptionSelector = (state, id) => itemSelector(state, id).description
@@ -96,10 +98,6 @@ export const reducer = (state = { allIds: ['item-1'], byId: { 'item-1': item(und
 export function middleware (store) {
   return (next) => (action) => {
     switch (action.type) {
-      case 'DUDELIST_REMOVE_DUDE':
-        itemIdsBoughtByDudeSelector(store.getState(), action.id)
-          .map(itemId => next(updateItemBoughtBy(itemId, undefined, itemPriceSelector(store.getState(), itemId))))
-        break
       case 'ITEMLIST_ADD_DUDE':
         next(addDude(action.name))
         next(updateItemBoughtBy(action.itemId, lastAddedDudeSelector(store.getState())))
