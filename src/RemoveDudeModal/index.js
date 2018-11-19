@@ -2,7 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Modal from '../Modal'
 import DudeList from '../DudeList'
-import { removeDude } from '../DudeList/interactions'
+import { dudeCanBeRemovedSelector, removeDude } from '../DudeList/interactions'
+
+const mapStateToProps = state => ({
+  isDudeRemovable: id => dudeCanBeRemovedSelector(state, id)
+})
 
 class RemoveDudeModal extends React.Component {
   constructor (props) {
@@ -21,10 +25,11 @@ class RemoveDudeModal extends React.Component {
   render () {
     return (
       <Modal onCancel={this.props.closeModal} onSubmit={this.removeDude}>
-        <DudeList onChange={this.selectDude} />
+        <DudeList onChange={this.selectDude} filter={this.props.isDudeRemovable} selectedId={this.state.id} />
+        <div><em>Dudes who've bought (or are sharing) items can not be removed</em></div>
       </Modal>
     )
   }
 }
 
-export default connect(null, { removeDude })(RemoveDudeModal)
+export default connect(mapStateToProps, { removeDude })(RemoveDudeModal)

@@ -1,5 +1,8 @@
 import createStore from '../../store'
-import { addDude, removeDude, dudeIdsSelector, dudeNameSelector, lastAddedDudeSelector } from '../interactions'
+import { addDude, removeDude, dudeCanBeRemovedSelector, dudeIdsSelector, dudeNameSelector, lastAddedDudeSelector } from '../interactions'
+
+import { shareItemBetweenDudes, updateItemBoughtBy } from '../../ItemList/interactions'
+import { addItemAndReturnId } from '../../ItemList/__tests__/ItemListTest.js'
 
 describe('Dude List', () => {
   it('can have Dudes added', () => {
@@ -28,5 +31,34 @@ describe('Dude List', () => {
     store.dispatch(removeDude(dudeId))
 
     expect(dudeIdsSelector(store.getState())).toHaveLength(0)
+  })
+
+  it('does not allow dudes who have bought items to be removed', () => {
+    const store = createStore()
+    store.dispatch(addDude('person 1'))
+    const dudeId = lastAddedDudeSelector(store.getState())
+
+    expect(dudeCanBeRemovedSelector(store.getState(), dudeId)).toEqual(true)
+
+    const itemId = addItemAndReturnId(store)
+    store.dispatch(updateItemBoughtBy(itemId, dudeId, 100))
+
+    expect(dudeCanBeRemovedSelector(store.getState(), dudeId)).toEqual(false)
+  })
+
+  it('does not allow dudes who are sharing items to be removed', () => {
+    const store = createStore()
+    store.dispatch(addDude('person 1'))
+    const dudeId1 = lastAddedDudeSelector(store.getState())
+
+    store.dispatch(addDude('person 2'))
+    const dudeId2 = lastAddedDudeSelector(store.getState())
+
+    expect(dudeCanBeRemovedSelector(store.getState(), dudeId2)).toEqual(true)
+
+    const itemId = addItemAndReturnId(store)
+    store.dispatch(shareItemBetweenDudes(itemId, [dudeId1, dudeId2]))
+
+    expect(dudeCanBeRemovedSelector(store.getState(), dudeId2)).toEqual(false)
   })
 })

@@ -3,8 +3,10 @@ import { connect } from 'react-redux'
 import { dudeIdsSelector, dudeNameSelector } from './interactions'
 import { dropdownStyle } from '../styles'
 
-const mapStateToProps = state => ({
-  dudes: dudeIdsSelector(state).map(id => ({ id, name: dudeNameSelector(state, id) }))
+const includeAll = id => true
+
+const mapStateToProps = (state, { filter = includeAll }) => ({
+  dudes: dudeIdsSelector(state).filter(filter).map(id => ({ id, name: dudeNameSelector(state, id) }))
 })
 
 const DudeList = ({ customActions = [], dudes, onChange, selectedId = '' }) => (
