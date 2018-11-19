@@ -48,6 +48,11 @@ export function middleware (store) {
         next(action)
         next(addNotification(`Added new dude '${action.name}'`))
         return
+      case 'DUDELIST_REMOVE_DUDE':
+        const name = dudeNameSelector(store.getState(), action.id)
+        next(action)
+        next(addNotification(`Removed '${name}'`))
+        return
     }
     next(action)
   }
