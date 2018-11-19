@@ -6,16 +6,12 @@ import {
   updateItemDescription, itemDescriptionSelector,
   updateItemBoughtBy, itemBoughtByDudeIdSelector, itemPriceSelector
 } from '../interactions'
-import { addDude, dudeIdsSelector, lastAddedDudeSelector } from '../../DudeList/interactions'
+import { dudeIdsSelector, lastAddedDudeSelector } from '../../DudeList/interactions'
+import { addDudeAndReturnId } from '../../DudeList/__tests__/DudeListTest.js'
 
 export const addItemAndReturnId = store => {
   store.dispatch(addItem())
   return lastAddedItemIdSelector(store.getState())
-}
-
-const addDudeAndReturnId = (store, name) => {
-  store.dispatch(addDude(name))
-  return lastAddedDudeSelector(store.getState())
 }
 
 describe('Item List', () => {

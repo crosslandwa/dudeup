@@ -1,21 +1,11 @@
 import createStore from '../../store'
-import { addDude, lastAddedDudeSelector } from '../../DudeList/interactions'
 import {
-  addItem, lastAddedItemIdSelector,
   updateItemBoughtBy,
   shareItemBetweenDudes, splitItemBetweenDudes
 } from '../../ItemList/interactions'
 import { dudesInDebtSummarySelector } from '../interactions'
-
-const addDudeAndReturnId = (store, name) => {
-  store.dispatch(addDude(name))
-  return lastAddedDudeSelector(store.getState())
-}
-
-const addItemAndReturnId = store => {
-  store.dispatch(addItem())
-  return lastAddedItemIdSelector(store.getState())
-}
+import { addDudeAndReturnId } from '../../DudeList/__tests__/DudeListTest.js'
+import { addItemAndReturnId } from '../../ItemList/__tests__/ItemListTest.js'
 
 describe('Summary', () => {
   it('details how much each dude has spent', () => {
