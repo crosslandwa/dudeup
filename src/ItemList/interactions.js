@@ -1,4 +1,5 @@
 import { addDude, dudeNameSelector, lastAddedDudeSelector } from '../DudeList/interactions'
+import { addNotification } from '../Notifications/interactions'
 
 const roundDown = amount => parseInt(amount * 100) / 100
 const apply = (f, x) => f(x)
@@ -108,6 +109,7 @@ export function middleware (store) {
         if (!itemIdsSelector(store.getState()).length) {
           next(addItem())
         }
+        next(addNotification(`Item removed`))
         return
     }
     next(action)
