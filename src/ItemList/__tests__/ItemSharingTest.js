@@ -1,20 +1,10 @@
 import createStore from '../../store'
 import {
-  addItem, lastAddedItemIdSelector,
   isItemExplicitlySplitSelector, itemSharingLabelSelector,
   shareItemBetweenDudes, splitItemBetweenDudes
 } from '../interactions'
-import { addDude, lastAddedDudeSelector } from '../../DudeList/interactions'
-
-const addItemAndReturnId = store => {
-  store.dispatch(addItem())
-  return lastAddedItemIdSelector(store.getState())
-}
-
-const addDudeAndReturnId = (store, name) => {
-  store.dispatch(addDude(name))
-  return lastAddedDudeSelector(store.getState())
-}
+import { addDudeAndReturnId } from '../../DudeList/__tests__/DudeListTest.js'
+import { addItemAndReturnId } from './ItemListTest.js'
 
 describe('Item sharing', () => {
   it('item is shared by all dudes by default', () => {
