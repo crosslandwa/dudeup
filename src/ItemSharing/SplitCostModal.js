@@ -20,7 +20,7 @@ const mapStateToProps = (state, { itemId }) => ({
     itemBoughtByDudeIdSelector(state, itemId)
   ),
   isEqualSplit: !isItemExplicitlySplitSelector(state, itemId),
-  itemDescription: itemDescriptionSelector(state, itemId) || 'a mystery item',
+  itemDescription: itemDescriptionSelector(state, itemId) || 'Unnamed item',
   itemSharedByDudeIds: itemSharedByDudeIdsSelector(state, itemId),
   price: itemPriceSelector(state, itemId),
   costSplitting: itemCostSplitSelector(state, itemId)
@@ -100,14 +100,12 @@ class SplitCostModal extends React.Component {
   render () {
     const { allDudeIds, closeModal, dudeName, itemDescription, price } = this.props
     return (
-      <Modal onCancel={closeModal} onSubmit={this.submit} >
+      <Modal onCancel={closeModal} onSubmit={this.submit} submitButtonText="Update" title={itemDescription} >
         <div style={{
           display: 'flex',
           flexDirection: 'column'
         }}>
-          <span>
-            <strong>{itemDescription}</strong>  - bought by <em>{dudeName}</em> for {price}
-          </span>
+          <span>Bought by <em>{dudeName}</em> for {price}</span>
           <div>
             <label>
               Shared by

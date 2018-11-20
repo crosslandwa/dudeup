@@ -32,7 +32,7 @@ class ItemList extends React.Component {
         </div>
         <div>
           <input style={textButtonStyle} type="button" onClick={this.props.addItem} value="Add item" />
-          <input style={textButtonStyle} type="button" value="Remove Dude" onClick={this.openModal} />
+          <input style={textButtonStyle} type="button" value="Remove dude" onClick={this.openModal} />
         </div>
         {this.state.modalOpen && <RemoveDudeModal closeModal={this.closeModal} />}
       </div>

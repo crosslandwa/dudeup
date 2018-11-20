@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { textButtonStyle } from '../styles'
+import ClosingCross from './ClosingCross'
 
 const mapDispatchToProps = (dispatch, { onCancel, onSubmit }) => ({
   onSubmit: event => {
@@ -42,17 +43,20 @@ class Modal extends React.Component {
         left: 0
       }}>
         <div style={{
-          width: '50%',
+          maxWidth: '50%',
+          minWidth: '17em',
           height: '66%',
           backgroundColor: 'white',
           borderRadius: '0.5em',
           padding: '1em'
         }}>
+          <ClosingCross onClick={this.props.onCancel} />
+          <h2 style={{ marginTop: 0, textAlign: 'center' }}>{this.props.title}</h2>
           <form onSubmit={this.props.onSubmit} >
             {this.props.children}
             <div>
               <input style={textButtonStyle} type="button" value="Cancel" onClick={this.props.onCancel} />
-              <input style={textButtonStyle} type="submit" value="OK"/>
+              <input style={textButtonStyle} type="submit" value={this.props.submitButtonText || 'OK'}/>
             </div>
           </form>
         </div>

@@ -24,9 +24,9 @@ class RemoveDudeModal extends React.Component {
 
   render () {
     return (
-      <Modal onCancel={this.props.closeModal} onSubmit={this.removeDude}>
+      <Modal onCancel={this.props.closeModal} onSubmit={this.removeDude} submitButtonText="Remove" title="Remove dude" >
         <DudeList onChange={this.selectDude} filter={this.props.isDudeRemovable} selectedId={this.state.id} />
-        <div><em>Dudes who've bought (or are sharing) items can not be removed</em></div>
+        <div><em>Dudes who have bought (or are sharing) items can not be removed</em></div>
       </Modal>
     )
   }
