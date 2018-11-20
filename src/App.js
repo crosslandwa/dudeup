@@ -14,6 +14,7 @@ const App = props => (
     fontFamily: 'sans-serif'
   }}>
     <AnErrorOccurred>
+      <h1>Dude Up</h1>
       <Notifications />
       <ItemList />
       <Summary />

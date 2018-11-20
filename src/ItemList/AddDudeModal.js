@@ -22,7 +22,7 @@ class AddDudeModal extends React.Component {
 
   render () {
     return (
-      <Modal onCancel={this.props.closeModal} onSubmit={this.submit} >
+      <Modal onCancel={this.props.closeModal} onSubmit={this.submit} submitButtonText="Add" title="Add dude">
         <div style={{
           display: 'flex',
           flexDirection: 'column'
