@@ -18,8 +18,8 @@ export const WithFlyoutArrowBelow = props => (
       pointerEvents: 'none',
       borderColor: 'rgba(136, 183, 213, 0)',
       borderBottomColor: '#eff0f1',
-      borderWidth: '1.5em',
-      marginTop: '-1.5em',
+      borderWidth: '1em',
+      marginTop: '-1em',
       width: 0
     }}></div>
   </div>
