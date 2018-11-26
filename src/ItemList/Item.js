@@ -41,7 +41,7 @@ class Item extends React.Component {
       remove, updateDescription
     } = this.props
     return (
-      <div style={{ margin: '0.5em' }}>
+      <div style={{ marginBottom: '0.5em' }}>
         <SelectOrAddDude itemId={id} selectedId={dudeId} onChange={this.updateItemBoughtByDude}/>
         <input style={textInputStyle} placeholder="item description" value={description} onChange={updateDescription} />
         <PriceInput onChange={this.updateItemPrice} price={price} />
