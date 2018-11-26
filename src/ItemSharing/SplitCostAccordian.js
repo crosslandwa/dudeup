@@ -1,26 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Modal from '../Modal'
+import Accordian from '../Accordian'
 import {
   itemCostSplitSelector, itemSharedByDudeIdsSelector, shareItemBetweenDudes, splitItemBetweenDudes,
-  itemDescriptionSelector,
-  itemBoughtByDudeIdSelector,
   itemPriceSelector,
   isItemExplicitlySplitSelector
 } from '../ItemList/interactions'
 import { dudeIdsSelector, dudeNameSelector } from '../DudeList/interactions'
 import PriceInput from '../GenericUi/PriceInput'
 
-const apply = (f, x) => f(x)
-
 const mapStateToProps = (state, { itemId }) => ({
   allDudeIds: dudeIdsSelector(state),
-  dudeName: apply(
-    dudeId => dudeId ? dudeNameSelector(state, dudeId) : 'some dude',
-    itemBoughtByDudeIdSelector(state, itemId)
-  ),
   isEqualSplit: !isItemExplicitlySplitSelector(state, itemId),
-  itemDescription: itemDescriptionSelector(state, itemId) || 'Unnamed item',
   itemSharedByDudeIds: itemSharedByDudeIdsSelector(state, itemId),
   price: itemPriceSelector(state, itemId),
   costSplitting: itemCostSplitSelector(state, itemId)
@@ -44,7 +35,7 @@ const AmountInputOption = connect(mapDudeIdToName)(props => (
   <label>{props.name}<PriceInput {...props} /></label>
 ))
 
-class SplitCostModal extends React.Component {
+class SplitCostAccordian extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -89,7 +80,7 @@ class SplitCostModal extends React.Component {
             .reduce((acc, { dudeId, amount }) => ({ ...acc, [dudeId]: amount }), {})
         )
       }
-      this.props.closeModal()
+      this.props.close()
     }
     this.splitTotal = () => Object.keys(this.state.individualAmounts)
       .map(dudeId => this.state.individualAmounts[dudeId])
@@ -98,14 +89,13 @@ class SplitCostModal extends React.Component {
   }
 
   render () {
-    const { allDudeIds, closeModal, dudeName, itemDescription, price } = this.props
+    const { allDudeIds, close, price } = this.props
     return (
-      <Modal onCancel={closeModal} onSubmit={this.submit} submitButtonText="Update" title={itemDescription} >
+      <Accordian onCancel={close} onSubmit={this.submit} submitButtonText="Update" title="Item sharing" >
         <div style={{
           display: 'flex',
           flexDirection: 'column'
         }}>
-          <span>Bought by <em>{dudeName}</em> for {price}</span>
           <div>
             <label>
               Shared by
@@ -133,9 +123,9 @@ class SplitCostModal extends React.Component {
             )}
           </div>
         </div>
-      </Modal>
+      </Accordian>
     )
   }
 }
 
-export default connect(mapStateToProps, { shareItemBetweenDudes, splitItemBetweenDudes })(SplitCostModal)
+export default connect(mapStateToProps, { shareItemBetweenDudes, splitItemBetweenDudes })(SplitCostAccordian)

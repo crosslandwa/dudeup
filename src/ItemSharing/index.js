@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { itemSharingLabelSelector } from '../ItemList/interactions'
 import { fauxLinkStyle } from '../styles'
-import SplitCostModal from './SplitCostModal'
+import SplitCostAccordian from './SplitCostAccordian'
+import { flyoutHighlight, WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 const mapStateToProps = (state, { id }) => ({
   sharingLabel: itemSharingLabelSelector(state, id)
@@ -11,32 +12,41 @@ const mapStateToProps = (state, { id }) => ({
 class ItemSharing extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { modalOpen: false }
+    this.state = { open: false }
 
-    this.openModal = () => {
-      this.setState({ modalOpen: true })
+    this.openSharing = () => {
+      this.setState({ open: true })
     }
 
-    this.closeModal = () => {
-      this.setState({ modalOpen: false })
+    this.closeSharing = () => {
+      this.setState({ open: false })
     }
   }
 
   render () {
     const { id, sharingLabel } = this.props
+
+    const Link = props => (
+      <div
+        style={{
+          ...fauxLinkStyle,
+          ...props.style,
+          width: 'fit-content'
+        }}
+        title="Update item sharing details"
+        onClick={this.openSharing}
+      >
+        {sharingLabel}
+      </div>
+    )
+
     return (
       <div>
-        <div
-          style={{
-            ...fauxLinkStyle,
-            width: 'fit-content'
-          }}
-          title="Update item sharing details"
-          onClick={this.openModal}
-        >
-          {sharingLabel}
-        </div>
-        {this.state.modalOpen && <SplitCostModal closeModal={this.closeModal} itemId={id} />}
+        {this.state.open
+          ? <WithFlyoutArrowBelow><Link style={flyoutHighlight} /></WithFlyoutArrowBelow>
+          : <Link />
+        }
+        {this.state.open && <SplitCostAccordian close={this.closeSharing} itemId={id} />}
       </div>
     )
   }

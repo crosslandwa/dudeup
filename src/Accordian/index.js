@@ -36,7 +36,7 @@ class Accordian extends React.Component {
         padding: '1em'
       }}>
         <ClosingCross onClick={this.props.onCancel} />
-        <h2 style={{ marginTop: 0, textAlign: 'center' }}>{this.props.title}</h2>
+        <h2 style={{ margin: 0, textAlign: 'center' }}>{this.props.title}</h2>
         <form onSubmit={this.props.onSubmit} >
           {this.props.children}
           <div>
