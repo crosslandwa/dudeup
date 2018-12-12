@@ -1,6 +1,7 @@
 import React from 'react'
-import AddDudeModal from './AddDudeModal'
+import AddDudeAndAssignToItemAccordian from './AddDudeAndAssignToItemAccordian'
 import DudeList from '../DudeList'
+import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 class SelectOrAddDude extends React.Component {
   constructor (props) {
@@ -18,7 +19,7 @@ class SelectOrAddDude extends React.Component {
     this.onChange = e => {
       const dudeId = e.target.value
       if (dudeId === '_add_dude_') {
-        openModal('addDude')
+        openModal()
       } else {
         this.props.onChange(dudeId)
       }
@@ -28,14 +29,16 @@ class SelectOrAddDude extends React.Component {
   render () {
     const { itemId, selectedId } = this.props
     return (
-      <div style={{ display: 'inline-block' }}>
-        <DudeList
-          customActions={[{ id: '_add_dude_', label: 'Add dude' }]}
-          selectedId={selectedId}
-          onChange={this.onChange}
-        />
+      <div>
+        <WithFlyoutArrowBelow show={!!this.state.modalOpen} >
+          <DudeList
+            customActions={[{ id: '_add_dude_', label: 'Item bought by new dude...' }]}
+            selectedId={selectedId}
+            onChange={this.onChange}
+          />
+        </WithFlyoutArrowBelow>
         {this.state.modalOpen && (
-          <AddDudeModal closeModal={this.closeModal} itemId={itemId} />
+          <AddDudeAndAssignToItemAccordian close={this.closeModal} itemId={itemId} />
         )}
       </div>
     )

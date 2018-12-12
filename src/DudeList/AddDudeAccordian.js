@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addDudeAndAssignToItem } from './interactions'
-import Modal from '../Modal'
+import { addDude } from './interactions'
+import Accordian from '../Accordian'
 import { textInputStyle } from '../styles'
 
-class AddDudeModal extends React.Component {
+class AddDudeAccordian extends React.Component {
   constructor (props) {
     super(props)
 
@@ -15,14 +15,14 @@ class AddDudeModal extends React.Component {
     }
 
     this.submit = () => {
-      this.state.name && this.props.addDudeAndAssignToItem(this.state.name, this.props.itemId)
-      this.props.closeModal()
+      this.state.name && this.props.addDude(this.state.name)
+      this.props.close()
     }
   }
 
   render () {
     return (
-      <Modal onCancel={this.props.closeModal} onSubmit={this.submit} submitButtonText="Add" title="Add dude">
+      <Accordian onCancel={this.props.close} onSubmit={this.submit} submitButtonText="Add" title="Add dude">
         <div style={{
           display: 'flex',
           flexDirection: 'column'
@@ -32,9 +32,9 @@ class AddDudeModal extends React.Component {
             <input style={textInputStyle} autoFocus type="textbox" onChange={this.handleTextInput}/>
           </label>
         </div>
-      </Modal>
+      </Accordian>
     )
   }
 }
 
-export default connect(null, { addDudeAndAssignToItem })(AddDudeModal)
+export default connect(null, { addDude })(AddDudeAccordian)

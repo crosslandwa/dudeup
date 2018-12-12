@@ -1,7 +1,9 @@
 import React from 'react'
 
+const grey = '#eff0f1'
+
 export const flyoutHighlight = {
-  backgroundColor: '#eff0f1'
+  backgroundColor: grey
 }
 
 export const WithFlyoutArrowBelow = props => (
@@ -12,15 +14,17 @@ export const WithFlyoutArrowBelow = props => (
     alignItems: 'center'
   }}>
     {props.children}
-    <div style={{
-      border: 'solid transparent',
-      content: ' ',
-      pointerEvents: 'none',
-      borderColor: 'rgba(136, 183, 213, 0)',
-      borderBottomColor: '#eff0f1',
-      borderWidth: '1em',
-      marginTop: '-1em',
-      width: 0
-    }}></div>
+    {props.show && (
+      <div style={{
+        border: 'solid transparent',
+        content: ' ',
+        pointerEvents: 'none',
+        borderColor: 'rgba(136, 183, 213, 0)',
+        borderBottomColor: grey,
+        borderWidth: '1em',
+        marginTop: '-1em',
+        width: 0
+      }}></div>
+    )}
   </div>
 )

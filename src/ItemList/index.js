@@ -29,14 +29,9 @@ class ItemList extends React.Component {
           {this.props.ids.map(id => <Item id={id} />)}
         </div>
         <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={this.props.addItem} value="Add item" />
-        {this.state.removeDudeOpen
-          ? (
-            <WithFlyoutArrowBelow>
-              <input style={{ ...textButtonStyle, ...flyoutHighlight }} type="button" value="Remove dude" onClick={this.openModal} />
-            </WithFlyoutArrowBelow>
-          )
-          : <input style={textButtonStyle} type="button" value="Remove dude" onClick={this.openModal} />
-        }
+        <WithFlyoutArrowBelow show={this.state.removeDudeOpen}>
+          <input style={{ ...textButtonStyle, ...flyoutHighlight }} type="button" value="Remove dude" onClick={this.openModal} />
+        </WithFlyoutArrowBelow>
         {this.state.removeDudeOpen && <RemoveDudeAccordian close={this.closeModal} />}
       </div>
     )
