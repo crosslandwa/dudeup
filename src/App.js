@@ -5,6 +5,7 @@ import ItemList from './ItemList'
 import Notifications from './Notifications'
 import Summary from './Summary'
 import AnErrorOccurred from './AnErrorOccurred'
+import DudeManagement from './DudeList/Management'
 
 const mapStateToProps = state => ({})
 const mapDispatchToProps = {}
@@ -16,6 +17,7 @@ const App = props => (
     <AnErrorOccurred>
       <h1>Dude Up</h1>
       <Notifications />
+      <DudeManagement />
       <ItemList />
       <Summary />
       <Clear />

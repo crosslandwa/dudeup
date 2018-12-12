@@ -42,10 +42,7 @@ class ItemSharing extends React.Component {
 
     return (
       <div>
-        {this.state.open
-          ? <WithFlyoutArrowBelow><Link style={flyoutHighlight} /></WithFlyoutArrowBelow>
-          : <Link />
-        }
+        <WithFlyoutArrowBelow show={this.state.open} ><Link style={flyoutHighlight} /></WithFlyoutArrowBelow>
         {this.state.open && <SplitCostAccordian close={this.closeSharing} itemId={id} />}
       </div>
     )
