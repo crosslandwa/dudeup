@@ -26,6 +26,14 @@ class DudeManagement extends React.Component {
   render () {
     return (
       <div style={{ marginBottom: '1em' }}>
+        <div style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+        }}>
+          {this.props.dudes.map(dude => (
+            <input type="button" style={{ ...textButtonStyle, margin: '0 1em 0.25em 0' }} value={dude.name} />
+          ))}
+        </div>
         <WithFlyoutArrowBelow show={!!this.state.modalOpen} >
           <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={this.toggleAddDude} value="Add dude" />
         </WithFlyoutArrowBelow>
