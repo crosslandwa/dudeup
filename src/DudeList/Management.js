@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { dudeIdsSelector, dudeNameSelector } from './interactions'
+import { dudeIdsSelector } from './interactions'
 import { textButtonStyle } from '../styles'
+import EditableDude from './EditableDude'
 import AddDudeAccordian from './AddDudeAccordian'
-import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
+import { flyoutHighlight, WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 const mapStateToProps = (state) => ({
-  dudes: dudeIdsSelector(state).map(id => ({ id, name: dudeNameSelector(state, id) }))
+  dudeIds: dudeIdsSelector(state)
 })
 
 class DudeManagement extends React.Component {
@@ -19,7 +20,7 @@ class DudeManagement extends React.Component {
     }
 
     this.toggleAddDude = e => {
-      this.setState({ modalOpen: this.state.modalOpen === '_add_dude_' ? false : '_add_dude_' })
+      this.setState(state => ({ modalOpen: !state.modalOpen }))
     }
   }
 
@@ -28,14 +29,12 @@ class DudeManagement extends React.Component {
       <div style={{ marginBottom: '1em' }}>
         <div style={{
           display: 'flex',
-          flexWrap: 'wrap',
+          flexWrap: 'wrap'
         }}>
-          {this.props.dudes.map(dude => (
-            <input type="button" style={{ ...textButtonStyle, margin: '0 1em 0.25em 0' }} value={dude.name} />
-          ))}
+          {this.props.dudeIds.map(id => <EditableDude id={id} />)}
         </div>
-        <WithFlyoutArrowBelow show={!!this.state.modalOpen} >
-          <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={this.toggleAddDude} value="Add dude" />
+        <WithFlyoutArrowBelow show={this.state.modalOpen} >
+          <input style={{ ...textButtonStyle, ...(this.state.modalOpen ? flyoutHighlight : {}), display: 'block' }} type="button" onClick={this.toggleAddDude} value="Add dude" />
         </WithFlyoutArrowBelow>
         {this.state.modalOpen && (
           <AddDudeAccordian close={this.closeModal} />
