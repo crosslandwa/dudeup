@@ -30,7 +30,7 @@ class ItemList extends React.Component {
         </div>
         <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={this.props.addItem} value="Add item" />
         <WithFlyoutArrowBelow show={this.state.removeDudeOpen}>
-          <input style={{ ...textButtonStyle, ...flyoutHighlight }} type="button" value="Remove dude" onClick={this.openModal} />
+          <input style={{ ...textButtonStyle, ...(this.state.removeDudeOpen ? flyoutHighlight : {}) }} type="button" value="Remove dude" onClick={this.openModal} />
         </WithFlyoutArrowBelow>
         {this.state.removeDudeOpen && <RemoveDudeAccordian close={this.closeModal} />}
       </div>

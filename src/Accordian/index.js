@@ -20,7 +20,9 @@ class Accordian extends React.Component {
       }
     }
 
-    this.captureRef = node => this.ref = node
+    this.captureRef = node => {
+      this.ref = node
+    }
 
     this.clickOutsideFunction = e => {
       if (this.ref && !this.ref.contains(e.target)) {
