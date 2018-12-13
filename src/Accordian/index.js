@@ -19,19 +19,29 @@ class Accordian extends React.Component {
         this.props.onCancel()
       }
     }
+
+    this.captureRef = node => this.ref = node
+
+    this.clickOutsideFunction = e => {
+      if (this.ref && !this.ref.contains(e.target)) {
+        this.props.onCancel()
+      }
+    }
   }
 
   componentDidMount () {
     document.addEventListener('keydown', this.escFunction, false)
+    document.addEventListener('click', this.clickOutsideFunction, false)
   }
 
   componentWillUnmount () {
     document.removeEventListener('keydown', this.escFunction, false)
+    document.removeEventListener('click', this.clickOutsideFunction, false)
   }
 
   render () {
     return (
-      <div style={{
+      <div ref={this.captureRef} style={{
         backgroundColor: '#eff0f1',
         padding: '0.5em'
       }}>
