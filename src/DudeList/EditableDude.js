@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { dudeNameSelector } from './interactions'
 import { textButtonStyle, textInputStyle } from '../styles'
 import Accordian from '../Accordian'
-import { flyoutHighlight, WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
+import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 const mapStateToProps = (state, { id }) => ({
   name: dudeNameSelector(state, id)
@@ -28,7 +28,7 @@ class DudeManagement extends React.Component {
     return (
       <div style={{ margin: '0 1em 0.25em 0' }}>
         <WithFlyoutArrowBelow show={edit} >
-          <input type="button" style={{ ...textButtonStyle, ...(edit ? flyoutHighlight : {}) }} onClick={this.toggleEditOpen} value={this.props.name} />
+          <input type="button" style={{ ...textButtonStyle }} onClick={this.toggleEditOpen} value={this.props.name} />
         </WithFlyoutArrowBelow>
         {this.state.editOpen && (
           <Accordian onCancel={this.closeEdit} onSubmit={() => {}} submitButtonText="Save" title={`Edit ${this.props.name}`}>

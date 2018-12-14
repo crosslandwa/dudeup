@@ -4,7 +4,7 @@ import { dudeIdsSelector } from './interactions'
 import { textButtonStyle } from '../styles'
 import EditableDude from './EditableDude'
 import AddDudeAccordian from './AddDudeAccordian'
-import { flyoutHighlight, WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
+import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 const mapStateToProps = (state) => ({
   dudeIds: dudeIdsSelector(state)
@@ -34,7 +34,7 @@ class DudeManagement extends React.Component {
           {this.props.dudeIds.map(id => <EditableDude id={id} />)}
         </div>
         <WithFlyoutArrowBelow show={this.state.modalOpen} >
-          <input style={{ ...textButtonStyle, ...(this.state.modalOpen ? flyoutHighlight : {}), display: 'block' }} type="button" onClick={this.toggleAddDude} value="Add dude" />
+          <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={this.toggleAddDude} value="+" />
         </WithFlyoutArrowBelow>
         {this.state.modalOpen && (
           <AddDudeAccordian close={this.closeModal} />

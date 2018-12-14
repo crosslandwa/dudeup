@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { itemSharingLabelSelector } from '../ItemList/interactions'
 import { fauxLinkStyle } from '../styles'
 import SplitCostAccordian from './SplitCostAccordian'
-import { flyoutHighlight, WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
+import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 const mapStateToProps = (state, { id }) => ({
   sharingLabel: itemSharingLabelSelector(state, id)
@@ -43,7 +43,7 @@ class ItemSharing extends React.Component {
     return (
       <div>
         <WithFlyoutArrowBelow show={this.state.open} >
-          <Link style={{ ...(this.state.open ? flyoutHighlight : {}) }} />
+          <Link />
         </WithFlyoutArrowBelow>
         {this.state.open && <SplitCostAccordian close={this.closeSharing} itemId={id} />}
       </div>

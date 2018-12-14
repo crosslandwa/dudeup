@@ -2,9 +2,10 @@ import React from 'react'
 
 const grey = '#eff0f1'
 
-export const flyoutHighlight = {
-  backgroundColor: grey
-}
+const addHighlight = children => React.Children.map(
+  children,
+  child => React.cloneElement(child, { style: { ...child.props.style, backgroundColor: grey } })
+)
 
 export const WithFlyoutArrowBelow = props => (
   <div style={{
@@ -13,7 +14,7 @@ export const WithFlyoutArrowBelow = props => (
     width: 'fit-content',
     alignItems: 'center'
   }}>
-    {props.children}
+    {props.show ? addHighlight(props.children) : props.children}
     {props.show && (
       <div style={{
         border: 'solid transparent',
