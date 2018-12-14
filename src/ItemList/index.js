@@ -4,7 +4,7 @@ import { addItem, itemIdsSelector } from './interactions'
 import Item from './Item'
 import { textButtonStyle } from '../styles'
 import RemoveDudeAccordian from '../DudeList/RemoveDudeAccordian'
-import { flyoutHighlight, WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
+import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 const mapStateToProps = state => ({
   ids: itemIdsSelector(state)
@@ -30,7 +30,7 @@ class ItemList extends React.Component {
         </div>
         <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={this.props.addItem} value="Add item" />
         <WithFlyoutArrowBelow show={this.state.removeDudeOpen}>
-          <input style={{ ...textButtonStyle, ...(this.state.removeDudeOpen ? flyoutHighlight : {}) }} type="button" value="Remove dude" onClick={this.openModal} />
+          <input style={{ ...textButtonStyle }} type="button" value="Remove dude" onClick={this.openModal} />
         </WithFlyoutArrowBelow>
         {this.state.removeDudeOpen && <RemoveDudeAccordian close={this.closeModal} />}
       </div>
