@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {
+  addItem,
   itemDescriptionSelector, updateItemDescription,
   itemBoughtByDudeIdSelector, itemPriceSelector, updateItemBoughtBy,
   removeItem
@@ -12,12 +13,13 @@ import { textButtonStyle, textInputStyle } from '../styles'
 import { addWarningNotification } from '../Notifications/interactions'
 
 const mapStateToProps = (state, { id }) => ({
-  description: itemDescriptionSelector(state, id),
-  dudeId: itemBoughtByDudeIdSelector(state, id),
-  price: itemPriceSelector(state, id)
+  description: id ? itemDescriptionSelector(state, id) : undefined,
+  dudeId: id ? itemBoughtByDudeIdSelector(state, id) : undefined,
+  price: id ? itemPriceSelector(state, id) : undefined
 })
 
 const mapDispatchToProps = (dispatch, { id }) => ({
+  addItem: (description, dudeId, price) => dispatch(addItem(description, dudeId, price)),
   addWarningNotification: text => dispatch(addWarningNotification(text)),
   remove: e => dispatch(removeItem(id)),
   updateDescription: description => dispatch(updateItemDescription(id, description)),
@@ -42,9 +44,12 @@ class EditItemAccordian extends React.Component {
     this.updateItem = e => {
       if (!this.state.description) {
         this.props.addWarningNotification('Did not update item - description required')
-      } else {
+      } else if (this.props.id) {
         this.props.updateItemBoughtBy(this.state.dudeId, this.state.price)
         this.props.updateDescription(this.state.description)
+        this.props.close()
+      } else {
+        this.props.addItem(this.state.description, this.state.dudeId, this.state.price)
         this.props.close()
       }
     }
@@ -56,9 +61,11 @@ class EditItemAccordian extends React.Component {
         <input autoFocus style={textInputStyle} placeholder="item description" value={this.state.description} onChange={this.storeItemDescription} />
         <DudeList selectedId={this.state.dudeId} onChange={this.storeItemBoughtBy}/>
         <PriceInput onChange={this.storeItemPrice} price={this.state.price} />
-        <div>
-          <input style={textButtonStyle} type="button" value="remove" onClick={this.props.remove} />
-        </div>
+        {this.props.id && (
+          <div>
+            <input style={textButtonStyle} type="button" value="remove" onClick={this.props.remove} />
+          </div>
+        )}
       </Accordian>
     )
   }

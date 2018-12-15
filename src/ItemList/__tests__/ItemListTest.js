@@ -18,15 +18,17 @@ describe('Item List', () => {
     expect(itemIdsSelector(store.getState())).toHaveLength(1)
   })
 
-  it('can have items added', () => {
+  it('can have items added, optionally with a description, buyer and price', () => {
     const store = createStore()
 
     store.dispatch(addItem())
     store.dispatch(addItem())
+    store.dispatch(addItem('a thing'))
 
     const itemIds = itemIdsSelector(store.getState())
 
-    expect(itemIds).toHaveLength(3)
+    expect(itemIds).toHaveLength(4)
+    expect(itemDescriptionSelector(store.getState(), itemIds[3])).toEqual('a thing')
   })
 
   it('can have items removed, but leaves at least one item', () => {
