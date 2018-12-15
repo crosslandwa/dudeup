@@ -46,7 +46,7 @@ class DudeManagement extends React.Component {
           <input type="button" style={textButtonStyle} onClick={this.toggleEditOpen} value={this.props.name} />
         </WithFlyoutArrowBelow>
         {this.state.editOpen && (
-          <Accordian onCancel={this.closeEdit} onSubmit={this.updateName} submitButtonText="Save" title={`Update ${this.props.name}`}>
+          <Accordian onCancel={this.closeEdit} onSubmit={this.updateName} submitButtonText="Update" title={`Update ${this.props.name}`}>
             <div style={{
               display: 'flex',
               flexDirection: 'column'

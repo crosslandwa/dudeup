@@ -4,6 +4,7 @@ import { addItem, itemIdsSelector } from './interactions'
 import ItemSummary from './ItemSummary'
 import EditItemAccordian from './EditItemAccordian'
 import { textButtonStyle } from '../styles'
+import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 const mapStateToProps = state => ({
   ids: itemIdsSelector(state)
@@ -29,13 +30,10 @@ class ItemList extends React.Component {
         <div>
           {this.props.ids.map(id => <ItemSummary id={id} />)}
         </div>
-        {this.state.add
-          ? (
-            <EditItemAccordian close={this.closeAdd} />
-          ) : (
-            <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={this.toggleAdd} value="Add item" />
-          )
-        }
+        <WithFlyoutArrowBelow show={this.state.add} >
+          <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={this.toggleAdd} value="Add item" />
+        </WithFlyoutArrowBelow>
+        {this.state.add && <EditItemAccordian close={this.closeAdd} submitButtonText="Add" title="Add item"/>}
       </React.Fragment>
     )
   }

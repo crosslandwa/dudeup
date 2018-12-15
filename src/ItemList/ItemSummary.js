@@ -45,7 +45,7 @@ class ItemSummary extends React.Component {
       <div style={{ ...textButtonStyle, marginBottom: '0.5em' }}>
         {this.state.edit
           ? (
-            <EditItemAccordian id={id} close={this.closeEdit} />
+            <EditItemAccordian id={id} close={this.closeEdit} submitButtonText="Update" />
           ) : (
             <div style={{ cursor: 'pointer' }} onClick={this.toggleEdit}>
               <span>{description}</span>
