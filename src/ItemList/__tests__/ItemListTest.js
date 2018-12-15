@@ -1,12 +1,10 @@
 import createStore from '../../store'
 import {
-  addDudeAndAssignToItem,
   addItem, removeItem, itemIdsSelector,
   lastAddedItemIdSelector,
   updateItemDescription, itemDescriptionSelector,
   updateItemBoughtBy, itemBoughtByDudeIdSelector, itemPriceSelector
 } from '../interactions'
-import { dudeIdsSelector, lastAddedDudeSelector } from '../../DudeList/interactions'
 import { addDudeAndReturnId } from '../../DudeList/__tests__/DudeListTest.js'
 
 export const addItemAndReturnId = store => {
@@ -74,16 +72,5 @@ describe('Item List', () => {
     store.dispatch(updateItemBoughtBy(itemId, dudeId, 1.057))
 
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(1.05)
-  })
-
-  it('can create a new dude and assigns them to the specified item in one go', () => {
-    const store = createStore()
-    const itemId = addItemAndReturnId(store)
-
-    store.dispatch(addDudeAndAssignToItem('A dude', itemId))
-
-    expect(dudeIdsSelector(store.getState())).toHaveLength(1)
-    expect(lastAddedDudeSelector(store.getState()))
-      .toEqual(itemBoughtByDudeIdSelector(store.getState(), itemId))
   })
 })

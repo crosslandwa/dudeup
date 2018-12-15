@@ -1,5 +1,5 @@
 import createStore from '../../store'
-import { addNotification, notificationIdsSelector, notificationTextSelector } from '../interactions'
+import { addNotification, addWarningNotification, notificationIdsSelector, notificationTextSelector, notificationTypeSelector } from '../interactions'
 
 describe('Notifications', () => {
   it('can be added', () => {
@@ -21,5 +21,15 @@ describe('Notifications', () => {
       expect(notificationIdsSelector(store.getState())).toHaveLength(0)
       done()
     }, 200)
+  })
+
+  it('can be added as warnings', () => {
+    const store = createStore()
+    store.dispatch(addWarningNotification('alert!'))
+
+    const ids = notificationIdsSelector(store.getState())
+    expect(ids).toHaveLength(1)
+    expect(notificationTextSelector(store.getState(), ids[0])).toEqual('alert!')
+    expect(notificationTypeSelector(store.getState(), ids[0])).toEqual('warning')
   })
 })
