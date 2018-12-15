@@ -1,13 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { notificationIdsSelector, notificationTextSelector } from './interactions'
-// import Item from './Item'
+import { notificationIdsSelector, notificationTextSelector, notificationTypeSelector } from './interactions'
 
 const mapStateToProps = state => ({
   notifications: notificationIdsSelector(state).map(id => ({
     id,
     text: notificationTextSelector(state, id),
-    type: 'success'
+    type: notificationTypeSelector(state, id)
   }))
 })
 

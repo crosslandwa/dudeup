@@ -1,11 +1,10 @@
-import { addDude, dudeNameSelector, lastAddedDudeSelector } from '../DudeList/interactions'
+import { dudeNameSelector } from '../DudeList/interactions'
 import { addNotification } from '../Notifications/interactions'
 
 const roundDown = amount => parseInt(amount * 100) / 100
 const apply = (f, x) => f(x)
 
 // ------ACTIONS------
-export const addDudeAndAssignToItem = (name, itemId) => ({ type: 'ITEMLIST_ADD_DUDE', name, itemId })
 export const addItem = () => ({ type: 'ITEMLIST_ADD_ITEM' })
 export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
 export const shareItemBetweenDudes = (id, dudeIds) => ({ type: 'ITEMLIST_UPDATE_ITEM_SHARING', id, dudeIds })
@@ -98,10 +97,6 @@ export const reducer = (state = { allIds: ['item-1'], byId: { 'item-1': item(und
 export function middleware (store) {
   return (next) => (action) => {
     switch (action.type) {
-      case 'ITEMLIST_ADD_DUDE':
-        next(addDude(action.name))
-        next(updateItemBoughtBy(action.itemId, lastAddedDudeSelector(store.getState())))
-        break
       case 'ITEMLIST_REMOVE_ITEM':
         next(action)
         if (!itemIdsSelector(store.getState()).length) {

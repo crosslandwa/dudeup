@@ -1,17 +1,19 @@
 // ------ACTIONS------
-export const addNotification = (text, timeoutSeconds = 3) => ({ type: 'NOTIFICATIONS_ADD', text, timeoutSeconds })
+export const addNotification = (text, timeoutSeconds = 3) => ({ type: 'NOTIFICATIONS_ADD', notificationType: 'success', text, timeoutSeconds })
+export const addWarningNotification = (text, timeoutSeconds = 3) => ({ type: 'NOTIFICATIONS_ADD', notificationType: 'warning', text, timeoutSeconds })
 const removeNotification = id => ({ type: 'NOTIFICATIONS_REMOVE', id })
 
 // ------SELECTORS------
 export const notificationIdsSelector = state => state.notifications.allIds
 const lastAddedNotificationIdSelctor = state => state.notifications.allIds.slice(-1)[0]
 export const notificationTextSelector = (state, id) => state.notifications.byId[id].text
+export const notificationTypeSelector = (state, id) => state.notifications.byId[id].type
 
 // ------REDUCERS------
 const notification = (state = { text: '' }, action) => {
   switch (action.type) {
     case 'NOTIFICATIONS_ADD':
-      return { ...state, text: action.text }
+      return { ...state, text: action.text, type: action.notificationType }
   }
   return state
 }

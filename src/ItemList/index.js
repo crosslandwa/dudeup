@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addItem, itemIdsSelector } from './interactions'
-import Item from './Item'
+import ItemSummary from './ItemSummary'
 import { textButtonStyle } from '../styles'
 
 const mapStateToProps = state => ({
@@ -9,12 +9,12 @@ const mapStateToProps = state => ({
 })
 
 const ItemList = props => (
-  <div>
+  <React.Fragment>
     <div>
-      {props.ids.map(id => <Item id={id} />)}
+      {props.ids.map(id => <ItemSummary id={id} />)}
     </div>
     <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={props.addItem} value="Add item" />
-  </div>
+  </React.Fragment>
 )
 
 export default connect(mapStateToProps, { addItem })(ItemList)
