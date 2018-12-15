@@ -72,7 +72,7 @@ const item = (state = defaultItemState, action) => {
   return state
 }
 
-export const reducer = (state = { allIds: ['item-1'], byId: { 'item-1': item(undefined, {}) } }, action) => {
+export const reducer = (state = { allIds: [], byId: {} }, action) => {
   switch (action.type) {
     case 'ITEMLIST_ADD_ITEM':
       const id = `item-${(state.allIds.length ? Math.max(...state.allIds.map(x => x.replace('item-', ''))) : 0) + 1}`
@@ -108,11 +108,9 @@ export function middleware (store) {
         }
         return
       case 'ITEMLIST_REMOVE_ITEM':
+        const removedItemDescription = itemDescriptionSelector(store.getState(), action.id)
         next(action)
-        if (!itemIdsSelector(store.getState()).length) {
-          next(addItem())
-        }
-        next(addNotification(`Item removed`))
+        next(addNotification(removedItemDescription ? `Removed item "${removedItemDescription}"`: 'Item removed'))
         return
     }
     next(action)

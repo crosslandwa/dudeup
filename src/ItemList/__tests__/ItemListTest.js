@@ -13,11 +13,6 @@ export const addItemAndReturnId = store => {
 }
 
 describe('Item List', () => {
-  it('initialises with a single item', () => {
-    const store = createStore()
-    expect(itemIdsSelector(store.getState())).toHaveLength(1)
-  })
-
   it('can have items added, optionally with a description, buyer and price', () => {
     const store = createStore()
 
@@ -27,18 +22,21 @@ describe('Item List', () => {
 
     const itemIds = itemIdsSelector(store.getState())
 
-    expect(itemIds).toHaveLength(4)
-    expect(itemDescriptionSelector(store.getState(), itemIds[3])).toEqual('a thing')
+    expect(itemIds).toHaveLength(3)
+    expect(itemDescriptionSelector(store.getState(), itemIds[2])).toEqual('a thing')
   })
 
-  it('can have items removed, but leaves at least one item', () => {
+  it('can have items removed', () => {
     const store = createStore()
-    const itemId = addItemAndReturnId(store)
+    const itemId1 = addItemAndReturnId(store)
+    const itemId2 = addItemAndReturnId(store)
     expect(itemIdsSelector(store.getState())).toHaveLength(2)
-    store.dispatch(removeItem(itemId))
+
+    store.dispatch(removeItem(itemId1))
     expect(itemIdsSelector(store.getState())).toHaveLength(1)
-    store.dispatch(removeItem(itemIdsSelector(store.getState())[0]))
-    expect(itemIdsSelector(store.getState())).toHaveLength(1)
+
+    store.dispatch(removeItem(itemId2))
+    expect(itemIdsSelector(store.getState())).toHaveLength(0)
   })
 
   it('can have the description of an item updated', () => {

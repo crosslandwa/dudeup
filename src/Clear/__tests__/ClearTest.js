@@ -13,6 +13,6 @@ describe('Clear', () => {
     store.dispatch(clear())
 
     expect(dudeIdsSelector(store.getState())).toHaveLength(0)
-    expect(itemIdsSelector(store.getState())).toHaveLength(1)
+    expect(itemIdsSelector(store.getState())).toHaveLength(0)
   })
 })
