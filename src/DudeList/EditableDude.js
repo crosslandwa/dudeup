@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { dudeNameSelector, updateDudeName } from './interactions'
+import { dudeCanBeRemovedSelector, dudeNameSelector, removeDude, updateDudeName } from './interactions'
 import { textButtonStyle, textInputStyle } from '../styles'
 import Accordian from '../Accordian'
 import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 const mapStateToProps = (state, { id }) => ({
-  name: dudeNameSelector(state, id)
+  name: dudeNameSelector(state, id),
+  isRemovable: dudeCanBeRemovedSelector(state, id)
 })
 
 class DudeManagement extends React.Component {
@@ -30,6 +31,11 @@ class DudeManagement extends React.Component {
       this.props.updateDudeName(this.props.id, this.state.name)
       this.closeEdit()
     }
+
+    this.remove = e => {
+      this.props.removeDude(this.props.id)
+      this.closeEdit()
+    }
   }
 
   render () {
@@ -37,10 +43,10 @@ class DudeManagement extends React.Component {
     return (
       <div style={{ margin: '0 1em 0.25em 0' }}>
         <WithFlyoutArrowBelow show={edit} >
-          <input type="button" style={{ ...textButtonStyle }} onClick={this.toggleEditOpen} value={this.props.name} />
+          <input type="button" style={textButtonStyle} onClick={this.toggleEditOpen} value={this.props.name} />
         </WithFlyoutArrowBelow>
         {this.state.editOpen && (
-          <Accordian onCancel={this.closeEdit} onSubmit={this.updateName} submitButtonText="Save" title={`Edit ${this.props.name}`}>
+          <Accordian onCancel={this.closeEdit} onSubmit={this.updateName} submitButtonText="Save" title={`Update ${this.props.name}`}>
             <div style={{
               display: 'flex',
               flexDirection: 'column'
@@ -50,6 +56,15 @@ class DudeManagement extends React.Component {
                 <input style={textInputStyle} value={this.state.name} autoFocus type="textbox" onChange={this.handleTextInput}/>
               </label>
             </div>
+            {this.props.isRemovable
+              ? <input type="button" style={textButtonStyle} onClick={this.remove} value="Remove" />
+              : (
+                <React.Fragment>
+                  <input type="button" style={textButtonStyle} disabled="true" value="Remove" />
+                  <div><em>Dudes who have bought (or are sharing) items can not be removed</em></div>
+                </React.Fragment>
+              )
+            }
           </Accordian>
         )}
       </div>
@@ -57,4 +72,4 @@ class DudeManagement extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, { updateDudeName })(DudeManagement)
+export default connect(mapStateToProps, { removeDude, updateDudeName })(DudeManagement)
