@@ -43,7 +43,7 @@ class EditItemAccordian extends React.Component {
 
     this.updateItem = e => {
       if (!this.state.description) {
-        this.props.addWarningNotification('Did not update item - description required')
+        this.props.addWarningNotification(`Did not ${this.props.id ? 'update' : 'add'} item - description required`)
       } else if (this.props.id) {
         this.props.updateItemBoughtBy(this.state.dudeId, this.state.price)
         this.props.updateDescription(this.state.description)
@@ -57,7 +57,7 @@ class EditItemAccordian extends React.Component {
 
   render () {
     return (
-      <Accordian onCancel={this.props.close} onSubmit={this.updateItem} submitButtonText={this.props.submitButtonText} title={this.props.title} >
+      <Accordian onCancel={this.props.close} onSubmit={this.updateItem} submitButtonText={this.props.id ? 'Update' : 'Add'} title={this.props.id ? '' : 'Add item'} >
         <input autoFocus style={textInputStyle} placeholder="item description" value={this.state.description} onChange={this.storeItemDescription} />
         <DudeList selectedId={this.state.dudeId} onChange={this.storeItemBoughtBy}/>
         <PriceInput onChange={this.storeItemPrice} price={this.state.price} />

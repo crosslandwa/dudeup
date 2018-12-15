@@ -110,7 +110,7 @@ export function middleware (store) {
       case 'ITEMLIST_REMOVE_ITEM':
         const removedItemDescription = itemDescriptionSelector(store.getState(), action.id)
         next(action)
-        next(addNotification(removedItemDescription ? `Removed item "${removedItemDescription}"`: 'Item removed'))
+        next(addNotification(removedItemDescription ? `Removed item '${removedItemDescription}'`: 'Item removed'))
         return
     }
     next(action)
