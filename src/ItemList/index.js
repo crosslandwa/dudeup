@@ -33,7 +33,7 @@ class ItemList extends React.Component {
         <WithFlyoutArrowBelow show={this.state.add} >
           <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={this.toggleAdd} value="Add item" />
         </WithFlyoutArrowBelow>
-        {this.state.add && <EditItemAccordian close={this.closeAdd} submitButtonText="Add" title="Add item"/>}
+        {this.state.add && <EditItemAccordian close={this.closeAdd} />}
       </React.Fragment>
     )
   }
