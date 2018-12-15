@@ -5,7 +5,7 @@ const roundDown = amount => parseInt(amount * 100) / 100
 const apply = (f, x) => f(x)
 
 // ------ACTIONS------
-export const addItem = () => ({ type: 'ITEMLIST_ADD_ITEM' })
+export const addItem = (description, dudeId, price) => ({ type: 'ITEMLIST_ADD_ITEM', description, dudeId, price })
 export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
 export const shareItemBetweenDudes = (id, dudeIds) => ({ type: 'ITEMLIST_UPDATE_ITEM_SHARING', id, dudeIds })
 export const splitItemBetweenDudes = (id, dudeIdToAmount) => ({
@@ -97,6 +97,16 @@ export const reducer = (state = { allIds: ['item-1'], byId: { 'item-1': item(und
 export function middleware (store) {
   return (next) => (action) => {
     switch (action.type) {
+      case 'ITEMLIST_ADD_ITEM':
+        next(action)
+        const itemId = lastAddedItemIdSelector(store.getState())
+        if (action.description) {
+          next(updateItemDescription(itemId, action.description))
+        }
+        if (action.dudeId || action.price) {
+          next(updateItemBoughtBy(itemId, action.dudeId, action.price))
+        }
+        return
       case 'ITEMLIST_REMOVE_ITEM':
         next(action)
         if (!itemIdsSelector(store.getState()).length) {
