@@ -16,7 +16,7 @@ class DudeManagement extends React.Component {
     this.state = { editOpen: false, name: this.props.name }
 
     this.closeEdit = () => {
-      this.setState({ editOpen: false })
+      this.setState({ editOpen: false, name: this.props.name })
     }
 
     this.toggleEditOpen = e => {
