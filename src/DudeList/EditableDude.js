@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { dudeNameSelector } from './interactions'
+import { dudeNameSelector, updateDudeName } from './interactions'
 import { textButtonStyle, textInputStyle } from '../styles'
 import Accordian from '../Accordian'
 import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
@@ -12,7 +12,7 @@ const mapStateToProps = (state, { id }) => ({
 class DudeManagement extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { editOpen: false }
+    this.state = { editOpen: false, name: this.props.name }
 
     this.closeEdit = () => {
       this.setState({ editOpen: false })
@@ -20,6 +20,15 @@ class DudeManagement extends React.Component {
 
     this.toggleEditOpen = e => {
       this.setState(state => ({ editOpen: !state.editOpen }))
+    }
+
+    this.handleTextInput = e => {
+      this.setState({ name: e.target.value })
+    }
+
+    this.updateName = e => {
+      this.props.updateDudeName(this.props.id, this.state.name)
+      this.closeEdit()
     }
   }
 
@@ -31,14 +40,14 @@ class DudeManagement extends React.Component {
           <input type="button" style={{ ...textButtonStyle }} onClick={this.toggleEditOpen} value={this.props.name} />
         </WithFlyoutArrowBelow>
         {this.state.editOpen && (
-          <Accordian onCancel={this.closeEdit} onSubmit={() => {}} submitButtonText="Save" title={`Edit ${this.props.name}`}>
+          <Accordian onCancel={this.closeEdit} onSubmit={this.updateName} submitButtonText="Save" title={`Edit ${this.props.name}`}>
             <div style={{
               display: 'flex',
               flexDirection: 'column'
             }}>
               <label>
                 Name:
-                <input style={textInputStyle} value={this.props.name} autoFocus type="textbox" onChange={this.handleTextInput}/>
+                <input style={textInputStyle} value={this.state.name} autoFocus type="textbox" onChange={this.handleTextInput}/>
               </label>
             </div>
           </Accordian>
@@ -48,4 +57,4 @@ class DudeManagement extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(DudeManagement)
+export default connect(mapStateToProps, { updateDudeName })(DudeManagement)

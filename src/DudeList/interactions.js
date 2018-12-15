@@ -4,6 +4,7 @@ import { isDudeInvoledInAnyItemsSelector } from '../ItemList/interactions'
 // ------ACTIONS------
 export const addDude = (name = 'The other guy') => ({ type: 'DUDELIST_ADD_DUDE', name })
 export const removeDude = id => ({ type: 'DUDELIST_REMOVE_DUDE', id })
+export const updateDudeName = (id, name) => ({ type: 'DUDELIST_UPDATE_NAME', id, name })
 
 // ------SELECTORS------
 export const dudeCanBeRemovedSelector = (state, id) => !isDudeInvoledInAnyItemsSelector(state, id)
@@ -15,6 +16,7 @@ export const lastAddedDudeSelector = state => dudeIdsSelector(state).slice(-1)[0
 const dude = (state = {}, action) => {
   switch (action.type) {
     case 'DUDELIST_ADD_DUDE':
+    case 'DUDELIST_UPDATE_NAME':
       return { ...state, name: action.name }
   }
   return state
@@ -37,6 +39,14 @@ export const reducer = (state = { allIds: [], byId: {} }, action) => {
       return {
         allIds: updatedIds,
         byId: { ...state.byId, [action.id]: undefined }
+      }
+    case 'DUDELIST_UPDATE_NAME':
+      return {
+        allIds: state.allIds,
+        byId: {
+          ...state.byId,
+          [action.id]: dude(state.byId[action.id], action)
+        }
       }
   }
   return state

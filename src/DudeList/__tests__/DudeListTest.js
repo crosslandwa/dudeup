@@ -1,5 +1,5 @@
 import createStore from '../../store'
-import { addDude, removeDude, dudeCanBeRemovedSelector, dudeIdsSelector, dudeNameSelector, lastAddedDudeSelector } from '../interactions'
+import { addDude, removeDude, dudeCanBeRemovedSelector, dudeIdsSelector, dudeNameSelector, updateDudeName, lastAddedDudeSelector } from '../interactions'
 
 import { shareItemBetweenDudes, updateItemBoughtBy } from '../../ItemList/interactions'
 import { addItemAndReturnId } from '../../ItemList/__tests__/ItemListTest.js'
@@ -36,6 +36,15 @@ describe('Dude List', () => {
     store.dispatch(removeDude(dudeId))
 
     expect(dudeIdsSelector(store.getState())).toHaveLength(0)
+  })
+
+  it('allows Dudes names to be changed', () => {
+    const store = createStore()
+    const dudeId = addDudeAndReturnId(store, 'person 1')
+
+    store.dispatch(updateDudeName(dudeId, 'updated name'))
+
+    expect(dudeNameSelector(store.getState(), dudeId)).toEqual('updated name')
   })
 
   it('does not allow dudes who have bought items to be removed', () => {
