@@ -41,6 +41,11 @@ class EditItemAccordian extends React.Component {
     this.storeItemDescription = store('description')
     this.storeItemPrice = store('price')
 
+    this.remove = () => {
+      this.props.remove()
+      this.props.close()
+    }
+
     this.updateItem = e => {
       if (!this.state.description) {
         this.props.addWarningNotification(`Did not ${this.props.id ? 'update' : 'add'} item - description required`)
@@ -77,7 +82,7 @@ class EditItemAccordian extends React.Component {
                 alignSelf: 'flex-end',
                 marginTop: '-0.5em'
               }}
-              onClick={this.props.remove}
+              onClick={this.remove}
               value="Remove"
             />
           </div>
