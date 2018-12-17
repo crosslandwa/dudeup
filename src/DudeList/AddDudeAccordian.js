@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addDude } from './interactions'
 import Accordian from '../Accordian'
-import { textInputStyle } from '../styles'
+import { textButtonStyle, textInputStyle } from '../styles'
 
 class AddDudeAccordian extends React.Component {
   constructor (props) {
@@ -22,7 +22,7 @@ class AddDudeAccordian extends React.Component {
 
   render () {
     return (
-      <Accordian onCancel={this.props.close} onSubmit={this.submit} submitButtonText="Add" title="Add dude">
+      <Accordian onCancel={this.props.close} onSubmit={this.submit} title="Add dude">
         <div style={{
           display: 'flex',
           flexDirection: 'column'
@@ -31,6 +31,9 @@ class AddDudeAccordian extends React.Component {
             Name:
             <input style={textInputStyle} autoFocus type="textbox" onChange={this.handleTextInput}/>
           </label>
+        </div>
+        <div>
+          <input style={textButtonStyle} type="submit" value="Add" />
         </div>
       </Accordian>
     )

@@ -8,6 +8,7 @@ import {
 } from '../ItemList/interactions'
 import { dudeIdsSelector, dudeNameSelector } from '../DudeList/interactions'
 import PriceInput from '../GenericUi/PriceInput'
+import { textButtonStyle } from '../styles'
 
 const mapStateToProps = (state, { itemId }) => ({
   allDudeIds: dudeIdsSelector(state),
@@ -91,7 +92,7 @@ class SplitCostAccordian extends React.Component {
   render () {
     const { allDudeIds, close, price } = this.props
     return (
-      <Accordian onCancel={close} onSubmit={this.submit} submitButtonText="Update" title="Item sharing" >
+      <Accordian onCancel={close} onSubmit={this.submit} title="Item sharing" >
         <div style={{
           display: 'flex',
           flexDirection: 'column'
@@ -122,6 +123,9 @@ class SplitCostAccordian extends React.Component {
               <div>You have {price - this.splitTotal()} left to divvy up</div>
             )}
           </div>
+        </div>
+        <div>
+          <input style={textButtonStyle} type="submit" value="Update" />
         </div>
       </Accordian>
     )

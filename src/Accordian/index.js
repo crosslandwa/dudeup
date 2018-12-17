@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { textButtonStyle } from '../styles'
 import ClosingCross from './ClosingCross'
 
 const mapDispatchToProps = (dispatch, { onCancel, onSubmit }) => ({
@@ -45,16 +44,13 @@ class Accordian extends React.Component {
     return (
       <div ref={this.captureRef} style={{
         backgroundColor: '#eff0f1',
+        borderRadius: '0.25em',
         padding: '0.5em'
       }}>
         <ClosingCross onClick={this.props.onCancel} />
         <h3 style={{ margin: '0 0 0.5em 0', textAlign: 'center' }}>{this.props.title}</h3>
         <form onSubmit={this.props.onSubmit} >
           {this.props.children}
-          <div>
-            <input style={textButtonStyle} type="button" value="Cancel" onClick={this.props.onCancel} />
-            <input style={textButtonStyle} type="submit" value={this.props.submitButtonText || 'OK'}/>
-          </div>
         </form>
       </div>
     )
