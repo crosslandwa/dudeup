@@ -46,7 +46,7 @@ class DudeManagement extends React.Component {
           <input type="button" style={textButtonStyle} onClick={this.toggleEditOpen} value={this.props.name} />
         </WithFlyoutArrowBelow>
         {this.state.editOpen && (
-          <Accordian onCancel={this.closeEdit} onSubmit={this.updateName} submitButtonText="Update" title={`Update ${this.props.name}`}>
+          <Accordian onCancel={this.closeEdit} onSubmit={this.updateName} title={`Update ${this.props.name}`}>
             <div style={{
               display: 'flex',
               flexDirection: 'column'
@@ -55,6 +55,9 @@ class DudeManagement extends React.Component {
                 Name:
                 <input style={textInputStyle} value={this.state.name} autoFocus type="textbox" onChange={this.handleTextInput}/>
               </label>
+            </div>
+            <div>
+              <input style={textButtonStyle} type="submit" value="Update" />
             </div>
             {this.props.isRemovable
               ? <input type="button" style={textButtonStyle} onClick={this.remove} value="Remove" />
