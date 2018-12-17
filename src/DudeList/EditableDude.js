@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { dudeCanBeRemovedSelector, dudeNameSelector, removeDude, updateDudeName } from './interactions'
-import { textButtonStyle, textInputStyle } from '../styles'
+import { fauxLinkStyle, textButtonStyle, textInputStyle } from '../styles'
 import Accordian from '../Accordian'
 import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
@@ -56,18 +56,27 @@ class DudeManagement extends React.Component {
                 <input style={textInputStyle} value={this.state.name} autoFocus type="textbox" onChange={this.handleTextInput}/>
               </label>
             </div>
-            <div>
+            <div style={{ margin: '0.5em 0' }}>
               <input style={textButtonStyle} type="submit" value="Update" />
             </div>
-            {this.props.isRemovable
-              ? <input type="button" style={textButtonStyle} onClick={this.remove} value="Remove" />
-              : (
-                <React.Fragment>
-                  <input type="button" style={textButtonStyle} disabled="true" value="Remove" />
-                  <div><em>Dudes who have bought (or are sharing) items can not be removed</em></div>
-                </React.Fragment>
-              )
-            }
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              fontSize: '85%'
+            }}>
+              {!this.props.isRemovable && <div><em>Dudes who have bought (or are sharing) items can not be removed</em></div>}
+              <input
+                type="button"
+                style={{
+                  ...fauxLinkStyle,
+                  alignSelf: 'flex-end',
+                  marginTop: '-0.5em'
+                }}
+                disabled={!this.props.isRemovable}
+                onClick={this.remove}
+                value="Remove"
+              />
+            </div>
           </Accordian>
         )}
       </div>
