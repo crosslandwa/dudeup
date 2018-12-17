@@ -42,12 +42,12 @@ class ItemSummary extends React.Component {
   render () {
     const { description, dude, id, price } = this.props
     return (
-      <div style={{ ...textButtonStyle, marginBottom: '0.5em' }}>
+      <div style={{ ...textButtonStyle, cursor: 'default', marginBottom: '0.5em' }}>
         {this.state.edit
           ? (
             <EditItemAccordian id={id} close={this.closeEdit} />
           ) : (
-            <div style={{ cursor: 'pointer' }} onClick={this.toggleEdit}>
+            <div style={{ cursor: 'pointer', width: 'fit-content' }} onClick={this.toggleEdit}>
               <span>{description}</span>
               <span> - </span>
               <span>{dude}</span>
