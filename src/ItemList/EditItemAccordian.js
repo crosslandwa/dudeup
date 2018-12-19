@@ -9,7 +9,7 @@ import {
 import Accordian from '../Accordian'
 import DudeList from '../DudeList'
 import PriceInput from '../GenericUi/PriceInput'
-import { fauxLinkStyle, textButtonStyle, textInputStyle } from '../styles'
+import { secondaryButtonStyle, textButtonStyle, textInputStyle } from '../styles'
 import { addWarningNotification } from '../Notifications/interactions'
 
 const mapStateToProps = (state, { id }) => ({
@@ -66,27 +66,17 @@ class EditItemAccordian extends React.Component {
         <input autoFocus style={textInputStyle} placeholder="item description" value={this.state.description} onChange={this.storeItemDescription} />
         <DudeList selectedId={this.state.dudeId} onChange={this.storeItemBoughtBy}/>
         <PriceInput onChange={this.storeItemPrice} price={this.state.price} />
-        <div style={{ margin: '0.5em 0' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5em' }}>
           <input style={textButtonStyle} type="submit" value={this.props.id ? 'Update' : 'Add'} />
-        </div>
-        {this.props.id && (
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            fontSize: '85%'
-          }}>
+          {this.props.id && (
             <input
               type="button"
-              style={{
-                ...fauxLinkStyle,
-                alignSelf: 'flex-end',
-                marginTop: '-0.5em'
-              }}
+              style={secondaryButtonStyle}
               onClick={this.remove}
               value="Remove"
             />
-          </div>
-        )}
+          )}
+        </div>
       </Accordian>
     )
   }

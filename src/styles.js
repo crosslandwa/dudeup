@@ -23,3 +23,10 @@ export const textInputStyle = {
   border: '1px solid black',
   borderRadius: '0.25em'
 }
+
+export const secondaryButtonStyle = {
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  padding: 0
+}
