@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { dudeCanBeRemovedSelector, dudeNameSelector, removeDude, updateDudeName } from './interactions'
-import { fauxLinkStyle, textButtonStyle, textInputStyle } from '../styles'
+import { secondaryButtonStyle, textButtonStyle, textInputStyle } from '../styles'
 import Accordian from '../Accordian'
 import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
@@ -47,36 +47,32 @@ class DudeManagement extends React.Component {
         </WithFlyoutArrowBelow>
         {this.state.editOpen && (
           <Accordian onCancel={this.closeEdit} onSubmit={this.updateName} title={`Update ${this.props.name}`}>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column'
-            }}>
+            <div>
               <label>
                 Name:
                 <input style={textInputStyle} value={this.state.name} autoFocus type="textbox" onChange={this.handleTextInput}/>
               </label>
             </div>
-            <div style={{ margin: '0.5em 0' }}>
-              <input style={textButtonStyle} type="submit" value="Update" />
-            </div>
             <div style={{
               display: 'flex',
-              flexDirection: 'column',
-              fontSize: '85%'
+              justifyContent: 'space-between',
+              fontSize: '85%',
+              marginTop: '0.5em'
             }}>
-              {!this.props.isRemovable && <div><em>Dudes who have bought (or are sharing) items can not be removed</em></div>}
+              <input style={textButtonStyle} type="submit" value="Update" />
               <input
                 type="button"
-                style={{
-                  ...fauxLinkStyle,
-                  alignSelf: 'flex-end',
-                  marginTop: '-0.5em'
-                }}
+                style={secondaryButtonStyle}
                 disabled={!this.props.isRemovable}
                 onClick={this.remove}
                 value="Remove"
               />
             </div>
+            {!this.props.isRemovable && (
+              <div style={{ fontSize: '85%', marginTop: '0.5em', textAlign: 'right' }}>
+                <em>Dudes who have bought (or are sharing) items can not be removed</em>
+              </div>
+            )}
           </Accordian>
         )}
       </div>
