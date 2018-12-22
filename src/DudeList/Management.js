@@ -32,10 +32,10 @@ class DudeManagement extends React.Component {
           flexWrap: 'wrap'
         }}>
           {this.props.dudeIds.map(id => <EditableDude id={id} />)}
+          <WithFlyoutArrowBelow show={this.state.modalOpen} >
+            <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={this.toggleAddDude} value="Add dude" />
+          </WithFlyoutArrowBelow>
         </div>
-        <WithFlyoutArrowBelow show={this.state.modalOpen} >
-          <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={this.toggleAddDude} value="+" />
-        </WithFlyoutArrowBelow>
         {this.state.modalOpen && (
           <AddDudeAccordian close={this.closeModal} />
         )}
