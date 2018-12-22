@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { dudeCanBeRemovedSelector, dudeNameSelector, removeDude, updateDudeName } from './interactions'
-import { secondaryButtonStyle, textButtonStyle, textInputStyle } from '../styles'
+import { textButtonStyle, textInputStyle } from '../styles'
 import Accordian from '../Accordian'
 import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
@@ -47,12 +47,11 @@ class DudeManagement extends React.Component {
         </WithFlyoutArrowBelow>
         {this.state.editOpen && (
           <Accordian onCancel={this.closeEdit} onSubmit={this.updateName} title={`Update ${this.props.name}`}>
-            <div>
-              <label>
-                Name:
-                <input style={textInputStyle} value={this.state.name} autoFocus type="textbox" onChange={this.handleTextInput}/>
-              </label>
-            </div>
+            <input style={{
+              ...textInputStyle,
+              boxSizing: 'border-box',
+              width: '100%'
+            }} value={this.state.name} autoFocus type="textbox" onChange={this.handleTextInput} placeholder="Name"/>
             <div style={{
               display: 'flex',
               justifyContent: 'space-between',
@@ -62,7 +61,7 @@ class DudeManagement extends React.Component {
               <input style={textButtonStyle} type="submit" value="Update" />
               <input
                 type="button"
-                style={secondaryButtonStyle}
+                style={textButtonStyle}
                 disabled={!this.props.isRemovable}
                 onClick={this.remove}
                 value="Remove"

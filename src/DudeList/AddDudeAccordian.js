@@ -23,16 +23,12 @@ class AddDudeAccordian extends React.Component {
   render () {
     return (
       <Accordian onCancel={this.props.close} onSubmit={this.submit} title="Add dude">
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column'
-        }}>
-          <label>
-            Name:
-            <input style={textInputStyle} autoFocus type="textbox" onChange={this.handleTextInput}/>
-          </label>
-        </div>
-        <div>
+        <input style={{
+          ...textInputStyle,
+          boxSizing: 'border-box',
+          width: '100%'
+        }} autoFocus type="textbox" onChange={this.handleTextInput} placeholder="Name"/>
+        <div style={{ marginTop: '0.5em' }}>
           <input style={textButtonStyle} type="submit" value="Add" />
         </div>
       </Accordian>

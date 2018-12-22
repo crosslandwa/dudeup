@@ -9,7 +9,7 @@ import {
 import Accordian from '../Accordian'
 import DudeList from '../DudeList'
 import PriceInput from '../GenericUi/PriceInput'
-import { secondaryButtonStyle, textButtonStyle, textInputStyle } from '../styles'
+import { textButtonStyle, textInputStyle } from '../styles'
 import { addWarningNotification } from '../Notifications/interactions'
 
 const mapStateToProps = (state, { id }) => ({
@@ -71,7 +71,7 @@ class EditItemAccordian extends React.Component {
           {this.props.id && (
             <input
               type="button"
-              style={secondaryButtonStyle}
+              style={textButtonStyle}
               onClick={this.remove}
               value="Remove"
             />
