@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { dudeIdsSelector } from './interactions'
 import { textButtonStyle } from '../styles'
 import EditableDude from './EditableDude'
-import AddDudeAccordian from './AddDudeAccordian'
+import EditDudeAccordian from './EditDudeAccordian'
 import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 const mapStateToProps = (state) => ({
@@ -37,7 +37,7 @@ class DudeManagement extends React.Component {
           </WithFlyoutArrowBelow>
         </div>
         {this.state.modalOpen && (
-          <AddDudeAccordian close={this.closeModal} />
+          <EditDudeAccordian close={this.closeModal} />
         )}
       </div>
     )
