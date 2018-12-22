@@ -26,7 +26,7 @@ class DudeManagement extends React.Component {
 
   render () {
     return (
-      <div style={{ marginBottom: '1em' }}>
+      <div>
         <div style={{
           display: 'flex',
           flexWrap: 'wrap'
