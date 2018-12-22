@@ -36,7 +36,7 @@ export const itemSharingLabelSelector = (state, id) => apply(
         ? `Split between ${dudeIds.map(dudeId => `${dudeNameSelector(state, dudeId)}(${itemSplit[dudeId].toFixed(2)})`).join(', ')}`
         : `Shared by ${dudeIds.map(dudeId => dudeNameSelector(state, dudeId)).join(', ')}`,
       itemCostSplitSelector(state, id)
-    ) : 'Shared by everyone',
+    ) : '',
   itemSharedByDudeIdsSelector(state, id)
 )
 export const lastAddedItemIdSelector = state => itemIdsSelector(state).slice(-1)[0]

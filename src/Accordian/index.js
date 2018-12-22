@@ -43,12 +43,12 @@ class Accordian extends React.Component {
   render () {
     return (
       <div ref={this.captureRef} style={{
-        backgroundColor: '#eff0f1',
-        borderRadius: '0.25em',
-        padding: '0.5em'
+        backgroundColor: '#2196f3',
+        padding: '0.5em',
+        margin: '0 -0.5em'
       }}>
         <ClosingCross onClick={this.props.onCancel} />
-        <h3 style={{ margin: '0 0 0.5em 0', textAlign: 'center' }}>{this.props.title}</h3>
+        <h3 style={{ margin: '0 0 0.5em 0' }}>{this.props.title}</h3>
         <form onSubmit={this.props.onSubmit} >
           {this.props.children}
         </form>

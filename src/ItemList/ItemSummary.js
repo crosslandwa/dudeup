@@ -2,22 +2,23 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {
   itemDescriptionSelector, updateItemDescription,
-  itemBoughtByDudeIdSelector, itemPriceSelector, updateItemBoughtBy
+  itemBoughtByDudeIdSelector, itemPriceSelector, updateItemBoughtBy,
+  itemSharingLabelSelector
 } from './interactions'
 import { dudeNameSelector } from '../DudeList/interactions'
 import EditItemAccordian from './EditItemAccordian'
-import ItemSharing from '../ItemSharing'
-import { textButtonStyle } from '../styles'
+import Dividor from '../Dividor'
 
 const apply = (f, x) => f(x)
 
 const mapStateToProps = (state, { id }) => ({
-  description: itemDescriptionSelector(state, id) || 'no description',
+  description: itemDescriptionSelector(state, id),
   dude: apply(
-    dudeId => dudeId ? dudeNameSelector(state, dudeId) : 'no buyer selected',
+    dudeId => dudeId ? dudeNameSelector(state, dudeId) : '',
     itemBoughtByDudeIdSelector(state, id)
   ),
-  price: itemPriceSelector(state, id)
+  price: itemPriceSelector(state, id),
+  sharingLabel: itemSharingLabelSelector(state, id)
 })
 
 const mapDispatchToProps = (dispatch, { id }) => ({
@@ -40,22 +41,38 @@ class ItemSummary extends React.Component {
   }
 
   render () {
-    const { description, dude, id, price } = this.props
+    const { description, dude, id, price, sharingLabel } = this.props
     return (
-      <div style={{ ...textButtonStyle, cursor: 'default', marginBottom: '0.5em' }}>
+      <div>
         {this.state.edit
           ? (
             <EditItemAccordian id={id} close={this.closeEdit} />
           ) : (
-            <div style={{ cursor: 'pointer', width: 'fit-content' }} onClick={this.toggleEdit}>
-              <span>{description}</span>
-              <span> - </span>
-              <span>{dude}</span>
-              <span> - </span>
-              <span>{price}</span>
+            <div style={{ cursor: 'pointer' }} onClick={this.toggleEdit}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}>
+                <div>
+                  {description}
+                </div>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  minWidth: '5em'
+                }}>
+                  <div>{price}</div>
+                  <div>{dude}</div>
+                </div>
+              </div>
+              {sharingLabel && (
+                <div style={{ marginTop: '0.5em', textAlign: 'center' }}><em>{sharingLabel}</em></div>
+              )}
             </div>
           )}
-        <ItemSharing id={id} />
+        <Dividor withTopMargin={true} />
       </div>
     )
   }

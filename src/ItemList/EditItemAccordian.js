@@ -62,7 +62,7 @@ class EditItemAccordian extends React.Component {
 
   render () {
     return (
-      <Accordian onCancel={this.props.close} onSubmit={this.updateItem} title={this.props.id ? '' : 'Add item'} >
+      <Accordian onCancel={this.props.close} onSubmit={this.updateItem} title={this.props.id ? 'Update item' : 'Add item'} >
         <input autoFocus style={textInputStyle} placeholder="item description" value={this.state.description} onChange={this.storeItemDescription} />
         <DudeList selectedId={this.state.dudeId} onChange={this.storeItemBoughtBy}/>
         <PriceInput onChange={this.storeItemPrice} price={this.state.price} />

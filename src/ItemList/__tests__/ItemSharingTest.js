@@ -13,7 +13,7 @@ describe('Item sharing', () => {
     addDudeAndReturnId(store, 'A man')
     addDudeAndReturnId(store, 'Another man')
 
-    expect(itemSharingLabelSelector(store.getState(), itemId)).toEqual('Shared by everyone')
+    expect(itemSharingLabelSelector(store.getState(), itemId)).toEqual('') // implicit assumption that no description means shared by all
     expect(isItemExplicitlySplitSelector(store.getState(), itemId)).toEqual(false)
   })
 
