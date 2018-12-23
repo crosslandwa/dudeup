@@ -10,6 +10,28 @@ const mapStateToProps = (state, { id }) => ({
   isRemovable: id ? dudeCanBeRemovedSelector(state, id) : false
 })
 
+const FullWidthHack = props => (
+  <div style={{
+    height: (props.tall) ? '9em' : '7em'
+  }}>
+    <div style={{
+      position: 'absolute',
+      left: '0',
+      width: '100vw',
+      display: 'flex',
+      justifyContent: 'center'
+    }}>
+      <div style={{
+        width: '100%',
+        maxWidth: 800,
+        padding: '0 0.5em'
+      }}>
+        {props.children}
+      </div>
+    </div>
+  </div>
+)
+
 class EditDudeAccordian extends React.Component {
   constructor (props) {
     super(props)
@@ -40,35 +62,37 @@ class EditDudeAccordian extends React.Component {
 
   render () {
     return (
-      <Accordian onCancel={this.props.close} onSubmit={this.submit} title={this.props.id ? `Update ${this.props.name}` : 'Add dude'}>
-        <input style={{
-          ...textInputStyle,
-          boxSizing: 'border-box',
-          width: '100%'
-        }} autoFocus type="textbox" onChange={this.handleTextInput} value={this.state.name} placeholder="Name"/>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          fontSize: '85%',
-          marginTop: '0.5em'
-        }}>
-          <input style={textButtonStyle} type="submit" value={this.props.id ? 'Update' : 'Add'} />
-          {this.props.id && (
-            <input
-              type="button"
-              style={textButtonStyle}
-              disabled={!this.props.isRemovable}
-              onClick={this.remove}
-              value="Remove"
-            />
-          )}
-        </div>
-        {this.props.id && !this.props.isRemovable && (
-          <div style={{ fontSize: '85%', marginTop: '0.5em', textAlign: 'right' }}>
-            <em>Dudes who have bought (or are sharing) items can not be removed</em>
+      <FullWidthHack tall={this.props.id && !this.props.isRemovable}>
+        <Accordian onCancel={this.props.close} onSubmit={this.submit} title={this.props.id ? `Update ${this.props.name}` : 'Add dude'}>
+          <input style={{
+            ...textInputStyle,
+            boxSizing: 'border-box',
+            width: '100%'
+          }} autoFocus type="textbox" onChange={this.handleTextInput} value={this.state.name} placeholder="Name"/>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontSize: '85%',
+            marginTop: '0.5em'
+          }}>
+            <input style={textButtonStyle} type="submit" value={this.props.id ? 'Update' : 'Add'} />
+            {this.props.id && (
+              <input
+                type="button"
+                style={textButtonStyle}
+                disabled={!this.props.isRemovable}
+                onClick={this.remove}
+                value="Remove"
+              />
+            )}
           </div>
-        )}
-      </Accordian>
+          {this.props.id && !this.props.isRemovable && (
+            <div style={{ fontSize: '85%', marginTop: '0.5em', textAlign: 'right' }}>
+              <em>Dudes who have bought (or are sharing) items can not be removed</em>
+            </div>
+          )}
+        </Accordian>
+      </FullWidthHack>
     )
   }
 }
