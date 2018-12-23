@@ -11,6 +11,7 @@ import DudeList from '../DudeList'
 import PriceInput from '../GenericUi/PriceInput'
 import { textButtonStyle, textInputStyle } from '../styles'
 import { addWarningNotification } from '../Notifications/interactions'
+import ItemSharing from './ItemSharing'
 
 const mapStateToProps = (state, { id }) => ({
   description: id ? itemDescriptionSelector(state, id) : undefined,
@@ -37,6 +38,12 @@ class EditItemAccordian extends React.Component {
 
     const store = key => e => this.setState({ [key]: e.target ? e.target.value : e })
 
+    this.setItemSharing = node => {
+      if (node) {
+        this.itemSharing = node.getWrappedInstance()
+      }
+    }
+
     this.storeItemBoughtBy = store('dudeId')
     this.storeItemDescription = store('description')
     this.storeItemPrice = store('price')
@@ -52,6 +59,7 @@ class EditItemAccordian extends React.Component {
       } else if (this.props.id) {
         this.props.updateItemBoughtBy(this.state.dudeId, this.state.price)
         this.props.updateDescription(this.state.description)
+        this.itemSharing && this.itemSharing.submit()
         this.props.close()
       } else {
         this.props.addItem(this.state.description, this.state.dudeId, this.state.price)
@@ -66,6 +74,7 @@ class EditItemAccordian extends React.Component {
         <input autoFocus style={textInputStyle} placeholder="item description" value={this.state.description} onChange={this.storeItemDescription} />
         <DudeList selectedId={this.state.dudeId} onChange={this.storeItemBoughtBy}/>
         <PriceInput onChange={this.storeItemPrice} price={this.state.price} />
+        {this.props.id && <ItemSharing ref={this.setItemSharing} itemId={this.props.id} />}
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5em' }}>
           <input style={textButtonStyle} type="submit" value={this.props.id ? 'Update' : 'Add'} />
           {this.props.id && (

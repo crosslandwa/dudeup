@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Accordian from '../Accordian'
 import {
   itemCostSplitSelector, itemSharedByDudeIdsSelector, shareItemBetweenDudes, splitItemBetweenDudes,
   itemPriceSelector,
@@ -8,7 +7,6 @@ import {
 } from '../ItemList/interactions'
 import { dudeIdsSelector, dudeNameSelector } from '../DudeList/interactions'
 import PriceInput from '../GenericUi/PriceInput'
-import { textButtonStyle } from '../styles'
 
 const mapStateToProps = (state, { itemId }) => ({
   allDudeIds: dudeIdsSelector(state),
@@ -36,7 +34,7 @@ const AmountInputOption = connect(mapDudeIdToName)(props => (
   <label>{props.name}<PriceInput {...props} /></label>
 ))
 
-class SplitCostAccordian extends React.Component {
+class ItemSharing extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -81,7 +79,6 @@ class SplitCostAccordian extends React.Component {
             .reduce((acc, { dudeId, amount }) => ({ ...acc, [dudeId]: amount }), {})
         )
       }
-      this.props.close()
     }
     this.splitTotal = () => Object.keys(this.state.individualAmounts)
       .map(dudeId => this.state.individualAmounts[dudeId])
@@ -90,46 +87,41 @@ class SplitCostAccordian extends React.Component {
   }
 
   render () {
-    const { allDudeIds, close, price } = this.props
+    const { allDudeIds, price } = this.props
     return (
-      <Accordian onCancel={close} onSubmit={this.submit} title="Item sharing" >
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column'
-        }}>
-          <div>
-            <label>
-              Shared by
-              <input autoFocus={this.state.isEqualSplit} type="radio" checked={this.state.isEqualSplit} onChange={this.setEqualSplit} />
-            </label>
-            <label>
-              Split between
-              <input autoFocus={!this.state.isEqualSplit} type="radio" checked={!this.state.isEqualSplit} onChange={this.setNonEqualSplit} />
-            </label>
-          </div>
-          <div>
-            {allDudeIds.map(id => (
-              <div>
-                {this.state.isEqualSplit
-                  ? <CheckBoxOption id={id} selected={this.state.selectedIds.includes(id)} onChange={e => this.toggleDudesInvolvement(id, e.target.checked)}/>
-                  : <AmountInputOption id={id} price={this.state.individualAmounts[id]} onChange={e => this.updateIndividualAmount(id, e.target.value)} />
-                }
-              </div>
-            ))}
-            {this.state.isEqualSplit && (
-              <div><CheckBox id="_everyone_" label="Everyone" onChange={this.shareByEveryone} selected={!this.state.selectedIds.length} /></div>
-            )}
-            {!this.state.isEqualSplit && (
-              <div>You have {price - this.splitTotal()} left to divvy up</div>
-            )}
-          </div>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        <div>
+          <label>
+            Shared by
+            <input autoFocus={this.state.isEqualSplit} type="radio" checked={this.state.isEqualSplit} onChange={this.setEqualSplit} />
+          </label>
+          <label>
+            Split between
+            <input autoFocus={!this.state.isEqualSplit} type="radio" checked={!this.state.isEqualSplit} onChange={this.setNonEqualSplit} />
+          </label>
         </div>
         <div>
-          <input style={textButtonStyle} type="submit" value="Update" />
+          {allDudeIds.map(id => (
+            <div>
+              {this.state.isEqualSplit
+                ? <CheckBoxOption id={id} selected={this.state.selectedIds.includes(id)} onChange={e => this.toggleDudesInvolvement(id, e.target.checked)}/>
+                : <AmountInputOption id={id} price={this.state.individualAmounts[id]} onChange={e => this.updateIndividualAmount(id, e.target.value)} />
+              }
+            </div>
+          ))}
+          {this.state.isEqualSplit && (
+            <div><CheckBox id="_everyone_" label="Everyone" onChange={this.shareByEveryone} selected={!this.state.selectedIds.length} /></div>
+          )}
+          {!this.state.isEqualSplit && (
+            <div>You have {price - this.splitTotal()} left to divvy up</div>
+          )}
         </div>
-      </Accordian>
+      </div>
     )
   }
 }
 
-export default connect(mapStateToProps, { shareItemBetweenDudes, splitItemBetweenDudes })(SplitCostAccordian)
+export default connect(mapStateToProps, { shareItemBetweenDudes, splitItemBetweenDudes }, null, { withRef: true })(ItemSharing)
