@@ -74,7 +74,7 @@ class EditItemAccordian extends React.Component {
         <input autoFocus style={textInputStyle} placeholder="item description" value={this.state.description} onChange={this.storeItemDescription} />
         <DudeList selectedId={this.state.dudeId} onChange={this.storeItemBoughtBy}/>
         <PriceInput onChange={this.storeItemPrice} price={this.state.price} />
-        {this.props.id && <ItemSharing ref={this.setItemSharing} itemId={this.props.id} />}
+        {this.props.id && <ItemSharing ref={this.setItemSharing} itemId={this.props.id} price={this.state.price} />}
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5em' }}>
           <input style={textButtonStyle} type="submit" value={this.props.id ? 'Update' : 'Add'} />
           {this.props.id && (

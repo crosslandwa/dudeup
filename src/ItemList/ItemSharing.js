@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {
   itemCostSplitSelector, itemSharedByDudeIdsSelector, shareItemBetweenDudes, splitItemBetweenDudes,
-  itemPriceSelector,
   isItemExplicitlySplitSelector
 } from '../ItemList/interactions'
 import { dudeIdsSelector, dudeNameSelector } from '../DudeList/interactions'
@@ -12,7 +11,6 @@ const mapStateToProps = (state, { itemId }) => ({
   allDudeIds: dudeIdsSelector(state),
   isEqualSplit: !isItemExplicitlySplitSelector(state, itemId),
   itemSharedByDudeIds: itemSharedByDudeIdsSelector(state, itemId),
-  price: itemPriceSelector(state, itemId),
   costSplitting: itemCostSplitSelector(state, itemId)
 })
 
@@ -104,6 +102,9 @@ class ItemSharing extends React.Component {
           </label>
         </div>
         <div>
+          {this.state.isEqualSplit && (
+            <div><CheckBox id="_everyone_" label="Everyone" onChange={this.shareByEveryone} selected={!this.state.selectedIds.length} /></div>
+          )}
           {allDudeIds.map(id => (
             <div>
               {this.state.isEqualSplit
@@ -112,9 +113,6 @@ class ItemSharing extends React.Component {
               }
             </div>
           ))}
-          {this.state.isEqualSplit && (
-            <div><CheckBox id="_everyone_" label="Everyone" onChange={this.shareByEveryone} selected={!this.state.selectedIds.length} /></div>
-          )}
           {!this.state.isEqualSplit && (
             <div>You have {price - this.splitTotal()} left to divvy up</div>
           )}
