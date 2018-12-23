@@ -33,7 +33,7 @@ export const itemSharingLabelSelector = (state, id) => apply(
   dudeIds => dudeIds.length
     ? apply(
       itemSplit => Object.keys(itemSplit).length
-        ? `Split between ${dudeIds.map(dudeId => `${dudeNameSelector(state, dudeId)}(${itemSplit[dudeId].toFixed(2)})`).join(', ')}`
+        ? `Split between ${dudeIds.map(dudeId => `${dudeNameSelector(state, dudeId)} (${itemSplit[dudeId].toFixed(2)})`).join(', ')}`
         : `Shared by ${dudeIds.map(dudeId => dudeNameSelector(state, dudeId)).join(', ')}`,
       itemCostSplitSelector(state, id)
     ) : '',
