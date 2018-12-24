@@ -19,7 +19,10 @@ const mapDudeIdToName = (state, { id }) => ({
 })
 
 const CheckBox = ({ id, label, onChange, selected }) => (
-  <label>
+  <label style={{
+    display: 'flex',
+    justifyContent: 'space-between'
+  }}>
     {label}
     <input type="checkbox" value={id} checked={selected} onChange={onChange} />
   </label>
@@ -29,7 +32,10 @@ const CheckBoxOption = connect(mapDudeIdToName)(props => (
 ))
 
 const AmountInputOption = connect(mapDudeIdToName)(props => (
-  <label>{props.name}<PriceInput {...props} /></label>
+  <label style={{
+    display: 'flex',
+    justifyContent: 'space-between'
+  }}>{props.name}<PriceInput style={{ height: '1.5em' }} {...props} /></label>
 ))
 
 class ItemSharing extends React.Component {
@@ -90,22 +96,20 @@ class ItemSharing extends React.Component {
       <div style={{
         display: 'flex',
         flexDirection: 'column',
-        marginTop: '0.5em'
+        marginTop: '0.5em',
+        lineHeight: '2em'
       }}>
-        <div style={{ lineHeight: '2em' }}>
+        <div>
           <label>
             Shared by
             <input autoFocus={this.state.isEqualSplit} type="radio" checked={this.state.isEqualSplit} onChange={this.setEqualSplit} />
           </label>
-          <label>
+          <label style={{ marginLeft: '0.5em' }}>
             Split between
             <input autoFocus={!this.state.isEqualSplit} type="radio" checked={!this.state.isEqualSplit} onChange={this.setNonEqualSplit} />
           </label>
         </div>
-        <div style={{ lineHeight: '2em' }}>
-          {this.state.isEqualSplit && (
-            <div><CheckBox id="_everyone_" label="Everyone" onChange={this.shareByEveryone} selected={!this.state.selectedIds.length} /></div>
-          )}
+        <div>
           {allDudeIds.map(id => (
             <div>
               {this.state.isEqualSplit
@@ -114,6 +118,9 @@ class ItemSharing extends React.Component {
               }
             </div>
           ))}
+          {this.state.isEqualSplit && (
+            <div><CheckBox id="_everyone_" label={<strong>Everyone</strong>} onChange={this.shareByEveryone} selected={!this.state.selectedIds.length} /></div>
+          )}
           {!this.state.isEqualSplit && (
             <div>You have {price - this.splitTotal()} left to divvy up</div>
           )}
