@@ -71,9 +71,25 @@ class EditItemAccordian extends React.Component {
   render () {
     return (
       <Accordian onCancel={this.props.close} onSubmit={this.updateItem} title={this.props.id ? 'Update item' : 'Add item'} >
-        <input autoFocus style={textInputStyle} placeholder="item description" value={this.state.description} onChange={this.storeItemDescription} />
-        <DudeList selectedId={this.state.dudeId} onChange={this.storeItemBoughtBy}/>
-        <PriceInput onChange={this.storeItemPrice} price={this.state.price} />
+        <input style={{
+            ...textInputStyle,
+            boxSizing: 'border-box',
+            width: '100%'
+          }}
+          autoFocus
+          placeholder="item description"
+          value={this.state.description}
+          onChange={this.storeItemDescription}
+        />
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          margin: '0 -0.5em'
+        }}>
+          <PriceInput style={{ flexGrow: 1, margin: '0.5em 0.5em 0 0.5em' }} onChange={this.storeItemPrice} price={this.state.price} />
+          <DudeList style={{ flexGrow: 1, margin: '0.5em 0.5em 0 0.5em' }} selectedId={this.state.dudeId} onChange={this.storeItemBoughtBy}/>
+        </div>
         {this.props.id && <ItemSharing ref={this.setItemSharing} itemId={this.props.id} price={this.state.price} />}
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5em' }}>
           <input style={textButtonStyle} type="submit" value={this.props.id ? 'Update' : 'Add'} />

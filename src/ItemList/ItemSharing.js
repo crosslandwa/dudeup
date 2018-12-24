@@ -89,9 +89,10 @@ class ItemSharing extends React.Component {
     return (
       <div style={{
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        marginTop: '0.5em'
       }}>
-        <div>
+        <div style={{ lineHeight: '2em' }}>
           <label>
             Shared by
             <input autoFocus={this.state.isEqualSplit} type="radio" checked={this.state.isEqualSplit} onChange={this.setEqualSplit} />
@@ -101,7 +102,7 @@ class ItemSharing extends React.Component {
             <input autoFocus={!this.state.isEqualSplit} type="radio" checked={!this.state.isEqualSplit} onChange={this.setNonEqualSplit} />
           </label>
         </div>
-        <div>
+        <div style={{ lineHeight: '2em' }}>
           {this.state.isEqualSplit && (
             <div><CheckBox id="_everyone_" label="Everyone" onChange={this.shareByEveryone} selected={!this.state.selectedIds.length} /></div>
           )}

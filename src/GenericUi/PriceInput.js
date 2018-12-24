@@ -1,9 +1,9 @@
 import React from 'react'
 import { textInputStyle } from '../styles'
 
-const PriceInput = ({ onChange, price }) => (
+const PriceInput = ({ onChange, price, style }) => (
   <input
-    style={textInputStyle}
+    style={{ ...textInputStyle, ...style }}
     type="number"
     step="0.01"
     onChange={onChange}
