@@ -6,7 +6,7 @@ import Notifications from './Notifications'
 import Summary from './Summary'
 import AnErrorOccurred from './AnErrorOccurred'
 import DudeManagement from './DudeList/Management'
-import Section from './Section'
+import Section from './GenericUi/Section'
 
 const mapStateToProps = state => ({})
 const mapDispatchToProps = {}
