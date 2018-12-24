@@ -7,7 +7,7 @@ import {
 } from './interactions'
 import { dudeNameSelector } from '../DudeList/interactions'
 import EditItemAccordian from './EditItemAccordian'
-import Dividor from '../Dividor'
+import Dividor from '../GenericUi/Dividor'
 
 const apply = (f, x) => f(x)
 

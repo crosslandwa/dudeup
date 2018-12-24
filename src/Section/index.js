@@ -1,5 +1,5 @@
 import React from 'react'
-import Dividor from '../Dividor'
+import Dividor from '../GenericUi/Dividor'
 
 const Section = props => (
   <div style={props.spaceAbove ? { marginTop: '0.5em' } : {} }>
