@@ -8,6 +8,7 @@ import {
 import { dudeNameSelector } from '../DudeList/interactions'
 import EditItemAccordian from './EditItemAccordian'
 import Dividor from '../GenericUi/Dividor'
+import { secondaryTextItalic } from '../styles'
 
 const apply = (f, x) => f(x)
 
@@ -68,7 +69,7 @@ class ItemSummary extends React.Component {
                 </div>
               </div>
               {sharingLabel && (
-                <div style={{ marginTop: '0.5em', textAlign: 'center' }}><em>{sharingLabel}</em></div>
+                <div style={{ ...secondaryTextItalic, marginTop: '0.5em', textAlign: 'center' }}>{sharingLabel}</div>
               )}
             </div>
           )}

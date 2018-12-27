@@ -24,3 +24,8 @@ export const textInputStyle = {
   border: '1px solid black',
   borderRadius: '0.25em'
 }
+
+export const secondaryTextItalic = {
+  color: '#808080',
+  fontStyle: 'italic'
+}
