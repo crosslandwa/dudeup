@@ -4,7 +4,7 @@ const color = '#2196f3'
 
 const addHighlight = children => React.Children.map(
   children,
-  child => React.cloneElement(child, { style: { ...child.props.style, backgroundColor: color } })
+  child => React.cloneElement(child, {  highlight: true, style: { ...child.props.style, backgroundColor: color } })
 )
 
 export const WithFlyoutArrowBelow = props => (

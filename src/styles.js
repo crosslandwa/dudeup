@@ -16,13 +16,16 @@ export const textButtonStyle = {
   border: '1px solid black',
   borderRadius: '0.25em',
   cursor: 'pointer',
-  minWidth: '6em'
+  minWidth: '6em',
+  lineHeight: '1.5em',
+  padding: '0.1em 0.5em',
 }
 
 export const textInputStyle = {
   fontSize: 'inherit',
   border: '1px solid black',
-  borderRadius: '0.25em'
+  borderRadius: '0.25em',
+  lineHeight: '1.5em'
 }
 
 export const secondaryTextItalic = {

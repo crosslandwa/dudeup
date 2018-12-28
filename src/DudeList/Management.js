@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { dudeIdsSelector } from './interactions'
-import { textButtonStyle } from '../styles'
 import EditableDude from './EditableDude'
 import EditDudeAccordian from './EditDudeAccordian'
 import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
+import AddButton from '../GenericUi/AddButton'
 
 const mapStateToProps = (state) => ({
   dudeIds: dudeIdsSelector(state)
@@ -33,7 +33,7 @@ class DudeManagement extends React.Component {
         }}>
           {this.props.dudeIds.map(id => <EditableDude id={id} />)}
           <WithFlyoutArrowBelow show={this.state.modalOpen} >
-            <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={this.toggleAddDude} value="Add dude" />
+            <AddButton label="Add dude" onClick={this.toggleAddDude} />
           </WithFlyoutArrowBelow>
         </div>
         {this.state.modalOpen && (

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { addItem, itemIdsSelector } from './interactions'
 import ItemSummary from './ItemSummary'
 import EditItemAccordian from './EditItemAccordian'
-import { textButtonStyle } from '../styles'
+import AddButton from '../GenericUi/AddButton'
 import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 const mapStateToProps = state => ({
@@ -31,7 +31,7 @@ class ItemList extends React.Component {
           {this.props.ids.map(id => <ItemSummary id={id} />)}
         </div>
         <WithFlyoutArrowBelow show={this.state.add} >
-          <input style={{ ...textButtonStyle, display: 'block' }} type="button" onClick={this.toggleAdd} value="Add item" />
+          <AddButton label="Add item" onClick={this.toggleAdd} />
         </WithFlyoutArrowBelow>
         {this.state.add && <EditItemAccordian close={this.closeAdd} />}
       </React.Fragment>
