@@ -41,6 +41,7 @@ class AddButton extends React.Component {
         alignItems: 'center',
         cursor: 'pointer'
       }}
+        onClick={onClick}
         onMouseEnter={this.onHover}
         onMouseLeave={this.endHover}
       >
@@ -53,7 +54,6 @@ class AddButton extends React.Component {
           textAlign: 'left'
         }}
           type="button"
-          onClick={onClick}
           value={label}
         />
       </div>
