@@ -4,14 +4,14 @@ import { textButtonStyle } from '../styles'
 const highlightColor = '#2196f3'
 
 const AddIcon = ({ highlight }) => (
-  <div style={{
+  <span style={{
     background: highlight ? highlightColor : '',
     borderRadius: '50%',
-    height: '1.5em',
-    width: '1.5em',
-    lineHeight: '1.5em',
+    height: '1.25em',
+    width: '1.25em',
+    lineHeight: '1.25em',
     textAlign: 'center'
-  }}>+</div>
+  }}>+</span>
 )
 
 class AddButton extends React.Component {
@@ -50,8 +50,11 @@ class AddButton extends React.Component {
           ...textButtonStyle,
           color: highlight ? highlightColor : '',
           border: 'none',
-          padding: '0.2em 0em 0.2em 0.05em',
-          textAlign: 'left'
+          padding: '0.2em 0.5em 0.2em 1.3em',
+          marginLeft: '-1.25em',
+          textAlign: 'left',
+          minWidth: '',
+          background: 'none'
         }}
           type="button"
           value={label}
