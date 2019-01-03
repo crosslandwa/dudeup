@@ -2,8 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {
   addItem,
-  itemDescriptionSelector, updateItemDescription,
-  itemBoughtByDudeIdSelector, itemPriceSelector, updateItemBoughtBy,
+  updateItem,
+  itemDescriptionSelector,
+  itemBoughtByDudeIdSelector, itemPriceSelector,
   removeItem
 } from './interactions'
 import Accordian from '../Accordian'
@@ -23,8 +24,7 @@ const mapDispatchToProps = (dispatch, { id }) => ({
   addItem: (description, dudeId, price) => dispatch(addItem(description, dudeId, price)),
   addWarningNotification: text => dispatch(addWarningNotification(text)),
   remove: e => dispatch(removeItem(id)),
-  updateDescription: description => dispatch(updateItemDescription(id, description)),
-  updateItemBoughtBy: (dudeId, price) => dispatch(updateItemBoughtBy(id, dudeId, price))
+  updateItem: (description, dudeId, price) => dispatch(updateItem(id, description, dudeId, price))
 })
 
 class EditItemAccordian extends React.Component {
@@ -57,8 +57,7 @@ class EditItemAccordian extends React.Component {
       if (!this.state.description) {
         this.props.addWarningNotification(`Did not ${this.props.id ? 'update' : 'add'} item - description required`)
       } else if (this.props.id) {
-        this.props.updateItemBoughtBy(this.state.dudeId, this.state.price)
-        this.props.updateDescription(this.state.description)
+        this.props.updateItem(this.state.description, this.state.dudeId, this.state.price)
         this.itemSharing && this.itemSharing.submit()
         this.props.close()
       } else {

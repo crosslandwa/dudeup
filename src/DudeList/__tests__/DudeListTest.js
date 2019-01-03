@@ -1,7 +1,7 @@
 import createStore from '../../store'
 import { addDude, removeDude, dudeCanBeRemovedSelector, dudeIdsSelector, dudeNameSelector, updateDudeName, lastAddedDudeSelector } from '../interactions'
 
-import { shareItemBetweenDudes, updateItemBoughtBy } from '../../ItemList/interactions'
+import { shareItemBetweenDudes, updateItem } from '../../ItemList/interactions'
 import { addItemAndReturnId } from '../../ItemList/__tests__/ItemListTest.js'
 
 export const addDudeAndReturnId = (store, name) => {
@@ -54,7 +54,7 @@ describe('Dude List', () => {
     expect(dudeCanBeRemovedSelector(store.getState(), dudeId)).toEqual(true)
 
     const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItemBoughtBy(itemId, dudeId, 100))
+    store.dispatch(updateItem(itemId, 'an item', dudeId, 100))
 
     expect(dudeCanBeRemovedSelector(store.getState(), dudeId)).toEqual(false)
   })

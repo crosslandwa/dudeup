@@ -1,6 +1,6 @@
 import createStore from '../../store'
 import {
-  updateItemBoughtBy,
+  updateItem,
   shareItemBetweenDudes, splitItemBetweenDudes
 } from '../../ItemList/interactions'
 import { dudesInDebtSummarySelector } from '../interactions'
@@ -13,7 +13,7 @@ describe('Summary', () => {
     const dudeId1 = addDudeAndReturnId(store, 'dude 1')
 
     const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItemBoughtBy(itemId, dudeId1, 9))
+    store.dispatch(updateItem(itemId, 'an item', dudeId1, 9))
 
     expect(dudesInDebtSummarySelector(store.getState()).spentAmounts[dudeId1]).toEqual(9)
   })
@@ -23,7 +23,7 @@ describe('Summary', () => {
     const dudeId1 = addDudeAndReturnId(store, 'dude 1')
 
     const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItemBoughtBy(itemId, dudeId1, 10))
+    store.dispatch(updateItem(itemId, 'an item', dudeId1, 10))
 
     expect(dudesInDebtSummarySelector(store.getState()).spentOnAmounts[dudeId1]).toEqual(10)
   })
@@ -44,7 +44,7 @@ describe('Summary', () => {
     const dudeId3 = addDudeAndReturnId(store, 'dude 3')
 
     const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItemBoughtBy(itemId, dudeId1, 9))
+    store.dispatch(updateItem(itemId, 'an item', dudeId1, 9))
 
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId1]).toEqual([])
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId2]).toEqual([{ dudeId: dudeId1, amount: 3 }])
@@ -58,7 +58,7 @@ describe('Summary', () => {
     const dudeId3 = addDudeAndReturnId(store, 'dude 3')
 
     const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItemBoughtBy(itemId, dudeId1, 9))
+    store.dispatch(updateItem(itemId, 'an item', dudeId1, 9))
     store.dispatch(shareItemBetweenDudes(itemId, [dudeId1, dudeId2]))
 
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId1]).toEqual([])
@@ -80,10 +80,10 @@ describe('Summary', () => {
     const dudeId1 = addDudeAndReturnId(store, 'dude 1')
 
     const itemId1 = addItemAndReturnId(store)
-    store.dispatch(updateItemBoughtBy(itemId1, dudeId1, 9))
+    store.dispatch(updateItem(itemId1, 'an item', dudeId1, 9))
 
     const itemId2 = addItemAndReturnId(store)
-    store.dispatch(updateItemBoughtBy(itemId2, dudeId1, 19))
+    store.dispatch(updateItem(itemId2, 'an item', dudeId1, 19))
 
     expect(dudesInDebtSummarySelector(store.getState()).groupTotal).toEqual(28)
   })

@@ -7,14 +7,13 @@ const apply = (f, x) => f(x)
 // ------ACTIONS------
 export const addItem = (description, dudeId, price) => ({ type: 'ITEMLIST_ADD_ITEM', description, dudeId, price })
 export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
+export const updateItem = (id, description, dudeId, price) => ({ type: 'ITEMLIST_UPDATE_ITEM', id, description, dudeId, price })
 export const shareItemBetweenDudes = (id, dudeIds) => ({ type: 'ITEMLIST_UPDATE_ITEM_SHARING', id, dudeIds })
 export const splitItemBetweenDudes = (id, dudeIdToAmount) => ({
   type: 'ITEMLIST_UPDATE_ITEM_SPLIT',
   id,
   itemSplit: Object.keys(dudeIdToAmount).reduce((acc, dudeId) => ({ ...acc, [dudeId]: roundDown(dudeIdToAmount[dudeId]) || 0 }), {})
 })
-export const updateItemBoughtBy = (id, dudeId, price) => ({ type: 'ITEMLIST_UPDATE_ITEM_BOUGHT_BY', id, dudeId, price })
-export const updateItemDescription = (id, description) => ({ type: 'ITEMLIST_UPDATE_ITEM_DESCRIPTION', id, description })
 
 // ------SELECTORS------
 export const isItemExplicitlySplitSelector = (state, id) => !!Object.keys(itemCostSplitSelector(state, id)).length
@@ -54,15 +53,14 @@ const defaultItemState = {
 
 const item = (state = defaultItemState, action) => {
   switch (action.type) {
-    case 'ITEMLIST_UPDATE_ITEM_DESCRIPTION':
-      return { ...state, description: action.description }
-    case 'ITEMLIST_UPDATE_ITEM_BOUGHT_BY':
+    case 'ITEMLIST_UPDATE_ITEM':
       return {
         ...state,
         boughtBy: {
           dudeId: action.dudeId || undefined,
           price: action.price ? roundDown(action.price) : state.boughtBy.price
-        }
+        },
+        description: action.description
       }
     case 'ITEMLIST_UPDATE_ITEM_SHARING':
       return { ...state, itemSharedByDudes: action.dudeIds, itemSplit: {} }
@@ -100,12 +98,7 @@ export function middleware (store) {
       case 'ITEMLIST_ADD_ITEM':
         next(action)
         const itemId = lastAddedItemIdSelector(store.getState())
-        if (action.description) {
-          next(updateItemDescription(itemId, action.description))
-        }
-        if (action.dudeId || action.price) {
-          next(updateItemBoughtBy(itemId, action.dudeId, action.price))
-        }
+        next(updateItem(itemId, action.description, action.dudeId, action.price))
         return
       case 'ITEMLIST_REMOVE_ITEM':
         const removedItemDescription = itemDescriptionSelector(store.getState(), action.id)

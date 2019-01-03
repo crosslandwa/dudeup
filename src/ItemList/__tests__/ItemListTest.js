@@ -1,9 +1,9 @@
 import createStore from '../../store'
 import {
-  addItem, removeItem, itemIdsSelector,
+  addItem, removeItem, updateItem, itemIdsSelector,
   lastAddedItemIdSelector,
-  updateItemDescription, itemDescriptionSelector,
-  updateItemBoughtBy, itemBoughtByDudeIdSelector, itemPriceSelector
+  itemDescriptionSelector,
+  itemBoughtByDudeIdSelector, itemPriceSelector
 } from '../interactions'
 import { addDudeAndReturnId } from '../../DudeList/__tests__/DudeListTest.js'
 
@@ -43,7 +43,7 @@ describe('Item List', () => {
     const store = createStore()
     const itemId = addItemAndReturnId(store)
 
-    store.dispatch(updateItemDescription(itemId, 'a lovely thing'))
+    store.dispatch(updateItem(itemId, 'a lovely thing'))
 
     expect(itemDescriptionSelector(store.getState(), itemId)).toEqual('a lovely thing')
   })
@@ -56,7 +56,7 @@ describe('Item List', () => {
     expect(itemBoughtByDudeIdSelector(store.getState(), itemId)).toEqual(undefined)
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(0)
 
-    store.dispatch(updateItemBoughtBy(itemId, dudeId, 99.99))
+    store.dispatch(updateItem(itemId, 'an item', dudeId, 99.99))
 
     expect(itemBoughtByDudeIdSelector(store.getState(), itemId)).toEqual(dudeId)
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(99.99)
@@ -69,7 +69,7 @@ describe('Item List', () => {
 
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(0)
 
-    store.dispatch(updateItemBoughtBy(itemId, dudeId, 1.057))
+    store.dispatch(updateItem(itemId, 'an item', dudeId, 1.057))
 
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(1.05)
   })

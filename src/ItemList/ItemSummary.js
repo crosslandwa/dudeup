@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {
-  itemDescriptionSelector, updateItemDescription,
-  itemBoughtByDudeIdSelector, itemPriceSelector, updateItemBoughtBy,
+  itemDescriptionSelector,
+  itemBoughtByDudeIdSelector, itemPriceSelector,
   itemSharingLabelSelector
 } from './interactions'
 import { dudeNameSelector } from '../DudeList/interactions'
@@ -20,11 +20,6 @@ const mapStateToProps = (state, { id }) => ({
   ),
   price: itemPriceSelector(state, id),
   sharingLabel: itemSharingLabelSelector(state, id)
-})
-
-const mapDispatchToProps = (dispatch, { id }) => ({
-  updateDescription: e => dispatch(updateItemDescription(id, e.target.value)),
-  updateItemBoughtBy: (dudeId, price) => dispatch(updateItemBoughtBy(id, dudeId, price))
 })
 
 class ItemSummary extends React.Component {
@@ -79,4 +74,4 @@ class ItemSummary extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItemSummary)
+export default connect(mapStateToProps)(ItemSummary)
