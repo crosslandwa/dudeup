@@ -53,6 +53,7 @@ const defaultItemState = {
 
 const item = (state = defaultItemState, action) => {
   switch (action.type) {
+    case 'ITEMLIST_ADD_ITEM':
     case 'ITEMLIST_UPDATE_ITEM':
       return {
         ...state,
@@ -97,8 +98,6 @@ export function middleware (store) {
     switch (action.type) {
       case 'ITEMLIST_ADD_ITEM':
         next(action)
-        const itemId = lastAddedItemIdSelector(store.getState())
-        next(updateItem(itemId, action.description, action.dudeId, action.price))
         return
       case 'ITEMLIST_REMOVE_ITEM':
         const removedItemDescription = itemDescriptionSelector(store.getState(), action.id)
