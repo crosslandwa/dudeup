@@ -12,7 +12,10 @@ export const shareItemBetweenDudes = (id, dudeIds) => ({ type: 'ITEMLIST_UPDATE_
 export const splitItemBetweenDudes = (id, dudeIdToAmount) => ({
   type: 'ITEMLIST_UPDATE_ITEM_SPLIT',
   id,
-  itemSplit: Object.keys(dudeIdToAmount).reduce((acc, dudeId) => ({ ...acc, [dudeId]: roundDown(dudeIdToAmount[dudeId]) || 0 }), {})
+  itemSplit: Object.keys(dudeIdToAmount)
+    .map(dudeId => ({ dudeId, amount: roundDown(dudeIdToAmount[dudeId]) || 0 }))
+    .filter(({ amount }) => amount > 0)
+    .reduce((acc, { dudeId, amount }) => ({ ...acc, [dudeId]: amount }), {})
 })
 
 // ------SELECTORS------

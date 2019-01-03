@@ -77,10 +77,7 @@ class ItemSharing extends React.Component {
       } else {
         this.props.splitItemBetweenDudes(
           this.props.itemId,
-          Object.keys(this.state.individualAmounts)
-            .map(dudeId => ({ dudeId, amount: this.state.individualAmounts[dudeId] }))
-            .filter(({ amount }) => amount > 0)
-            .reduce((acc, { dudeId, amount }) => ({ ...acc, [dudeId]: amount }), {})
+          this.state.individualAmounts
         )
       }
     }
