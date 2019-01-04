@@ -18,7 +18,7 @@ export const textButtonStyle = {
   cursor: 'pointer',
   minWidth: '6em',
   lineHeight: '1.5em',
-  padding: '0.1em 0.5em',
+  padding: '0.1em 0.5em'
 }
 
 export const textInputStyle = {

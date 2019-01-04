@@ -36,26 +36,28 @@ class AddButton extends React.Component {
     const highlight = this.props.highlight || this.state.hover
 
     return (
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        cursor: 'pointer'
-      }}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          cursor: 'pointer'
+        }}
         onClick={onClick}
         onMouseEnter={this.onHover}
         onMouseLeave={this.endHover}
       >
         <AddIcon highlight={highlight} />
-        <input style={{
-          ...textButtonStyle,
-          color: highlight ? highlightColor : '',
-          border: 'none',
-          padding: '0.2em 0.5em 0.2em 1.3em',
-          marginLeft: '-1.25em',
-          textAlign: 'left',
-          minWidth: '',
-          background: 'none'
-        }}
+        <input
+          style={{
+            ...textButtonStyle,
+            color: highlight ? highlightColor : '',
+            border: 'none',
+            padding: '0.2em 0.5em 0.2em 1.3em',
+            marginLeft: '-1.25em',
+            textAlign: 'left',
+            minWidth: '',
+            background: 'none'
+          }}
           type="button"
           value={label}
         />
