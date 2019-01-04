@@ -1,8 +1,5 @@
 import createStore from '../../store'
-import {
-  updateItem,
-  shareItemBetweenDudes, splitItemBetweenDudes
-} from '../../ItemList/interactions'
+import { updateItem } from '../../ItemList/interactions'
 import { dudesInDebtSummarySelector } from '../interactions'
 import { addDudeAndReturnId } from '../../DudeList/__tests__/DudeListTest.js'
 import { addItemAndReturnId } from '../../ItemList/__tests__/ItemListTest.js'
@@ -58,17 +55,13 @@ describe('Summary', () => {
     const dudeId3 = addDudeAndReturnId(store, 'dude 3')
 
     const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItem(itemId, 'an item', dudeId1, 9))
-    store.dispatch(shareItemBetweenDudes(itemId, [dudeId1, dudeId2]))
+    store.dispatch(updateItem(itemId, 'an item', dudeId1, 9, [dudeId1, dudeId2]))
 
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId1]).toEqual([])
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId2]).toEqual([{ dudeId: dudeId1, amount: 4.5 }])
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId3]).toEqual([])
 
-    store.dispatch(splitItemBetweenDudes(itemId, {
-      [dudeId1]: 3,
-      [dudeId2]: 6
-    }))
+    store.dispatch(updateItem(itemId, 'an item', dudeId1, 9, { [dudeId1]: 3, [dudeId2]: 6 }))
 
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId1]).toEqual([])
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId2]).toEqual([{ dudeId: dudeId1, amount: 6 }])

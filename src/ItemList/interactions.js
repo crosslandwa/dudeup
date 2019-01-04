@@ -5,17 +5,22 @@ const roundDown = amount => parseInt(amount * 100) / 100
 const apply = (f, x) => f(x)
 
 // ------ACTIONS------
-export const addItem = (description, dudeId, price) => ({ type: 'ITEMLIST_ADD_ITEM', description, dudeId, price })
-export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
-export const updateItem = (id, description, dudeId, price) => ({ type: 'ITEMLIST_UPDATE_ITEM', id, description, dudeId, price })
-export const shareItemBetweenDudes = (id, dudeIds) => ({ type: 'ITEMLIST_UPDATE_ITEM_SHARING', id, dudeIds })
-export const splitItemBetweenDudes = (id, dudeIdToAmount) => ({
-  type: 'ITEMLIST_UPDATE_ITEM_SPLIT',
-  id,
-  itemSplit: Object.keys(dudeIdToAmount)
-    .map(dudeId => ({ dudeId, amount: roundDown(dudeIdToAmount[dudeId]) || 0 }))
+export const addItem = (description, dudeId, price, costSplitting = []) => ({
+  type: 'ITEMLIST_ADD_ITEM',
+  description,
+  dudeId,
+  itemSplit: Array.isArray(costSplitting) ? {} : Object.keys(costSplitting)
+    .map(dudeId => ({ dudeId, amount: roundDown(costSplitting[dudeId]) || 0 }))
     .filter(({ amount }) => amount > 0)
-    .reduce((acc, { dudeId, amount }) => ({ ...acc, [dudeId]: amount }), {})
+    .reduce((acc, { dudeId, amount }) => ({ ...acc, [dudeId]: amount }), {}),
+  price,
+  sharedByDudeIds: Array.isArray(costSplitting) ? costSplitting : Object.keys(costSplitting)
+})
+export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
+export const updateItem = (id, description, dudeId, price, costSplitting = []) => ({
+  ...addItem(description, dudeId, price, costSplitting),
+  type: 'ITEMLIST_UPDATE_ITEM',
+  id
 })
 
 // ------SELECTORS------
@@ -55,23 +60,16 @@ const defaultItemState = {
 }
 
 const item = (state = defaultItemState, action) => {
-  switch (action.type) {
-    case 'ITEMLIST_ADD_ITEM':
-    case 'ITEMLIST_UPDATE_ITEM':
-      return {
-        ...state,
-        boughtBy: {
-          dudeId: action.dudeId || undefined,
-          price: action.price ? roundDown(action.price) : state.boughtBy.price
-        },
-        description: action.description
-      }
-    case 'ITEMLIST_UPDATE_ITEM_SHARING':
-      return { ...state, itemSharedByDudes: action.dudeIds, itemSplit: {} }
-    case 'ITEMLIST_UPDATE_ITEM_SPLIT':
-      return { ...state, itemSharedByDudes: Object.keys(action.itemSplit), itemSplit: action.itemSplit }
+  return {
+    ...state,
+    boughtBy: {
+      dudeId: action.dudeId || undefined,
+      price: action.price ? roundDown(action.price) : state.boughtBy.price
+    },
+    description: action.description,
+    itemSharedByDudes: action.sharedByDudeIds,
+    itemSplit: action.itemSplit
   }
-  return state
 }
 
 export const reducer = (state = { allIds: [], byId: {} }, action) => {
@@ -89,10 +87,10 @@ export const reducer = (state = { allIds: [], byId: {} }, action) => {
         allIds: updatedIds,
         byId: { ...state.byId, [action.id]: undefined }
       }
+    case 'ITEMLIST_UPDATE_ITEM':
+      return { ...state, byId: { ...state.byId, [action.id]: item(state.byId[action.id], action) } }
   }
-  return (action.type.startsWith('ITEMLIST_UPDATE_ITEM') && action.id)
-    ? { ...state, byId: { ...state.byId, [action.id]: item(state.byId[action.id], action) } }
-    : state
+  return state
 }
 
 // ------MIDDLEWARE------
