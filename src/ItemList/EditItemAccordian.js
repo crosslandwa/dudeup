@@ -145,11 +145,11 @@ class EditItemAccordian extends React.Component {
           <div>
             <label>
               Shared by
-              <input autoFocus={this.state.isEqualSplit} type="radio" checked={this.state.isEqualSplit} onChange={this.setEqualSplit} />
+              <input type="radio" checked={this.state.isEqualSplit} onChange={this.setEqualSplit} />
             </label>
             <label style={{ marginLeft: '0.5em' }}>
               Split between
-              <input autoFocus={!this.state.isEqualSplit} type="radio" checked={!this.state.isEqualSplit} onChange={this.setNonEqualSplit} />
+              <input type="radio" checked={!this.state.isEqualSplit} onChange={this.setNonEqualSplit} />
             </label>
           </div>
           {this.state.isEqualSplit
