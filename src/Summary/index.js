@@ -4,21 +4,16 @@ import { dudesInDebtSummarySelector } from './interactions'
 import DudeSummary from './DudeSummary'
 
 const mapStateToProps = state => {
-  const summary = dudesInDebtSummarySelector(state)
+  const { debts, dudeIds, spentAmounts, spentOnAmounts } = dudesInDebtSummarySelector(state)
   return {
-    ids: summary.dudeIds,
-    balances: summary.dudeIds.reduce((acc, id) => ({
+    ids: dudeIds,
+    balances: dudeIds.reduce((acc, id) => ({
       ...acc,
-      [id]: summary.spentOnAmounts[id] - summary.spentAmounts[id]
+      [id]: spentOnAmounts[id] - spentAmounts[id]
     }), {}),
-    credits: summary.dudeIds.reduce((acc, id) => ({
-      ...acc,
-      [id]: summary.dudeIds.reduce((acc, innerId) => acc.concat(summary.debts[innerId].filter(x => x.dudeId === id).map(x => ({ dudeId: innerId, amount: x.amount }))), [])
-    }), {}),
-    debts: summary.debts,
-    groupTotal: summary.groupTotal.toFixed(2),
-    spentAmounts: summary.spentAmounts,
-    spentOnAmounts: summary.spentOnAmounts
+    paymentsDue: Object.keys(debts).reduce((acc, dudeId) => acc.concat(
+      debts[dudeId].map(({ dudeId: to, amount }) => ({ from: dudeId, to, amount }))
+    ), [])
   }
 }
 
@@ -28,7 +23,7 @@ const Summary = props => (
     flexDirection: 'column'
   }}>
     {props.ids.map(id => (
-      <DudeSummary id={id} credits={props.credits[id]} debts={props.debts[id]} balance={props.balances[id]} amountSpent={props.spentAmounts[id]} amountSpentOn={props.spentOnAmounts[id]}/>
+      <DudeSummary id={id} paymentsDue={props.paymentsDue} balance={props.balances[id]} />
     ))}
   </div>
 )

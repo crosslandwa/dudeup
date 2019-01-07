@@ -9,18 +9,18 @@ const arrowStyle = {
   border: 'solid black',
   borderWidth: '0 2px 2px 0',
   display: 'inline-block',
-  padding: '0.125em',
+  padding: '0.125em'
 }
 
 const downArrowStyle = { ...arrowStyle, marginRight: '0.2em', marginTop: '-0.5em', transform: 'rotate(45deg)' }
 const leftArrowStyle = { ...arrowStyle, transform: 'rotate(135deg)' }
 
-const mapStateToProps = (state, { id, balance, credits, debts }) => ({
-  credits: credits.map(({ dudeId, amount }) => ({
-    name: dudeNameSelector(state, dudeId), amount
+const mapStateToProps = (state, { id, balance, credits, debts, paymentsDue }) => ({
+  credits: paymentsDue.filter(({ to }) => to === id).map(({ from, amount }) => ({
+    name: dudeNameSelector(state, from), amount
   })),
-  debits: debts.map(({ dudeId, amount }) => ({
-    name: dudeNameSelector(state, dudeId), amount
+  debits: paymentsDue.filter(({ from }) => from === id).map(({ to, amount }) => ({
+    name: dudeNameSelector(state, to), amount
   })),
   isSquare: pick(balance, false, true, false),
   name: dudeNameSelector(state, id)
@@ -77,7 +77,6 @@ class DudeSummary extends React.Component {
       </div>
     )
   }
-
 }
 
 export default connect(mapStateToProps)(DudeSummary)
