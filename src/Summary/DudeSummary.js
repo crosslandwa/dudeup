@@ -1,25 +1,83 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { dudeNameSelector } from '../DudeList/interactions'
+import Dividor from '../GenericUi/Dividor'
 
-const mapStateToProps = (state, { id, debts }) => ({
-  name: dudeNameSelector(state, id),
-  debts: debts.map(({ dudeId, amount }) => ({
+const pick = (balance, negative, zero, postive) => balance === 0 ? zero : balance > 0 ? postive : negative
+
+const arrowStyle = {
+  border: 'solid black',
+  borderWidth: '0 2px 2px 0',
+  display: 'inline-block',
+  padding: '0.125em',
+}
+
+const downArrowStyle = { ...arrowStyle, marginRight: '0.2em', marginTop: '-0.5em', transform: 'rotate(45deg)' }
+const leftArrowStyle = { ...arrowStyle, transform: 'rotate(135deg)' }
+
+const mapStateToProps = (state, { id, balance, credits, debts }) => ({
+  credits: credits.map(({ dudeId, amount }) => ({
     name: dudeNameSelector(state, dudeId), amount
-  }))
+  })),
+  debits: debts.map(({ dudeId, amount }) => ({
+    name: dudeNameSelector(state, dudeId), amount
+  })),
+  isSquare: pick(balance, false, true, false),
+  name: dudeNameSelector(state, id)
 })
 
-const DudeSummary = props => (
-  <div style={{
-    display: 'flex',
-    flexDirection: 'column'
-  }}>
-    <div>{props.name} has paid {props.amountSpent.toFixed(2)}, had {props.amountSpentOn.toFixed(2)} spent on them and owes...</div>
-    {!props.debts.length && <div>nothing</div>}
-    {props.debts.map(({ name, amount }) => (
-      <div>{amount.toFixed(2)} to {name}</div>
-    ))}
-  </div>
-)
+class DudeSummary extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = { openSummary: false }
+    this.toggleSummary = () => {
+      this.setState((state, props) => ({ openSummary: !state.openSummary }))
+    }
+  }
+
+  render () {
+    const { balance, credits, debits, isSquare, name } = this.props
+    return (
+      <div>
+        {isSquare && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            margin: '0.5em 0px 1em 0'
+          }}>
+            <span>{name} is all square</span>
+          </div>
+        )}
+        {!isSquare && (
+          <div onClick={this.toggleSummary}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              margin: '0.5em 0px 1em 0'
+            }}>
+              <span>{name} {pick(balance, `is owed ${Math.abs(balance).toFixed(2)}`, '', <React.Fragment><strong>owes</strong> {balance.toFixed(2)}</React.Fragment>)}</span>
+              <span style={this.state.openSummary ? downArrowStyle : leftArrowStyle} ></span>
+            </div>
+            {this.state.openSummary && (
+              <ul style={{
+                fontSize: '85%'
+              }}>
+                {debits.map(({ name, amount }) => (
+                  <li>{amount.toFixed(2)} to {name}</li>
+                ))}
+                {credits.map(({ name, amount }) => (
+                  <li>{amount.toFixed(2)} from {name}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+        <Dividor />
+      </div>
+    )
+  }
+
+}
 
 export default connect(mapStateToProps)(DudeSummary)
