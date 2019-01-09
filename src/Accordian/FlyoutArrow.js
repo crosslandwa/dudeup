@@ -1,10 +1,9 @@
 import React from 'react'
-
-const color = '#2196f3'
+import { highlightColor } from '../styles'
 
 const addHighlight = children => React.Children.map(
   children,
-  child => React.cloneElement(child, { highlight: true, style: { ...child.props.style, backgroundColor: color } })
+  child => React.cloneElement(child, { highlight: true, style: { ...child.props.style, backgroundColor: highlightColor } })
 )
 
 export const WithFlyoutArrowBelow = props => (
@@ -21,7 +20,7 @@ export const WithFlyoutArrowBelow = props => (
         content: ' ',
         pointerEvents: 'none',
         borderColor: 'rgba(136, 183, 213, 0)',
-        borderBottomColor: color,
+        borderBottomColor: highlightColor,
         borderWidth: '1em',
         marginTop: '-1em',
         width: 0

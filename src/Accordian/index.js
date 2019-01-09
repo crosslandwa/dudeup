@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ClosingCross from './ClosingCross'
+import { highlightColor } from '../styles'
 
 const mapDispatchToProps = (dispatch, { onCancel, onSubmit }) => ({
   onSubmit: event => {
@@ -43,7 +44,7 @@ class Accordian extends React.Component {
   render () {
     return (
       <div ref={this.captureRef} style={{
-        backgroundColor: '#2196f3',
+        backgroundColor: highlightColor,
         padding: '0.5em',
         margin: '0 -0.5em'
       }}>

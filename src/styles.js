@@ -30,5 +30,8 @@ export const textInputStyle = {
 
 export const secondaryTextItalic = {
   color: '#808080',
+  fontSize: '85%',
   fontStyle: 'italic'
 }
+
+export const highlightColor = '#ffa700'

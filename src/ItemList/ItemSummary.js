@@ -60,8 +60,8 @@ class ItemSummary extends React.Component {
                   alignItems: 'center',
                   minWidth: '5em'
                 }}>
-                  <div>{price}</div>
-                  <div>{dude}</div>
+                  <span>{price}</span>
+                  <span style={secondaryTextItalic}>{dude || '???'}</span>
                 </div>
               </div>
               {sharingLabel && (

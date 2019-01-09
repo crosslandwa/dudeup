@@ -1,7 +1,5 @@
 import React from 'react'
-import { textButtonStyle } from '../styles'
-
-const highlightColor = '#2196f3'
+import { highlightColor, textButtonStyle } from '../styles'
 
 const AddIcon = ({ highlight }) => (
   <span style={{
