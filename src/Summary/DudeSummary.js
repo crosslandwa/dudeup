@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { dudeNameSelector } from '../DudeList/interactions'
 import Dividor from '../GenericUi/Dividor'
+import FocusableDiv from '../GenericUi/FocusableDiv'
 
 const pick = (balance, negative, zero, postive) => balance === 0 ? zero : balance > 0 ? postive : negative
 
@@ -40,16 +41,16 @@ class DudeSummary extends React.Component {
     return (
       <div>
         {isSquare && (
-          <div style={{
+          <FocusableDiv style={{
             display: 'flex',
             alignItems: 'center',
             margin: '0.5em 0px 1em 0'
           }}>
             <span>{name} is all square</span>
-          </div>
+          </FocusableDiv>
         )}
         {!isSquare && (
-          <div onClick={this.toggleSummary}>
+          <FocusableDiv onClick={this.toggleSummary}>
             <div style={{
               display: 'flex',
               justifyContent: 'space-between',
@@ -71,7 +72,7 @@ class DudeSummary extends React.Component {
                 ))}
               </ul>
             )}
-          </div>
+          </FocusableDiv>
         )}
         <Dividor />
       </div>

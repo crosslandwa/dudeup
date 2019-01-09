@@ -9,6 +9,7 @@ import { dudeNameSelector } from '../DudeList/interactions'
 import EditItemAccordian from './EditItemAccordian'
 import Dividor from '../GenericUi/Dividor'
 import { secondaryTextItalic } from '../styles'
+import FocusableDiv from '../GenericUi/FocusableDiv'
 
 const apply = (f, x) => f(x)
 
@@ -44,7 +45,7 @@ class ItemSummary extends React.Component {
           ? (
             <EditItemAccordian id={id} close={this.closeEdit} />
           ) : (
-            <div style={{ cursor: 'pointer' }} onClick={this.toggleEdit}>
+            <FocusableDiv style={{ cursor: 'pointer' }} onClick={this.toggleEdit}>
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -66,7 +67,7 @@ class ItemSummary extends React.Component {
               {sharingLabel && (
                 <div style={{ ...secondaryTextItalic, marginTop: '0.5em', textAlign: 'center' }}>{sharingLabel}</div>
               )}
-            </div>
+            </FocusableDiv>
           )}
         <Dividor withTopMargin={true} />
       </div>
