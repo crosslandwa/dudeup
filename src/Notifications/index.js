@@ -12,37 +12,40 @@ const mapStateToProps = state => ({
 
 const bgColor = {
   success: '#b1ffb8',
-  warning: 'yellow',
-  error: 'red'
+  warning: '#fded72'
 }
 
-const borderColor = {
-  success: '#398440',
-  warning: 'yellow',
-  error: 'red'
+const textColor = {
+  success: '#0b7107',
+  warning: '#7d7000'
 }
 
 const Notification = ({ text, type }) => (
   <div style={{
     backgroundColor: bgColor[type],
-    border: `solid 1px ${borderColor[type]}`,
-    borderRadius: '0.25em',
-    marginBottom: '0.25em',
+    borderRadius: '0.05em',
+    border: `solid 1px ${textColor[type]}`,
+    color: textColor[type],
+    margin: 'auto',
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    boxShadow: 'rgb(200, 200, 200, 0.5) 0px 0px 0.05em 0.07em',
+    padding: '0.5em',
+    maxWidth: 800
   }}><span>{text}</span></div>
 )
 
 const Notifications = ({ notifications }) => notifications.length
   ? (
     <div style={{
-      width: '100%',
+      width: '80%',
       position: 'fixed',
-      top: '0.25em',
-      left: 0,
-      zIndex: 2
+      left: '50%',
+      marginLeft: '-40%',
+      bottom: '1em',
+      zIndex: 1
     }}>
-      {notifications.map(notification => <Notification {...notification} />)}
+      {notifications.slice(-1).map(notification => <Notification {...notification} />)}
     </div>
   ) : null
 

@@ -51,7 +51,8 @@ class Modal extends React.Component {
         justifyContent: 'center',
         position: 'fixed',
         top: 0,
-        left: 0
+        left: 0,
+        zIndex: 2
       }}>
         <div
           style={{

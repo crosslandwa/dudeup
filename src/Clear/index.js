@@ -34,7 +34,7 @@ class Clear extends React.Component {
               <span>Clearing will remove all Dudes and Items from your device. Click the OK button to proceed</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2.5em' }}>
-              <input style={textButtonStyle} type="submit" value="OK" />
+              <input autoFocus style={textButtonStyle} type="submit" value="OK" />
             </div>
             <div style={{ fontSize: '85%', marginTop: '0.5em', textAlign: 'center' }}>
               <em>This can not be undone</em>
