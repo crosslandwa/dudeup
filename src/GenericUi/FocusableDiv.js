@@ -1,5 +1,4 @@
 import React from 'react'
-import Dividor from '../GenericUi/Dividor'
 
 const noOp = () => {}
 
