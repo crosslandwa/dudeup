@@ -60,7 +60,7 @@ class ItemSummary extends React.Component {
                   alignItems: 'center',
                   minWidth: '5em'
                 }}>
-                  <span>{price}</span>
+                  <span>{price.toFixed(2)}</span>
                   <span style={secondaryTextItalic}>{dude || '???'}</span>
                 </div>
               </div>
