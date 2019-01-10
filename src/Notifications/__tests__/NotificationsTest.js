@@ -1,35 +1,42 @@
 import createStore from '../../store'
-import { addNotification, addWarningNotification, notificationIdsSelector, notificationTextSelector, notificationTypeSelector } from '../interactions'
+import { addNotification, addWarningNotification, notificationsSelector, removeNotification } from '../interactions'
 
 describe('Notifications', () => {
   it('can be added', () => {
     const store = createStore()
     store.dispatch(addNotification('some text'))
 
-    const ids = notificationIdsSelector(store.getState())
-    expect(ids).toHaveLength(1)
-    expect(notificationTextSelector(store.getState(), ids[0])).toEqual('some text')
-  })
-
-  it('are automatically removed after a specified timeout (defaults to 4s)', done => {
-    const store = createStore()
-    store.dispatch(addNotification('some text', 0.1))
-
-    expect(notificationIdsSelector(store.getState())).toHaveLength(1)
-
-    setTimeout(() => {
-      expect(notificationIdsSelector(store.getState())).toHaveLength(0)
-      done()
-    }, 200)
+    const notifications = notificationsSelector(store.getState())
+    expect(notifications).toHaveLength(1)
+    expect(notifications[0].text).toEqual('some text')
+    expect(notifications[0].type).toEqual('success')
   })
 
   it('can be added as warnings', () => {
     const store = createStore()
     store.dispatch(addWarningNotification('alert!'))
 
-    const ids = notificationIdsSelector(store.getState())
-    expect(ids).toHaveLength(1)
-    expect(notificationTextSelector(store.getState(), ids[0])).toEqual('alert!')
-    expect(notificationTypeSelector(store.getState(), ids[0])).toEqual('warning')
+    const notifications = notificationsSelector(store.getState())
+    expect(notifications[0].text).toEqual('alert!')
+    expect(notifications[0].type).toEqual('warning')
+  })
+
+  it('only the most recent notification is available', () => {
+    const store = createStore()
+    store.dispatch(addNotification('one'))
+    store.dispatch(addNotification('two'))
+
+    const notifications = notificationsSelector(store.getState())
+    expect(notifications).toHaveLength(1)
+    expect(notifications[0].text).toEqual('two')
+  })
+
+  it('can be dismissed', () => {
+    const store = createStore()
+    store.dispatch(addNotification('one'))
+    store.dispatch(removeNotification())
+
+    const notifications = notificationsSelector(store.getState())
+    expect(notifications).toHaveLength(0)
   })
 })
