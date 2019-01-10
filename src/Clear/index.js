@@ -27,8 +27,8 @@ class Clear extends React.Component {
 
   render () {
     return (
-      <div style={{ marginTop: '0.5em' }}>
-        {this.state.modal ? (
+      <React.Fragment>
+        {this.state.modal && (
           <Modal onCancel={this.closeModal} onSubmit={this.clear} title="Clear" >
             <div>
               <span>Clearing will remove all Dudes and Items from your device. Click the OK button to proceed</span>
@@ -40,12 +40,9 @@ class Clear extends React.Component {
               <em>This can not be undone</em>
             </div>
           </Modal>
-        ) : (
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <input style={textButtonStyle} type="button" onClick={this.openModal} value="Clear" />
-          </div>
         )}
-      </div>
+        <input style={textButtonStyle} type="button" onClick={this.openModal} value="Clear" />
+      </React.Fragment>
     )
   }
 }

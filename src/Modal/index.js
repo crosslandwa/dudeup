@@ -61,7 +61,8 @@ class Modal extends React.Component {
             height: '66%',
             backgroundColor: 'white',
             borderRadius: '0.5em',
-            padding: '1em'
+            padding: '1em',
+            width: 'inherit'
           }}
           ref={this.captureRef}
         >
