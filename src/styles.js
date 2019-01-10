@@ -1,3 +1,9 @@
+export const secondaryTextItalic = {
+  color: '#808080',
+  fontSize: '85%',
+  fontStyle: 'italic'
+}
+
 export const fauxLinkStyle = {
   fontSize: 'inherit',
   cursor: 'pointer',
@@ -21,17 +27,19 @@ export const textButtonStyle = {
   padding: '0.1em 0.5em'
 }
 
+export const secondaryTextButtonStyle = {
+  ...secondaryTextItalic,
+  ...textButtonStyle,
+  background: '#ececec',
+  border: `1px solid ${secondaryTextItalic.color}`,
+  padding: '0.1em 0.5em 0.25em 0.5em'
+}
+
 export const textInputStyle = {
   fontSize: 'inherit',
   border: '1px solid black',
   borderRadius: '0.25em',
   lineHeight: '1.5em'
-}
-
-export const secondaryTextItalic = {
-  color: '#808080',
-  fontSize: '85%',
-  fontStyle: 'italic'
 }
 
 export const highlightColor = '#ffa700'

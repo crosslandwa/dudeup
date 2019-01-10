@@ -72,7 +72,6 @@ class EditDudeAccordian extends React.Component {
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
-            fontSize: '85%',
             marginTop: '0.5em'
           }}>
             <input style={textButtonStyle} type="submit" value={this.props.id ? 'Update' : 'Add'} />

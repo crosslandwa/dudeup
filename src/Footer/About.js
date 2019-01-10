@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { textButtonStyle } from '../styles'
+import { secondaryTextButtonStyle, textButtonStyle } from '../styles'
 import Modal from '../Modal'
 
 class About extends React.Component {
@@ -31,7 +31,7 @@ class About extends React.Component {
             </div>
           </Modal>
         )}
-        <input style={textButtonStyle} type="button" onClick={this.openModal} value="About" />
+        <input style={secondaryTextButtonStyle} type="button" onClick={this.openModal} value="About" />
       </React.Fragment>
     )
   }

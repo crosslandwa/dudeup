@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { clear } from './interactions'
 import { addNotification } from '../Notifications/interactions'
-import { textButtonStyle } from '../styles'
+import { secondaryTextButtonStyle, secondaryTextItalic, textButtonStyle } from '../styles'
 import Modal from '../Modal'
 
 class Clear extends React.Component {
@@ -33,15 +33,16 @@ class Clear extends React.Component {
             <div>
               <span>Clearing will remove all Dudes and Items from your device. Click the OK button to proceed</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2.5em' }}>
-              <input autoFocus style={textButtonStyle} type="submit" value="OK" />
+            <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '2.5em' }}>
+              <input autoFocus style={textButtonStyle} type="button" value="Cancel" onClick={this.closeModal} />
+              <input style={textButtonStyle} type="submit" value="OK" />
             </div>
-            <div style={{ fontSize: '85%', marginTop: '0.5em', textAlign: 'center' }}>
+            <div style={{ ...secondaryTextItalic, marginTop: '2em', textAlign: 'center' }}>
               <em>This can not be undone</em>
             </div>
           </Modal>
         )}
-        <input style={textButtonStyle} type="button" onClick={this.openModal} value="Clear" />
+        <input style={secondaryTextButtonStyle} type="button" onClick={this.openModal} value="Clear" />
       </React.Fragment>
     )
   }
