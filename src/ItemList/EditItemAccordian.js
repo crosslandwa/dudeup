@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch, { id }) => ({
   updateItem: (...args) => dispatch(updateItem(id, ...args))
 })
 
-const amountLeft = (price, individualAmounts) => price - Object.keys(individualAmounts)
+const amountLeft = (price = 0, individualAmounts) => price - Object.keys(individualAmounts)
   .map(dudeId => individualAmounts[dudeId])
   .filter(x => x)
   .reduce((a, b) => a + b, 0)
