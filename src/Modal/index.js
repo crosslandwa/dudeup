@@ -32,28 +32,29 @@ class Modal extends React.Component {
 
   componentDidMount () {
     document.addEventListener('keydown', this.escFunction, false)
-    document.addEventListener('click', this.clickOutsideFunction, false)
   }
 
   componentWillUnmount () {
     document.removeEventListener('keydown', this.escFunction, false)
-    document.removeEventListener('click', this.clickOutsideFunction, false)
   }
 
   render () {
     return (
-      <div style={{
-        width: '100%',
-        height: '100%',
-        backgroundColor: '#303030E0',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        zIndex: 2
-      }}>
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          backgroundColor: '#303030E0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: 2
+        }}
+        onClick={this.clickOutsideFunction}
+      >
         <div
           style={{
             maxWidth: '50%',
