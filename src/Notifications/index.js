@@ -7,6 +7,14 @@ const mapStateToProps = state => ({
   notifications: notificationsSelector(state)
 })
 
+const mapDispatchToProps = dispatch => ({
+  removeNotification: e => {
+    e.stopPropagation()
+    e.nativeEvent.stopImmediatePropagation() // prevents bubbling to handlers added via document.addEventListener
+    dispatch(removeNotification())
+  }
+})
+
 const bgColor = {
   success: '#b1ffb8',
   warning: '#fded72'
@@ -54,4 +62,4 @@ const Notifications = ({ notifications, removeNotification }) => notifications.l
     </div>
   ) : null
 
-export default connect(mapStateToProps, { removeNotification })(Notifications)
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications)

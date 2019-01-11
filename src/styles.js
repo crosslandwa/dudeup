@@ -42,4 +42,4 @@ export const textInputStyle = {
   lineHeight: '1.5em'
 }
 
-export const highlightColor = '#ffa700'
+export const highlightColor = '#d9f2ff'
