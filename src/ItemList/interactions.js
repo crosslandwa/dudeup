@@ -1,7 +1,7 @@
 import { dudeNameSelector } from '../DudeList/interactions'
 import { addNotification } from '../Notifications/interactions'
 
-const roundDown = amount => parseInt(amount * 100) / 100
+const roundDown = amount => Math.round(amount * 100) / 100
 const apply = (f, x) => f(x)
 
 // ------ACTIONS------
