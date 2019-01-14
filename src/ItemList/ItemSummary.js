@@ -26,14 +26,31 @@ const mapStateToProps = (state, { id }) => ({
 class ItemSummary extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { edit: false }
+    this.state = { edit: false, reFocus: false }
 
     this.toggleEdit = e => {
       this.setState(state => ({ edit: !state.edit }))
     }
 
-    this.closeEdit = e => {
-      this.setState({ edit: false })
+    this.captureRef = node => {
+      this.ref = node
+    }
+
+    this.closeEdit = (reFocus = false) => {
+      this.setState({ edit: false, reFocus })
+    }
+
+    this.closeEditAndRefocus = () => {
+      this.closeEdit(true)
+    }
+  }
+
+  componentDidUpdate () {
+    if (this.ref && this.state.reFocus) {
+      this.setState(state => {
+        this.ref.focus()
+        return { reFocus: false }
+      })
     }
   }
 
@@ -43,9 +60,9 @@ class ItemSummary extends React.Component {
       <div>
         {this.state.edit
           ? (
-            <EditItemAccordian id={id} close={this.closeEdit} />
+            <EditItemAccordian id={id} closeExplicit={this.closeEditAndRefocus} closeImplicit={this.closeEdit} />
           ) : (
-            <FocusableDiv style={{ cursor: 'pointer' }} onClick={this.toggleEdit}>
+            <FocusableDiv ref={this.captureRef} style={{ cursor: 'pointer' }} onClick={this.toggleEdit}>
               <div style={{
                 display: 'flex',
                 alignItems: 'center',

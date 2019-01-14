@@ -30,7 +30,7 @@ class DudeManagement extends React.Component {
         <WithFlyoutArrowBelow show={edit} >
           <input type="button" style={textButtonStyle} onClick={this.toggleEditOpen} value={this.props.name} />
         </WithFlyoutArrowBelow>
-        {this.state.editOpen && <EditDudeAccordian id={this.props.id} close={this.closeEdit} />}
+        {this.state.editOpen && <EditDudeAccordian id={this.props.id} closeExplicit={this.closeEdit} closeImplicit={this.closeEdit} />}
       </div>
     )
   }

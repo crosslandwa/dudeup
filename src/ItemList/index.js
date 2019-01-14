@@ -16,11 +16,28 @@ class ItemList extends React.Component {
     this.state = { add: false }
 
     this.toggleAdd = e => {
-      this.setState(state => ({ add: !state.add }))
+      this.setState(state => ({ add: !state.add, reFocus: false }))
     }
 
-    this.closeAdd = e => {
-      this.setState({ add: false })
+    this.closeAdd = (reFocus = false) => {
+      this.setState({ add: false, reFocus })
+    }
+
+    this.closeAddAndRefocus = () => {
+      this.closeAdd(true)
+    }
+
+    this.captureRef = node => {
+      this.ref = node
+    }
+  }
+
+  componentDidUpdate () {
+    if (this.ref && this.state.reFocus) {
+      this.setState(state => {
+        this.ref.focus()
+        return { reFocus: false }
+      })
     }
   }
 
@@ -31,9 +48,9 @@ class ItemList extends React.Component {
           {this.props.ids.map(id => <ItemSummary id={id} />)}
         </div>
         <WithFlyoutArrowBelow show={this.state.add} >
-          <AddButton label="Add item" onClick={this.toggleAdd} />
+          <AddButton ref={this.captureRef} label="Add item" onClick={this.toggleAdd} />
         </WithFlyoutArrowBelow>
-        {this.state.add && <EditItemAccordian close={this.closeAdd} />}
+        {this.state.add && <EditItemAccordian closeExplicit={this.closeAddAndRefocus} closeImplicit={this.closeAdd} />}
       </React.Fragment>
     )
   }

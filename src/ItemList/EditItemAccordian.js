@@ -76,7 +76,7 @@ class EditItemAccordian extends React.Component {
 
     this.remove = () => {
       this.props.remove()
-      this.props.close()
+      this.props.closeImplicit()
     }
 
     this.shareByEveryone = () => {
@@ -101,7 +101,7 @@ class EditItemAccordian extends React.Component {
         const args = [description, dudeId, price, isEqualSplit ? selectedIds : individualAmounts]
         const apply = this.props.id ? this.props.updateItem : this.props.addItem
         apply(...args)
-        this.props.close()
+        this.props.closeExplicit()
       }
     }
 
@@ -114,8 +114,9 @@ class EditItemAccordian extends React.Component {
   }
 
   render () {
+    const { closeExplicit, closeImplicit } = this.props
     return (
-      <Accordian onCancel={this.props.close} onSubmit={this.updateItem} title={this.props.id ? 'Update item' : 'Add item'} >
+      <Accordian closeExplicit={closeExplicit} closeImplicit={closeImplicit} onSubmit={this.updateItem} title={this.props.id ? 'Update item' : 'Add item'} >
         <input
           style={{
             ...textInputStyle,

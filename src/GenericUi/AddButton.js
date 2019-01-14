@@ -27,6 +27,14 @@ class AddButton extends React.Component {
     this.endHover = () => {
       this.setState({ hover: false })
     }
+
+    this.captureRef = node => {
+      this.ref = node
+    }
+
+    this.focus = () => {
+      this.ref.focus()
+    }
   }
 
   render () {
@@ -58,6 +66,7 @@ class AddButton extends React.Component {
           }}
           type="button"
           value={label}
+          ref={this.captureRef}
         />
       </div>
     )

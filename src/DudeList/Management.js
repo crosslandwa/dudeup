@@ -15,12 +15,29 @@ class DudeManagement extends React.Component {
     super(props)
     this.state = { modalOpen: false }
 
-    this.closeModal = () => {
-      this.setState({ modalOpen: false })
-    }
-
     this.toggleAddDude = e => {
       this.setState(state => ({ modalOpen: !state.modalOpen }))
+    }
+
+    this.close = (reFocus = false) => {
+      this.setState({ modalOpen: false, reFocus })
+    }
+
+    this.closeAndRefocus = () => {
+      this.close(true)
+    }
+
+    this.captureRef = node => {
+      this.ref = node
+    }
+  }
+
+  componentDidUpdate () {
+    if (this.ref && this.state.reFocus) {
+      this.setState(state => {
+        this.ref.focus()
+        return { reFocus: false }
+      })
     }
   }
 
@@ -33,11 +50,11 @@ class DudeManagement extends React.Component {
         }}>
           {this.props.dudeIds.map(id => <EditableDude id={id} />)}
           <WithFlyoutArrowBelow show={this.state.modalOpen} >
-            <AddButton label="Add dude" onClick={this.toggleAddDude} />
+            <AddButton ref={this.captureRef} label="Add dude" onClick={this.toggleAddDude} />
           </WithFlyoutArrowBelow>
         </div>
         {this.state.modalOpen && (
-          <EditDudeAccordian close={this.closeModal} />
+          <EditDudeAccordian closeExplicit={this.closeAndRefocus} closeImplicit={this.close} />
         )}
       </div>
     )

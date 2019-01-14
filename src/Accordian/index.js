@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import ClosingCross from './ClosingCross'
 import { highlightColor } from '../styles'
 
-const mapDispatchToProps = (dispatch, { onCancel, onSubmit }) => ({
+const mapDispatchToProps = (dispatch, { onSubmit }) => ({
   onSubmit: event => {
     event.preventDefault()
     onSubmit()
@@ -16,7 +16,7 @@ class Accordian extends React.Component {
 
     this.escFunction = event => {
       if (event.keyCode === 27) {
-        this.props.onCancel()
+        this.props.closeExplicit()
       }
     }
 
@@ -26,7 +26,7 @@ class Accordian extends React.Component {
 
     this.clickOutsideFunction = e => {
       if (this.ref && !this.ref.contains(e.target)) {
-        this.props.onCancel()
+        this.props.closeImplicit()
       }
     }
   }
@@ -48,7 +48,7 @@ class Accordian extends React.Component {
         padding: '0.5em',
         margin: '0 -0.5em'
       }}>
-        <ClosingCross onClick={this.props.onCancel} />
+        <ClosingCross onClick={this.props.closeExplicit} />
         <h3 style={{ margin: '0 0 0.5em 0' }}>{this.props.title}</h3>
         <form onSubmit={this.props.onSubmit} >
           {this.props.children}

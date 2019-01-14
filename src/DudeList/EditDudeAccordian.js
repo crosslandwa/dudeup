@@ -44,7 +44,7 @@ class EditDudeAccordian extends React.Component {
 
     this.remove = e => {
       this.props.removeDude(this.props.id)
-      this.props.close()
+      this.props.closeImplicit()
     }
 
     this.submit = () => {
@@ -52,18 +52,20 @@ class EditDudeAccordian extends React.Component {
         this.props.addWarningNotification(`Did not ${this.props.id ? 'update' : 'add'} Dude - name required`)
       } else if (this.props.id) {
         this.props.updateDudeName(this.props.id, this.state.name)
-        this.props.close()
+        this.props.closeExplicit()
       } else {
         this.state.name && this.props.addDude(this.state.name)
-        this.props.close()
+        this.props.closeExplicit()
       }
     }
   }
 
   render () {
+    const { closeExplicit, closeImplicit } = this.props
+
     return (
       <FullWidthHack tall={this.props.id && !this.props.isRemovable}>
-        <Accordian onCancel={this.props.close} onSubmit={this.submit} title={this.props.id ? `Update ${this.props.name}` : 'Add dude'}>
+        <Accordian closeExplicit={closeExplicit} closeImplicit={closeImplicit} onSubmit={this.submit} title={this.props.id ? `Update ${this.props.name}` : 'Add dude'}>
           <input style={{
             ...textInputStyle,
             boxSizing: 'border-box',
