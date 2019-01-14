@@ -62,7 +62,7 @@ describe('Item List', () => {
     expect(itemPriceSelector(store.getState(), itemId)).toEqual(99.99)
   })
 
-  it('restricts item price to 2dp rounded down', () => {
+  it('restricts item price to 2dp rounded tp nearest', () => {
     const store = createStore()
     const itemId = addItemAndReturnId(store)
     const dudeId = addDudeAndReturnId(store, 'Some dude')
@@ -71,6 +71,6 @@ describe('Item List', () => {
 
     store.dispatch(updateItem(itemId, 'an item', dudeId, 1.057))
 
-    expect(itemPriceSelector(store.getState(), itemId)).toEqual(1.05)
+    expect(itemPriceSelector(store.getState(), itemId)).toEqual(1.06)
   })
 })
