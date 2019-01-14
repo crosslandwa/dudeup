@@ -14,12 +14,35 @@ class DudeManagement extends React.Component {
     super(props)
     this.state = { editOpen: false }
 
-    this.closeEdit = () => {
-      this.setState({ editOpen: false })
+    this.toggleEditOpen = e => {
+      this.setState(state => {
+        if (state.editOpen) {
+          this.closeAndRefocus()
+        } else {
+          return ({ editOpen: !state.editOpen })
+        }
+      })
     }
 
-    this.toggleEditOpen = e => {
-      this.setState(state => ({ editOpen: !state.editOpen }))
+    this.close = (reFocus = false) => {
+      this.setState({ editOpen: false, reFocus })
+    }
+
+    this.closeAndRefocus = () => {
+      this.close(true)
+    }
+
+    this.captureRef = node => {
+      this.ref = node
+    }
+  }
+
+  componentDidUpdate () {
+    if (this.ref && this.state.reFocus) {
+      this.setState(state => {
+        this.ref.focus()
+        return { reFocus: false }
+      })
     }
   }
 
@@ -28,9 +51,9 @@ class DudeManagement extends React.Component {
     return (
       <div style={{ margin: '0 1em 0.25em 0' }}>
         <WithFlyoutArrowBelow show={edit} >
-          <input type="button" style={textButtonStyle} onClick={this.toggleEditOpen} value={this.props.name} />
+          <input ref={this.captureRef} type="button" style={textButtonStyle} onClick={this.toggleEditOpen} value={this.props.name} />
         </WithFlyoutArrowBelow>
-        {this.state.editOpen && <EditDudeAccordian id={this.props.id} closeExplicit={this.closeEdit} closeImplicit={this.closeEdit} />}
+        {this.state.editOpen && <EditDudeAccordian id={this.props.id} closeExplicit={this.closeAndRefocus} closeImplicit={this.close} />}
       </div>
     )
   }

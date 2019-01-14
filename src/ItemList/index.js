@@ -16,7 +16,13 @@ class ItemList extends React.Component {
     this.state = { add: false }
 
     this.toggleAdd = e => {
-      this.setState(state => ({ add: !state.add, reFocus: false }))
+      this.setState(state => {
+        if (state.add) {
+          this.closeAddAndRefocus()
+        } else {
+          return ({ add: !state.add })
+        }
+      })
     }
 
     this.closeAdd = (reFocus = false) => {

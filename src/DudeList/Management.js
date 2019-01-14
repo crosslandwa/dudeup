@@ -16,7 +16,13 @@ class DudeManagement extends React.Component {
     this.state = { modalOpen: false }
 
     this.toggleAddDude = e => {
-      this.setState(state => ({ modalOpen: !state.modalOpen }))
+      this.setState(state => {
+        if (state.modalOpen) {
+          this.closeAndRefocus()
+        } else {
+          return ({ modalOpen: !state.modalOpen })
+        }
+      })
     }
 
     this.close = (reFocus = false) => {
