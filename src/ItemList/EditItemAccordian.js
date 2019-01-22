@@ -135,7 +135,7 @@ class EditItemAccordian extends React.Component {
           margin: '0 -0.5em'
         }}>
           <PriceInput style={{ flexGrow: 1, margin: '0.5em 0.5em 0 0.5em' }} onChange={this.storeItemPrice} price={this.state.price} />
-          <DudeList style={{ flexGrow: 1, margin: '0.5em 0.5em 0 0.5em' }} selectedId={this.state.dudeId} onChange={this.storeItemBoughtBy}/>
+          <DudeList style={{ maxWidth: 'calc(100% - 1em)', flexGrow: 1, margin: '0.5em 0.5em 0 0.5em' }} selectedId={this.state.dudeId} onChange={this.storeItemBoughtBy}/>
         </div>
         <div style={{
           display: 'flex',

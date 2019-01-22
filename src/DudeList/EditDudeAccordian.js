@@ -12,7 +12,7 @@ const mapStateToProps = (state, { id }) => ({
 
 const FullWidthHack = props => (
   <div style={{
-    height: (props.tall) ? '9em' : '7em'
+    height: (props.tall) ? '10em' : '8em'
   }}>
     <div style={{
       position: 'absolute',

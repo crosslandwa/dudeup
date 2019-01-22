@@ -49,7 +49,7 @@ class Accordian extends React.Component {
         margin: '0 -0.5em'
       }}>
         <ClosingCross onClick={this.props.closeExplicit} />
-        <h3 style={{ margin: '0 0 0.5em 0' }}>{this.props.title}</h3>
+        <h3 style={{ margin: '0 0 0.5em 0', maxWidth: 'calc(100% - 2em)' }}>{this.props.title}</h3>
         <form onSubmit={this.props.onSubmit} >
           {this.props.children}
         </form>
