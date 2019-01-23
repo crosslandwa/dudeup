@@ -75,10 +75,12 @@ class ItemSummary extends React.Component {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  minWidth: '5em'
+                  minWidth: '5em',
+                  textAlign: 'right',
+                  padding: '0 0 0 1em'
                 }}>
-                  <span>{price.toFixed(2)}</span>
-                  <span style={secondaryTextItalic}>{dude || '???'}</span>
+                  <span style={{ width: '100%' }}>{price.toFixed(2)}</span>
+                  <span style={{...secondaryTextItalic, width: '100%' }}>{dude || '???'}</span>
                 </div>
               </div>
               {sharingLabel && (
