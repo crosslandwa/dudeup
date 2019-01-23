@@ -20,7 +20,7 @@ class App extends React.Component {
     return (
       <div style={{
         fontFamily: 'helvetica',
-        fontSize: '0.875em',
+        fontSize: '1em',
         margin: '0 auto',
         maxWidth: 800
       }}>
