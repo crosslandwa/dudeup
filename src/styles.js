@@ -4,13 +4,6 @@ export const secondaryTextItalic = {
   fontStyle: 'italic'
 }
 
-export const fauxLinkStyle = {
-  fontSize: 'inherit',
-  cursor: 'pointer',
-  textDecoration: 'underline',
-  fontStyle: 'italic'
-}
-
 export const dropdownStyle = {
   fontSize: 'inherit',
   border: '1px solid black',
@@ -30,6 +23,7 @@ export const textButtonStyle = {
 export const secondaryTextButtonStyle = {
   ...secondaryTextItalic,
   ...textButtonStyle,
+  fontStyle: '',
   background: '#ececec',
   border: `1px solid ${secondaryTextItalic.color}`,
   padding: '0.1em 0.5em 0.25em 0.5em'
