@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { notificationsSelector, removeNotification } from './interactions'
-import { secondaryTextItalic } from '../styles'
+import { secondaryTextItalic, highlightColor, warningColor } from '../styles'
 
 const mapStateToProps = state => ({
   notifications: notificationsSelector(state)
@@ -16,13 +16,8 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const bgColor = {
-  success: '#b1ffb8',
-  warning: '#fded72'
-}
-
-const textColor = {
-  success: '#0b7107',
-  warning: '#7d7000'
+  success: highlightColor,
+  warning: warningColor
 }
 
 const Notification = ({ text, type, onClick }) => (
@@ -30,13 +25,11 @@ const Notification = ({ text, type, onClick }) => (
     style={{
       backgroundColor: bgColor[type],
       borderRadius: '0.05em',
-      border: `solid 1px ${textColor[type]}`,
-      color: textColor[type],
       margin: 'auto',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      boxShadow: 'rgb(200, 200, 200, 0.5) 0px 0px 0.05em 0.07em',
+      boxShadow: '0.03em 0.03em 0.1em 0.15em #6d6d6d',
       padding: '0.5em',
       maxWidth: 800,
       cursor: 'pointer'

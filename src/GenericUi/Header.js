@@ -4,7 +4,8 @@ import { highlightColor } from '../styles'
 const Header = props => (
   <header style={{
     fontFamily: 'helvetica',
-    boxShadow: `0 0 1em 0.5em ${highlightColor}`,
+    backgroundColor: highlightColor,
+    boxShadow: `0 0 2em 1.5em ${highlightColor}`,
     margin: '0 auto'
   }}>
     <div style={{

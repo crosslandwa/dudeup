@@ -3,7 +3,10 @@ import { highlightColor } from '../styles'
 
 const addHighlight = children => React.Children.map(
   children,
-  child => React.cloneElement(child, { highlight: true, style: { ...child.props.style, backgroundColor: highlightColor } })
+  child => React.cloneElement(
+    child,
+    { highlight: true, style: { ...child.props.style, boxShadow: `inset 0 0 0.1em 0.1em ${highlightColor}` } }
+  )
 )
 
 export const WithFlyoutArrowBelow = props => (
