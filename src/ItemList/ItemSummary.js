@@ -80,7 +80,7 @@ class ItemSummary extends React.Component {
                   padding: '0 0 0 1em'
                 }}>
                   <span style={{ width: '100%' }}>{price.toFixed(2)}</span>
-                  <span style={{...secondaryTextItalic, width: '100%' }}>{dude || '???'}</span>
+                  <span style={{ ...secondaryTextItalic, width: '100%' }}>{dude || '???'}</span>
                 </div>
               </div>
               {sharingLabel && (

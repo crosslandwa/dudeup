@@ -30,7 +30,7 @@ class Clear extends React.Component {
       <React.Fragment>
         {this.state.modal && (
           <Modal onCancel={this.closeModal} onSubmit={this.clear} title="Clear" >
-            <div>
+            <div style={{ fontSize: '0.8em' }}>
               <span>Clearing will remove all Dudes and Items from your device. Click the OK button to proceed</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '2.5em' }}>

@@ -63,7 +63,8 @@ class Modal extends React.Component {
             backgroundColor: 'white',
             borderRadius: '0.5em',
             padding: '1em',
-            width: 'inherit'
+            width: 'inherit',
+            overflow: 'scroll'
           }}
           ref={this.captureRef}
         >
