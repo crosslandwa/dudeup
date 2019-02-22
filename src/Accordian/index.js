@@ -44,7 +44,7 @@ class Accordian extends React.Component {
   render () {
     return (
       <div ref={this.captureRef} style={{
-        backgroundColor: highlightColor,
+        boxShadow: `inset 0 0 0.1em 0.25em ${highlightColor}`,
         padding: '0.5em',
         margin: '0 -0.5em'
       }}>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { highlightColor } from '../styles'
 
 class ClosingCross extends React.Component {
   constructor (props) {
@@ -34,7 +35,7 @@ class ClosingCross extends React.Component {
           style={{
             cursor: 'pointer',
             textAlign: 'center',
-            background: this.state.hover ? 'white' : '',
+            background: this.state.hover ? highlightColor : '',
             borderRadius: '50%',
             height: '1.5em',
             width: '1.5em',
