@@ -8,6 +8,8 @@ import AnErrorOccurred from './AnErrorOccurred'
 import DudeManagement from './DudeList/Management'
 import Section from './GenericUi/Section'
 import Header from './GenericUI/Header'
+import AboutAndClear from './AboutAndClear'
+import './app.css'
 
 const mapStateToProps = state => ({})
 const mapDispatchToProps = {}
@@ -30,6 +32,7 @@ class App extends React.Component {
           <div style={{ margin: '0 0.75em' }}>
             <AnErrorOccurred>
               <Notifications />
+              <AboutAndClear />
               <Section title="Dudes"><DudeManagement /></Section>
               <Section title="Items"><ItemList /></Section>
               <Section title="Settle up..."><Summary /></Section>
