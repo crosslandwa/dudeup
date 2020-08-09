@@ -27,6 +27,11 @@
   color: white;
 }
 
+.du-button--delete {
+  background: #ff0909;
+  color: white;
+}
+
 .du-button--text-only {
   background: none;
   border: none;
