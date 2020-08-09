@@ -33,10 +33,10 @@ class App extends React.Component {
             <AnErrorOccurred>
               <Notifications />
               <About />
-              <Clear />
               <Section title="Dudes"><DudeManagement /></Section>
               <Section title="Items"><ItemList /></Section>
               <Section title="Settle up..."><Summary /></Section>
+              <Clear />
             </AnErrorOccurred>
           </div>
         </div>

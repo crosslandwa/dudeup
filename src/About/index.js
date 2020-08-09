@@ -20,7 +20,7 @@ class About extends React.Component {
 
   render () {
     return (
-      <React.Fragment>
+      <div class="du-section">
         <WithFlyoutArrowBelow show={this.state.about}>
           <a class="du-anchor" href="" onClick={this.openAbout}>About</a>
         </WithFlyoutArrowBelow>
@@ -41,7 +41,7 @@ class About extends React.Component {
             </div>
           </Accordian>
         )}
-      </React.Fragment>
+      </div>
     )
   }
 }

@@ -1,12 +1,10 @@
 import React from 'react'
-import { highlightColor } from '../styles'
 
 const Header = props => (
   <header style={{
     fontFamily: 'helvetica',
-    backgroundColor: highlightColor,
-    boxShadow: `0 0 2em 1.5em ${highlightColor}`,
-    margin: '0 auto'
+    margin: '0 auto',
+    textDecoration: 'underline'
   }}>
     <div style={{
       padding: '0.25em',

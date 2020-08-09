@@ -1,6 +1,14 @@
+.du-section {
+  margin-bottom: 2em;
+}
+
 .du-anchor, .du-anchor:visited {
   color: inherit;
   text-decoration: none;
+}
+
+.du-anchor:active, .du-anchor:hover {
+  color: #51b1c7;
 }
 
 .du-info-text {
