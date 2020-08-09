@@ -1,14 +1,24 @@
-.du-about-and-clear {
-  display: flex;
-  flex-direction: row-reverse;
+a, a:visited, a:hover, a:active {
+  color: inherit;
 }
 
-.du-button--submit {
+.du-info-text {
+  margin-bottom: 1em;
+}
+
+.du-button {
   border: 1px solid black;
   border-radius: 0.25em;
   cursor: pointer;
+  display: block;
   font-size: inherit;
   line-height: 1.5em;
+  margin-bottom: 1em;
   min-width: 6em;
   padding: 0.1em 0.5em;
+}
+
+.du-button--submit {
+  background: #43b139;
+  color: white;
 }

@@ -8,32 +8,37 @@ import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 class AboutAndClear extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { modal: false }
+    this.state = { about: false }
 
-    this.openModal = (e) => {
+    this.openAbout = (e) => {
       e && e.preventDefault()
-      this.setState({ modal: true })
+      this.setState({ about: true, showClear: false })
     }
 
-    this.closeModal = () => {
-      this.setState({ modal: false })
+    this.openClear = (e) => {
+      e && e.preventDefault()
+      this.setState({ about: false, showClear: true })
+    }
+
+    this.closeAccordian = () => {
+      this.setState({ about: false, showClear: false })
     }
 
     this.clear = () => {
       this.props.clear()
       this.props.addNotification('All Dudes and Items have been cleared')
-      this.closeModal()
+      this.closeAccordian()
     }
   }
 
   render () {
     return (
-      <div class="du-about-and-clear">
-        <WithFlyoutArrowBelow show={this.state.modal}>
-          <a class="du-anchor" href="" onClick={this.openModal}>About</a>
+      <div>
+        <WithFlyoutArrowBelow show={this.state.about}>
+          <a class="du-anchor" href="" onClick={this.openAbout}>About</a>
         </WithFlyoutArrowBelow>
-        {this.state.modal && (
-          <Accordian closeExplicit={this.closeModal} closeImplicit={this.closeModal} onSubmit={this.closeModal} title="About">
+        {this.state.about && (
+          <Accordian closeExplicit={this.closeAccordian} closeImplicit={this.closeAccordian} onSubmit={this.closeAccordian} title="About">
             <div>
               <p>Take the maths out of settling up the cost of group activities.</p>
               <ul>
@@ -45,10 +50,19 @@ class AboutAndClear extends React.Component {
               <h4>What about my data?</h4>
               <p>Your DUDE UP list is stored on your device - no other data is recorded or collected</p>
               <p>Sadly, this means you are not able to share lists with other people or devices...</p>
-              <form>
-                <button class="du-button du-button--submit" type="submit" autofocus >OK</button>
-              </form>
+              <button class="du-button du-button--submit" type="submit" autofocus >OK</button>
             </div>
+          </Accordian>
+        )}
+        <WithFlyoutArrowBelow show={this.state.showClear}>
+          <a class="du-anchor" href="" onClick={this.openClear}>Clear</a>
+        </WithFlyoutArrowBelow>
+        {this.state.showClear && (
+          <Accordian closeExplicit={this.closeAccordian} closeImplicit={this.closeAccordian} onSubmit={this.clear} title="Clear">
+            <div class="du-info-text">Clearing will remove all Dudes and Items from your device. Click the OK button to proceed</div>
+            <input autoFocus class="du-button" type="button" value="Cancel" onClick={this.closeAccordian} />
+            <button class="du-button du-button--submit" type="submit">OK</button>
+            <em>This can not be undone</em>
           </Accordian>
         )}
       </div>
