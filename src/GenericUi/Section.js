@@ -2,7 +2,7 @@ import React from 'react'
 import Dividor from '../GenericUi/Dividor'
 
 const Section = ({ children, dividor = true, title }) => (
-  <div style={{ marginTop: '2em' }}>
+  <div class="du-section">
     {title && (
       <h2 style={{
         margin: 0,

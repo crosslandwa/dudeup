@@ -15,6 +15,9 @@ export default {
     replace({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
+    postcss({
+      extensions: [ '.css' ]
+    }),
     babel({
       exclude: 'node_modules/**',
       plugins: ['external-helpers']
@@ -26,9 +29,6 @@ export default {
         'node_modules/react/index.js': ['Component', 'PureComponent', 'Fragment', 'Children', 'createElement'],
         'node_modules/react-is/index.js': ['isValidElementType']
       }
-    }),
-    postcss({
-      extensions: [ '.css' ]
     })
   ]
 }

@@ -1,0 +1,41 @@
+.du-section {
+  margin-bottom: 2em;
+}
+
+.du-info-text {
+  margin-bottom: 1em;
+}
+
+.du-button {
+  border: 1px solid black;
+  border-radius: 0.25em;
+  cursor: pointer;
+  display: block;
+  font-size: inherit;
+  line-height: 1.5em;
+  margin-bottom: 1em;
+  min-width: 6em;
+  padding: 0.1em 0.5em;
+}
+
+.du-button:hover {
+  color: #51b1c7;
+}
+
+.du-button--submit {
+  background: #43b139;
+  color: white;
+}
+
+.du-button--delete {
+  background: #ff0909;
+  color: white;
+}
+
+.du-button--text-only {
+  background: none;
+  border: none;
+  margin-bottom: 0.5em;
+  min-width: 0;
+  padding: 0;
+}

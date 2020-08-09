@@ -4,7 +4,8 @@
   "scripts": {
     "build": "rollup -c",
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "watch": "npm run build -- --watch"
   },
   "author": "https://github.com/crosslandwa",
   "license": "ISC",
