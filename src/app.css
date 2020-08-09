@@ -32,10 +32,25 @@
   color: white;
 }
 
-.du-button--text-only {
+.du-button--flyout {
   background: none;
   border: none;
   margin-bottom: 0.5em;
   min-width: 0;
-  padding: 0;
+  padding: 0 0.5em 0 0;
+}
+
+.du-button--flyout::before {
+  border-radius: 50%;
+  content: '+';
+  display: inline-block;
+  height: 1.25em;
+  line-height: 1.25em;
+  margin-right: 0.5em;
+  width: 1.25em;
+}
+
+.du-button--flyout:hover:before {
+  background-color: #51b1c7;
+  color: black;
 }

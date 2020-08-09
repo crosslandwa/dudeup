@@ -22,7 +22,7 @@ class About extends React.Component {
     return (
       <React.Fragment>
         <WithFlyoutArrowBelow show={this.state.about}>
-          <button class="du-button du-button--text-only" onClick={this.openAbout}>About</button>
+          <button class="du-button du-button--flyout" onClick={this.openAbout}>About</button>
         </WithFlyoutArrowBelow>
         {this.state.about && (
           <Accordian closeExplicit={this.closeAccordian} closeImplicit={this.closeAccordian} onSubmit={this.closeAccordian} title="About">
