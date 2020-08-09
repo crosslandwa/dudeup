@@ -1,39 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { clear } from '../Clear/interactions'
 import Accordian from '../Accordian'
-import { addNotification } from '../Notifications/interactions'
 import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
-class AboutAndClear extends React.Component {
+class About extends React.Component {
   constructor (props) {
     super(props)
     this.state = { about: false }
 
     this.openAbout = (e) => {
       e && e.preventDefault()
-      this.setState({ about: true, showClear: false })
-    }
-
-    this.openClear = (e) => {
-      e && e.preventDefault()
-      this.setState({ about: false, showClear: true })
+      this.setState({ about: true })
     }
 
     this.closeAccordian = () => {
-      this.setState({ about: false, showClear: false })
-    }
-
-    this.clear = () => {
-      this.props.clear()
-      this.props.addNotification('All Dudes and Items have been cleared')
-      this.closeAccordian()
+      this.setState({ about: false })
     }
   }
 
   render () {
     return (
-      <div>
+      <React.Fragment>
         <WithFlyoutArrowBelow show={this.state.about}>
           <a class="du-anchor" href="" onClick={this.openAbout}>About</a>
         </WithFlyoutArrowBelow>
@@ -50,24 +37,13 @@ class AboutAndClear extends React.Component {
               <h4>What about my data?</h4>
               <p>Your DUDE UP list is stored on your device - no other data is recorded or collected</p>
               <p>Sadly, this means you are not able to share lists with other people or devices...</p>
-              <button class="du-button du-button--submit" type="submit" autofocus >OK</button>
+              <button class="du-button du-button--submit" type="submit" autoFocus >OK</button>
             </div>
           </Accordian>
         )}
-        <WithFlyoutArrowBelow show={this.state.showClear}>
-          <a class="du-anchor" href="" onClick={this.openClear}>Clear</a>
-        </WithFlyoutArrowBelow>
-        {this.state.showClear && (
-          <Accordian closeExplicit={this.closeAccordian} closeImplicit={this.closeAccordian} onSubmit={this.clear} title="Clear">
-            <div class="du-info-text">Clearing will remove all Dudes and Items from your device. Click the OK button to proceed</div>
-            <input autoFocus class="du-button" type="button" value="Cancel" onClick={this.closeAccordian} />
-            <button class="du-button du-button--submit" type="submit">OK</button>
-            <em>This can not be undone</em>
-          </Accordian>
-        )}
-      </div>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(null, { addNotification, clear })(AboutAndClear)
+export default connect(null)(About)

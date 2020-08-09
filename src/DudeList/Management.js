@@ -13,20 +13,20 @@ const mapStateToProps = (state) => ({
 class DudeManagement extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { modalOpen: false }
+    this.state = { showAccordian: false }
 
     this.toggleAddDude = e => {
       this.setState(state => {
-        if (state.modalOpen) {
+        if (state.showAccordian) {
           this.closeAndRefocus()
         } else {
-          return ({ modalOpen: !state.modalOpen })
+          return ({ showAccordian: !state.showAccordian })
         }
       })
     }
 
     this.close = (reFocus = false) => {
-      this.setState({ modalOpen: false, reFocus })
+      this.setState({ showAccordian: false, reFocus })
     }
 
     this.closeAndRefocus = () => {
@@ -55,11 +55,11 @@ class DudeManagement extends React.Component {
           flexWrap: 'wrap'
         }}>
           {this.props.dudeIds.map(id => <EditableDude id={id} />)}
-          <WithFlyoutArrowBelow show={this.state.modalOpen} >
+          <WithFlyoutArrowBelow show={this.state.showAccordian} >
             <AddButton ref={this.captureRef} label="Add dude" onClick={this.toggleAddDude} />
           </WithFlyoutArrowBelow>
         </div>
-        {this.state.modalOpen && (
+        {this.state.showAccordian && (
           <EditDudeAccordian closeExplicit={this.closeAndRefocus} closeImplicit={this.close} />
         )}
       </div>
