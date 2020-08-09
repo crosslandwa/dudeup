@@ -20,9 +20,9 @@ class About extends React.Component {
 
   render () {
     return (
-      <div class="du-section">
+      <React.Fragment>
         <WithFlyoutArrowBelow show={this.state.about}>
-          <a class="du-anchor" href="" onClick={this.openAbout}>About</a>
+          <button class="du-button du-button--text-only" onClick={this.openAbout}>About</button>
         </WithFlyoutArrowBelow>
         {this.state.about && (
           <Accordian closeExplicit={this.closeAccordian} closeImplicit={this.closeAccordian} onSubmit={this.closeAccordian} title="About">
@@ -41,7 +41,7 @@ class About extends React.Component {
             </div>
           </Accordian>
         )}
-      </div>
+      </React.Fragment>
     )
   }
 }

@@ -30,7 +30,7 @@ class Clear extends React.Component {
     return (
       <div>
         <WithFlyoutArrowBelow show={this.state.showClear}>
-          <a class="du-anchor" href="" onClick={this.openClear}>Clear</a>
+          <button class="du-button du-button--text-only" onClick={this.openClear}>Clear</button>
         </WithFlyoutArrowBelow>
         {this.state.showClear && (
           <Accordian closeExplicit={this.closeAccordian} closeImplicit={this.closeAccordian} onSubmit={this.clear} title="Clear">
