@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addDude, dudeCanBeRemovedSelector, dudeNameSelector, removeDude, updateDudeName } from './interactions'
 import Accordian from '../Accordian'
-import { textButtonStyle, textInputStyle } from '../styles'
+import { textInputStyle } from '../styles'
 import { addWarningNotification } from '../Notifications/interactions'
 
 const mapStateToProps = (state, { id }) => ({
@@ -76,15 +76,15 @@ class EditDudeAccordian extends React.Component {
             justifyContent: 'space-between',
             marginTop: '0.5em'
           }}>
-            <input style={textButtonStyle} type="submit" value={this.props.id ? 'Update' : 'Add'} />
+            <button class="du-button du-button--submit" type="submit">{this.props.id ? 'Update' : 'Add'}</button>
             {this.props.id && (
-              <input
-                type="button"
-                style={textButtonStyle}
+              <button
+                class="du-button du-button--delete"
                 disabled={!this.props.isRemovable}
                 onClick={this.remove}
-                value="Remove"
-              />
+              >
+                Remove
+              </button>
             )}
           </div>
           {this.props.id && !this.props.isRemovable && (

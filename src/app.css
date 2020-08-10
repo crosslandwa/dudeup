@@ -6,14 +6,27 @@
   margin-bottom: 1em;
 }
 
+.du-button__label {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.du-button__label--name {
+  max-width: 20em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .du-button {
   border: 1px solid black;
   border-radius: 0.25em;
+  box-sizing: border-box;
   cursor: pointer;
   display: block;
   font-size: inherit;
   line-height: 1.5em;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   min-width: 6em;
   padding: 0.1em 0.5em;
 }
@@ -35,9 +48,8 @@
 .du-button--flyout {
   background: none;
   border: none;
-  margin-bottom: 0.5em;
   min-width: 0;
-  padding: 0 0.5em 0 0;
+  padding-left: 0;
 }
 
 .du-button--flyout::before {

@@ -13,7 +13,7 @@ import {
 import Accordian from '../Accordian'
 import DudeList from '../DudeList'
 import PriceInput from '../GenericUi/PriceInput'
-import { textButtonStyle, textInputStyle } from '../styles'
+import { textInputStyle } from '../styles'
 import { addWarningNotification } from '../Notifications/interactions'
 import ItemSharing from './ItemSharing'
 import ItemSplitting from './ItemSplitting'
@@ -159,14 +159,9 @@ class EditItemAccordian extends React.Component {
           }
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5em' }}>
-          <input style={textButtonStyle} type="submit" value={this.props.id ? 'Update' : 'Add'} />
+          <button class="du-button du-button--submit" type="submit">{this.props.id ? 'Update' : 'Add'}</button>
           {this.props.id && (
-            <input
-              type="button"
-              style={textButtonStyle}
-              onClick={this.remove}
-              value="Remove"
-            />
+            <button class="du-button du-button--delete" onClick={this.remove}>Remove</button>
           )}
         </div>
       </Accordian>
