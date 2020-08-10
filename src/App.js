@@ -30,9 +30,9 @@ class App extends React.Component {
           maxWidth: 800
         }}>
           <div style={{ margin: '0 0.75em' }}>
+            <About />
             <AnErrorOccurred>
               <Notifications />
-              <About />
               <Section title="Dudes"><DudeManagement /></Section>
               <Section title="Items"><ItemList /></Section>
               <Section title="Settle up..."><Summary /></Section>

@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Section from './GenericUi/Section'
 import { clear } from './Clear/interactions'
-import { secondaryTextButtonStyle } from './styles'
 
 class AnErrorOccurred extends React.Component {
   constructor (props) {
@@ -21,12 +20,10 @@ class AnErrorOccurred extends React.Component {
   render () {
     return this.state.error ? (
       <Section title="Dude...">
-        <div>
+        <div style={{ marginBottom: '2em' }}>
           I'm sorry, something went wrong, my bad. Try hitting the Reset button below...
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2em' }}>
-          <input style={secondaryTextButtonStyle} type="button" onClick={this.reset} value="Reset" />
-        </div>
+        <button class="du-button du-button--delete" onClick={this.reset}>Reset</button>
       </Section>
     ) : this.props.children
   }

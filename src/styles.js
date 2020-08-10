@@ -10,18 +10,6 @@ export const dropdownStyle = {
   cursor: 'pointer'
 }
 
-export const secondaryTextButtonStyle = {
-  ...secondaryTextItalic,
-  borderRadius: '0.25em',
-  cursor: 'pointer',
-  minWidth: '6em',
-  lineHeight: '1.5em',
-  fontStyle: '',
-  background: '#ececec',
-  border: `1px solid ${secondaryTextItalic.color}`,
-  padding: '0.1em 0.5em 0.25em 0.5em'
-}
-
 export const textInputStyle = {
   fontSize: 'inherit',
   border: '1px solid black',
