@@ -1,15 +1,11 @@
 import React from 'react'
 
-const noOp = () => {}
-
-const bindEnterKeyTo = f => f
-  ? event => {
-    if (event.keyCode === 13) {
-      event.preventDefault()
-      f()
-    }
+const bindEnterKeyTo = f => event => {
+  if (event.keyCode === 13) {
+    event.preventDefault()
+    f()
   }
-  : noOp
+}
 
 class FocusableDiv extends React.Component {
   constructor (props) {
