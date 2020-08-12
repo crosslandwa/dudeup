@@ -46,7 +46,7 @@ class Accordian extends React.Component {
       <div ref={this.captureRef} style={{
         boxShadow: `inset 0 0 0.1em 0.25em ${highlightColor}`,
         padding: '0.5em',
-        margin: '0 -0.5em'
+        margin: '0 -0.5em 0.5em -0.5em'
       }}>
         <ClosingCross onClick={this.props.closeExplicit} />
         <h3 style={{ margin: '0 0 0.5em 0', maxWidth: 'calc(100% - 2em)' }}>{this.props.title}</h3>

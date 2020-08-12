@@ -1,5 +1,4 @@
 import React from 'react'
-import Dividor from '../GenericUi/Dividor'
 
 const Section = ({ children, dividor = true, title }) => (
   <div class="du-section">
@@ -9,7 +8,7 @@ const Section = ({ children, dividor = true, title }) => (
         fontSize: '1.25em'
       }}>{title}</h2>
     )}
-    {dividor && <Dividor />}
+    {dividor && <hr class="du-hr" />}
     <div>
       {children}
     </div>
