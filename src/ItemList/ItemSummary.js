@@ -56,7 +56,7 @@ class ItemSummary extends React.Component {
   render () {
     const { description, dude, id, price, sharingLabel } = this.props
     return (
-      <div>
+      <>
         {this.state.edit
           ? (
             <EditItemAccordian id={id} closeExplicit={this.closeEditAndRefocus} closeImplicit={this.closeEdit} />
@@ -88,7 +88,7 @@ class ItemSummary extends React.Component {
             </FocusableDiv>
           )}
         <hr class="du-hr" />
-      </div>
+      </>
     )
   }
 }

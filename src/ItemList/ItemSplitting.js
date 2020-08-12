@@ -19,12 +19,12 @@ const AmountInputOption = connect(mapDudeIdToName)(props => (
 ))
 
 const ItemSplitting = ({ allDudeIds, amountLeft, individualAmounts, updateIndividualAmount }) => (
-  <div>
+  <>
     {allDudeIds.map(id => (
       <AmountInputOption id={id} price={individualAmounts[id]} onChange={e => updateIndividualAmount(id, e.target.value)} />
     ))}
-    <div>Amount left to split: {amountLeft.toFixed(2)}</div>
-  </div>
+    <span>Amount left to split: {amountLeft.toFixed(2)}</span>
+  </>
 )
 
 export default connect(mapStateToProps, null)(ItemSplitting)

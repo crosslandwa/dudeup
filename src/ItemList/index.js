@@ -49,15 +49,15 @@ class ItemList extends React.Component {
 
   render () {
     return (
-      <React.Fragment>
-        <div>
+      <>
+        <>
           {this.props.ids.map(id => <ItemSummary id={id} />)}
-        </div>
+        </>
         <WithFlyoutArrowBelow show={this.state.add} >
           <AddButton ref={this.captureRef} label="Add item" onClick={this.toggleAdd} />
         </WithFlyoutArrowBelow>
         {this.state.add && <EditItemAccordian closeExplicit={this.closeAddAndRefocus} closeImplicit={this.closeAdd} />}
-      </React.Fragment>
+      </>
     )
   }
 }

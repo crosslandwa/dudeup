@@ -24,12 +24,12 @@ const CheckBoxOption = connect(mapDudeIdToName)(props => (
 ))
 
 const ItemSharing = ({ allDudeIds, selectedIds, shareByEveryone, toggleDudesInvolvement }) => (
-  <div>
+  <>
     {allDudeIds.map(id => (
       <CheckBoxOption id={id} selected={selectedIds.includes(id)} onChange={e => toggleDudesInvolvement(id, e.target.checked)}/>
     ))}
-    <div><CheckBox id="_everyone_" label={<strong>Everyone</strong>} onChange={shareByEveryone} selected={!selectedIds.length} /></div>
-  </div>
+    <CheckBox id="_everyone_" label={<strong>Everyone</strong>} onChange={shareByEveryone} selected={!selectedIds.length} />
+  </>
 )
 
 export default connect(mapStateToProps)(ItemSharing)

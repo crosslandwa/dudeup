@@ -9,9 +9,9 @@ const Section = ({ children, dividor = true, title }) => (
       }}>{title}</h2>
     )}
     {dividor && <hr class="du-hr" />}
-    <div>
+    <>
       {children}
-    </div>
+    </>
   </div>
 )
 

@@ -49,7 +49,7 @@ class DudeManagement extends React.Component {
 
   render () {
     return (
-      <div>
+      <>
         <div style={{
           display: 'flex',
           flexWrap: 'wrap'
@@ -62,7 +62,7 @@ class DudeManagement extends React.Component {
         {this.state.showAccordian && (
           <EditDudeAccordian closeExplicit={this.closeAndRefocus} closeImplicit={this.close} />
         )}
-      </div>
+      </>
     )
   }
 }

@@ -26,7 +26,7 @@ class About extends React.Component {
         </WithFlyoutArrowBelow>
         {this.state.about && (
           <Accordian closeExplicit={this.closeAccordian} closeImplicit={this.closeAccordian} onSubmit={this.closeAccordian} title="About">
-            <div>
+            <>
               <p>Take the maths out of settling up the cost of group activities.</p>
               <ul>
                 <li>Add dudes <em>(Press "Add dude")</em></li>
@@ -38,7 +38,7 @@ class About extends React.Component {
               <p>Your DUDE UP list is stored on your device - no other data is recorded or collected</p>
               <p>Sadly, this means you are not able to share lists with other people or devices...</p>
               <button class="du-button du-button--submit" type="submit" autoFocus >OK</button>
-            </div>
+            </>
           </Accordian>
         )}
       </React.Fragment>

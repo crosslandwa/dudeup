@@ -28,7 +28,7 @@ class Clear extends React.Component {
 
   render () {
     return (
-      <div>
+      <>
         <WithFlyoutArrowBelow show={this.state.showClear}>
           <button class="du-button du-button--flyout" onClick={this.openClear}>Clear</button>
         </WithFlyoutArrowBelow>
@@ -40,7 +40,7 @@ class Clear extends React.Component {
             <em>This can not be undone</em>
           </Accordian>
         )}
-      </div>
+      </>
     )
   }
 }
