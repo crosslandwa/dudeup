@@ -60,7 +60,7 @@ body {
   opacity: 0.5;
 }
 
-.du-details:hover, .du-button:hover:enabled {
+.du-details > summary:focus, .du-details:hover > summary, .du-button:focus, .du-button:hover:enabled {
   color: #51b1c7;
 }
 
@@ -76,7 +76,7 @@ body {
   margin-bottom: 0.5em;
 }
 
-.du-button--delete:hover:enabled, .du-button--submit:hover:enabled {
+.du-button--delete:focus, .du-button--delete:hover:enabled, .du-button--submit:focus, .du-button--submit:hover:enabled {
   color: black;
 }
 
@@ -155,7 +155,7 @@ body {
   padding: 0.25em 0.5em;
 }
 
-.du-item-summary:hover {
+.du-item-summary:focus, .du-item-summary:hover {
   background: #efefef;
   color: #51b1c7;
 }
