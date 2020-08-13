@@ -35,7 +35,7 @@ class Clear extends React.Component {
         {this.state.showClear && (
           <Accordian closeExplicit={this.closeAccordian} closeImplicit={this.closeAccordian} onSubmit={this.clear} title="Clear">
             <div class="du-info-text">Clearing will remove all Dudes and Items from your device. Click the OK button to proceed</div>
-            <input autoFocus class="du-button" type="button" value="Cancel" onClick={this.closeAccordian} />
+            <button autoFocus class="du-button" type="button" onClick={this.closeAccordian}>Cancel</button>
             <button class="du-button du-button--delete" type="submit">Clear</button>
             <em>This can not be undone</em>
           </Accordian>
