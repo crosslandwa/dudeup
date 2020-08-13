@@ -34,9 +34,11 @@ class Clear extends React.Component {
         </WithFlyoutArrowBelow>
         {this.state.showClear && (
           <Accordian closeExplicit={this.closeAccordian} closeImplicit={this.closeAccordian} onSubmit={this.clear} title="Clear">
-            <div class="du-info-text">Clearing will remove all Dudes and Items from your device. Click the OK button to proceed</div>
-            <button autoFocus class="du-button" type="button" onClick={this.closeAccordian}>Cancel</button>
-            <button class="du-button du-button--delete" type="submit">Clear</button>
+            <div class="du-info-text">Clearing will remove all Dudes and Items from your device. Click the Clear button to proceed</div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <button class="du-button du-button--delete" type="submit">Clear</button>
+              <button autoFocus class="du-button" type="button" onClick={this.closeAccordian}>Cancel</button>
+            </div>
             <em>This can not be undone</em>
           </Accordian>
         )}
