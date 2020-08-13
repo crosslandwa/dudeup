@@ -159,3 +159,28 @@ body {
   background: #efefef;
   color: #51b1c7;
 }
+
+.du-closing-cross {
+  border-radius: 50%;
+  cursor: pointer;
+  float: right;
+  height: 1.5em;
+  line-height: 1.5em;
+  margin-bottom: '-1.4em';
+  text-align: center;
+  width: 1.5em;
+}
+
+.du-closing-cross:before {
+  content: '✕';
+}
+
+.du-closing-cross:hover {
+  background: #51b1c7;
+}
+
+.du-accordian {
+  box-shadow: inset 0 0 0.1em 0.25em #51b1c7;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+}

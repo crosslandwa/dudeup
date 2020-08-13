@@ -1,7 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import ClosingCross from './ClosingCross'
-import { highlightColor } from '../styles'
 
 const mapDispatchToProps = (dispatch, { onSubmit }) => ({
   onSubmit: event => {
@@ -42,12 +40,8 @@ class Accordian extends React.Component {
 
   render () {
     return (
-      <div ref={this.captureRef} style={{
-        boxShadow: `inset 0 0 0.1em 0.25em ${highlightColor}`,
-        padding: '0.5em',
-        marginBottom: '0.5em'
-      }}>
-        <ClosingCross onClick={this.props.closeExplicit} />
+      <div ref={this.captureRef} class="du-accordian">
+        <div class="du-closing-cross" onClick={this.props.closeExplicit} />
         <h3 style={{ margin: '0 0 0.5em 0', maxWidth: 'calc(100% - 2em)' }}>{this.props.title}</h3>
         <form onBlur={this.closeIfFocusLost} onSubmit={this.props.onSubmit} >
           {this.props.children}
