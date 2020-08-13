@@ -61,7 +61,7 @@ class ItemSummary extends React.Component {
           ? (
             <EditItemAccordian id={id} closeExplicit={this.closeEditAndRefocus} closeImplicit={this.closeEdit} />
           ) : (
-            <FocusableDiv ref={this.captureRef} style={{ cursor: 'pointer', marginBottom: '0.5em', padding: '0.25em 0.5em' }} onClick={this.toggleEdit}>
+            <FocusableDiv class="du-item-summary" ref={this.captureRef} onClick={this.toggleEdit}>
               <div style={{
                 display: 'flex',
                 justifyContent: 'space-between'
