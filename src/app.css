@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  overscroll-behavior: none;
+}
+
 .du-content-container {
   box-sizing: border-box;
   font-family: helvetica;
