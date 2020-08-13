@@ -1,3 +1,12 @@
+.du-content-container {
+  box-sizing: border-box;
+  font-family: helvetica;
+  font-size: 1em;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 0.75em;
+}
+
 .du-section {
   margin-bottom: 2em;
 }
@@ -93,4 +102,41 @@
   margin-bottom: 0.5em;
   margin-top: 0;
   width: 100%;
+}
+
+.du-full-width-container__outer {
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.du-full-width-container__inner {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 0.75em;
+}
+
+.du-notifications__container {
+  bottom: 1em;
+  position: fixed;
+  z-index: 1
+}
+
+.du-notifications__item {
+  align-items: center;
+  border-radius: 0.1em;
+  box-shadow: inset 0.03em 0.03em 0.1em 0.15em white;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
+}
+
+.du-notifications__item--success {
+  background-color: #51b1c7;
+}
+
+.du-notifications__item--warning {
+  background-color: #ffce15;
 }

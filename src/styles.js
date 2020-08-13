@@ -18,4 +18,3 @@ export const textInputStyle = {
 }
 
 export const highlightColor = '#51b1c7'
-export const warningColor = '#ffce15'

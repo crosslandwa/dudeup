@@ -21,26 +21,19 @@ class App extends React.Component {
 
   render () {
     return (
-      <React.Fragment>
+      <>
         <Header />
-        <div style={{
-          fontFamily: 'helvetica',
-          fontSize: '1em',
-          margin: '0 auto',
-          maxWidth: 800
-        }}>
-          <div style={{ margin: '0 0.75em' }}>
-            <About />
-            <AnErrorOccurred>
-              <Notifications />
-              <Section title="Dudes"><DudeManagement /></Section>
-              <Section title="Items"><ItemList /></Section>
-              <Section title="Settle up..."><Summary /></Section>
-              <Clear />
-            </AnErrorOccurred>
-          </div>
+        <div class="du-content-container">
+          <About />
+          <AnErrorOccurred>
+            <Notifications />
+            <Section title="Dudes"><DudeManagement /></Section>
+            <Section title="Items"><ItemList /></Section>
+            <Section title="Settle up..."><Summary /></Section>
+            <Clear />
+          </AnErrorOccurred>
         </div>
-      </React.Fragment>
+      </>
     )
   }
 }

@@ -14,18 +14,8 @@ const FullWidthHack = props => (
   <div style={{
     height: (props.tall) ? '10em' : '8em'
   }}>
-    <div style={{
-      position: 'absolute',
-      left: '0',
-      width: '100vw',
-      display: 'flex',
-      justifyContent: 'center'
-    }}>
-      <div style={{
-        width: '100%',
-        maxWidth: 800,
-        padding: '0 0.5em'
-      }}>
+    <div class="du-full-width-container__outer">
+      <div class="du-full-width-container__inner">
         {props.children}
       </div>
     </div>
