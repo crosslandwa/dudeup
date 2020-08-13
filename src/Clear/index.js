@@ -33,14 +33,18 @@ class Clear extends React.Component {
           <button class="du-button du-button--flyout" onClick={this.openClear}>Clear</button>
         </WithFlyoutArrowBelow>
         {this.state.showClear && (
-          <Accordian closeExplicit={this.closeAccordian} closeImplicit={this.closeAccordian} onSubmit={this.clear} title="Clear">
-            <div class="du-info-text">Clearing will remove all Dudes and Items from your device. Click the Clear button to proceed</div>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <button class="du-button du-button--delete" type="submit">Clear</button>
-              <button autoFocus class="du-button" type="button" onClick={this.closeAccordian}>Cancel</button>
+          <div class="du-full-width-container__outer du-full-width-container__outer--overlay">
+            <div class="du-full-width-container__inner">
+              <Accordian closeExplicit={this.closeAccordian} closeImplicit={this.closeAccordian} onSubmit={this.clear} title="Clear">
+                <div class="du-info-text">Clearing will remove all Dudes and Items from your device. Click the Clear button to proceed</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <button class="du-button du-button--delete" type="submit">Clear</button>
+                  <button autoFocus class="du-button" type="button" onClick={this.closeAccordian}>Cancel</button>
+                </div>
+                <em>This can not be undone</em>
+              </Accordian>
             </div>
-            <em>This can not be undone</em>
-          </Accordian>
+          </div>
         )}
       </>
     )

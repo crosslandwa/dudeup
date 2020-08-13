@@ -24,8 +24,9 @@ class Accordian extends React.Component {
       this.ref = node
     }
 
-    this.clickOutsideFunction = e => {
-      if (this.ref && !this.ref.contains(e.target)) {
+    this.closeIfFocusLost = blurEvent => {
+      const targetElement = blurEvent.relatedTarget
+      if ((targetElement === null) || (this.ref && !this.ref.contains(targetElement))) {
         this.props.closeImplicit()
       }
     }
@@ -33,12 +34,10 @@ class Accordian extends React.Component {
 
   componentDidMount () {
     document.addEventListener('keydown', this.escFunction, false)
-    document.addEventListener('click', this.clickOutsideFunction, false)
   }
 
   componentWillUnmount () {
     document.removeEventListener('keydown', this.escFunction, false)
-    document.removeEventListener('click', this.clickOutsideFunction, false)
   }
 
   render () {
@@ -50,7 +49,7 @@ class Accordian extends React.Component {
       }}>
         <ClosingCross onClick={this.props.closeExplicit} />
         <h3 style={{ margin: '0 0 0.5em 0', maxWidth: 'calc(100% - 2em)' }}>{this.props.title}</h3>
-        <form onSubmit={this.props.onSubmit} >
+        <form onBlur={this.closeIfFocusLost} onSubmit={this.props.onSubmit} >
           {this.props.children}
         </form>
       </div>
