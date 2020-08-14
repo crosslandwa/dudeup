@@ -12,7 +12,7 @@ const mapStateToProps = (state, { id }) => ({
 
 const FullWidthHack = props => (
   <div style={{
-    height: (props.tall) ? '10em' : '8em'
+    height: (props.tall) ? '11em' : '9em'
   }}>
     <div class="du-full-width-container__outer">
       <div class="du-full-width-container__inner">

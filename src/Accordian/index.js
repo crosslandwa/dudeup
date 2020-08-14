@@ -40,7 +40,7 @@ class Accordian extends React.Component {
 
   render () {
     return (
-      <div ref={this.captureRef} class="du-accordian">
+      <div ref={this.captureRef} class={this.props.overlay ? 'du-accordian du-accordian--overlay' : 'du-accordian'}>
         <div class="du-closing-cross" onClick={this.props.closeExplicit} />
         <h3 style={{ margin: '0 0 0.5em 0', maxWidth: 'calc(100% - 2em)' }}>{this.props.title}</h3>
         <form onBlur={this.closeIfFocusLost} onSubmit={this.props.onSubmit} >
