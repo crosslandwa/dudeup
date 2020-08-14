@@ -53,7 +53,7 @@ class DudeManagement extends React.Component {
           flexWrap: 'wrap'
         }}>
           {this.props.dudeIds.map(id => <EditableDude id={id} />)}
-          <button class={`du-button du-button--flyout ${this.state.showAccordian ? 'du-flyout--below' : ''}`} ref={this.captureRef} onClick={this.toggleAddDude}>
+          <button class={`du-button du-button--text-only ${this.state.showAccordian ? 'du-flyout--below' : ''}`} ref={this.captureRef} onClick={this.toggleAddDude}>
             <span class="du-button__label">Add dude</span>
           </button>
         </div>

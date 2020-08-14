@@ -28,7 +28,7 @@ class Clear extends React.Component {
   render () {
     return (
       <>
-        <button class={`du-button du-button--flyout ${this.state.showClear ? 'du-flyout--below' : ''}`} onClick={this.openClear}>
+        <button class={`du-button du-button--text-only du-button--header ${this.state.showClear ? 'du-flyout--below' : ''}`} onClick={this.openClear}>
           <span class="du-button__label">Clear</span>
         </button>
         {this.state.showClear && (

@@ -49,7 +49,7 @@ class ItemList extends React.Component {
     return (
       <>
         {this.props.ids.map(id => <ItemSummary id={id} />)}
-        <button class={`du-button du-button--flyout ${this.state.add ? 'du-flyout--below' : ''}`} ref={this.captureRef} onClick={this.toggleAdd}>
+        <button class={`du-button du-button--text-only ${this.state.add ? 'du-flyout--below' : ''}`} ref={this.captureRef} onClick={this.toggleAdd}>
           <span class="du-button__label">Add item</span>
         </button>
         {this.state.add && <EditItemAccordian closeExplicit={this.closeAddAndRefocus} closeImplicit={this.closeAdd} />}

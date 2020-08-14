@@ -20,7 +20,7 @@ class About extends React.Component {
   render () {
     return (
       <>
-        <button class={`du-button du-button--flyout ${this.state.about ? 'du-flyout--below' : ''}`} onClick={this.openAbout}>
+        <button class={`du-button du-button--text-only du-button--header ${this.state.about ? 'du-flyout--below' : ''}`} onClick={this.openAbout}>
           <span class="du-button__label">About</span>
         </button>
         {this.state.about && (
