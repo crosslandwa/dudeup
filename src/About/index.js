@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Accordian from '../Accordian'
-import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 class About extends React.Component {
   constructor (props) {
@@ -21,9 +20,9 @@ class About extends React.Component {
   render () {
     return (
       <>
-        <WithFlyoutArrowBelow show={this.state.about}>
-          <button class="du-button du-button--flyout" onClick={this.openAbout}>About</button>
-        </WithFlyoutArrowBelow>
+        <button class={`du-button du-button--flyout ${this.state.about ? 'du-flyout--below' : ''}`} onClick={this.openAbout}>
+          <span class="du-button__label">About</span>
+        </button>
         {this.state.about && (
           <div class="du-full-width-container__outer du-full-width-container__outer--overlay">
             <div class="du-full-width-container__inner">

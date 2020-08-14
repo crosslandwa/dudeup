@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { dudeNameSelector } from './interactions'
 import EditDudeAccordian from './EditDudeAccordian'
-import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 const mapStateToProps = (state, { id }) => ({
   name: dudeNameSelector(state, id)
@@ -49,11 +48,9 @@ class DudeManagement extends React.Component {
     const edit = !!this.state.editOpen
     return (
       <div style={{ margin: '0 1em 0.25em 0' }}>
-        <WithFlyoutArrowBelow show={edit} >
-          <button ref={this.captureRef} class="du-button" onClick={this.toggleEditOpen}>
-            <span class="du-button__label du-button__label--name">{this.props.name}</span>
-          </button>
-        </WithFlyoutArrowBelow>
+        <button ref={this.captureRef} class={`du-button ${edit ? 'du-flyout--below' : ''}`} onClick={this.toggleEditOpen}>
+          <span class="du-button__label du-button__label--name">{this.props.name}</span>
+        </button>
         {this.state.editOpen && <EditDudeAccordian id={this.props.id} closeExplicit={this.closeAndRefocus} closeImplicit={this.close} />}
       </div>
     )

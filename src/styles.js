@@ -16,5 +16,3 @@ export const textInputStyle = {
   borderRadius: '0.25em',
   lineHeight: '1.5em'
 }
-
-export const highlightColor = '#51b1c7'

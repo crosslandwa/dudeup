@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { clear } from './interactions'
 import Accordian from '../Accordian'
 import { addNotification } from '../Notifications/interactions'
-import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 class Clear extends React.Component {
   constructor (props) {
@@ -29,9 +28,9 @@ class Clear extends React.Component {
   render () {
     return (
       <>
-        <WithFlyoutArrowBelow show={this.state.showClear}>
-          <button class="du-button du-button--flyout" onClick={this.openClear}>Clear</button>
-        </WithFlyoutArrowBelow>
+        <button class={`du-button du-button--flyout ${this.state.showClear ? 'du-flyout--below' : ''}`} onClick={this.openClear}>
+          <span class="du-button__label">Clear</span>
+        </button>
         {this.state.showClear && (
           <div class="du-full-width-container__outer du-full-width-container__outer--overlay">
             <div class="du-full-width-container__inner">

@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import { addItem, itemIdsSelector } from './interactions'
 import ItemSummary from './ItemSummary'
 import EditItemAccordian from './EditItemAccordian'
-import AddButton from '../GenericUi/AddButton'
-import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
 
 const mapStateToProps = state => ({
   ids: itemIdsSelector(state)
@@ -50,12 +48,10 @@ class ItemList extends React.Component {
   render () {
     return (
       <>
-        <>
-          {this.props.ids.map(id => <ItemSummary id={id} />)}
-        </>
-        <WithFlyoutArrowBelow show={this.state.add} >
-          <AddButton ref={this.captureRef} label="Add item" onClick={this.toggleAdd} />
-        </WithFlyoutArrowBelow>
+        {this.props.ids.map(id => <ItemSummary id={id} />)}
+        <button class={`du-button du-button--flyout ${this.state.add ? 'du-flyout--below' : ''}`} ref={this.captureRef} onClick={this.toggleAdd}>
+          <span class="du-button__label">Add item</span>
+        </button>
         {this.state.add && <EditItemAccordian closeExplicit={this.closeAddAndRefocus} closeImplicit={this.closeAdd} />}
       </>
     )

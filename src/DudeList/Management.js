@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import { dudeIdsSelector } from './interactions'
 import EditableDude from './EditableDude'
 import EditDudeAccordian from './EditDudeAccordian'
-import { WithFlyoutArrowBelow } from '../Accordian/FlyoutArrow'
-import AddButton from '../GenericUi/AddButton'
 
 const mapStateToProps = (state) => ({
   dudeIds: dudeIdsSelector(state)
@@ -55,9 +53,9 @@ class DudeManagement extends React.Component {
           flexWrap: 'wrap'
         }}>
           {this.props.dudeIds.map(id => <EditableDude id={id} />)}
-          <WithFlyoutArrowBelow show={this.state.showAccordian} >
-            <AddButton ref={this.captureRef} label="Add dude" onClick={this.toggleAddDude} />
-          </WithFlyoutArrowBelow>
+          <button class={`du-button du-button--flyout ${this.state.showAccordian ? 'du-flyout--below' : ''}`} ref={this.captureRef} onClick={this.toggleAddDude}>
+            <span class="du-button__label">Add dude</span>
+          </button>
         </div>
         {this.state.showAccordian && (
           <EditDudeAccordian closeExplicit={this.closeAndRefocus} closeImplicit={this.close} />
