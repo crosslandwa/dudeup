@@ -4,6 +4,7 @@
   "scripts": {
     "build": "rollup -c",
     "lint": "eslint .",
+    "start": "open dist/index.html && npm run watch",
     "test": "jest",
     "watch": "npm run build -- --watch"
   },
