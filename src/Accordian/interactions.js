@@ -1,3 +1,5 @@
+import { removeNotification } from '../Notifications/interactions'
+
 // ------ACTIONS------
 export const closeAccordian = () => ({ type: 'ACCORDIAN_CLOSE' })
 export const openAccordian = id => ({ type: 'ACCORDIAN_OPEN', id })
@@ -16,4 +18,14 @@ export const reducer = (state = initialState, action) => {
       return { id: action.id }
   }
   return state
+}
+
+// ------MIDDLEWARE------
+export const middleware = ({ dispatch }) => (next) => (action) => {
+  switch (action.type) {
+    case 'ACCORDIAN_OPEN':
+      dispatch(removeNotification())
+      return next(action)
+  }
+  return next(action)
 }

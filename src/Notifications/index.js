@@ -7,14 +7,6 @@ const mapStateToProps = state => ({
   notifications: notificationsSelector(state)
 })
 
-const mapDispatchToProps = dispatch => ({
-  removeNotification: e => {
-    e.stopPropagation()
-    e.nativeEvent.stopImmediatePropagation() // prevents bubbling to handlers added via document.addEventListener
-    dispatch(removeNotification())
-  }
-})
-
 const Notification = ({ text, type, onClick }) => (
   <div class={`du-notifications__item du-notifications__item--${type}`} onClick={onClick}>
     <span>{text}</span>
@@ -31,4 +23,4 @@ const Notifications = ({ notifications, removeNotification }) => notifications.l
     </div>
   ) : null
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notifications)
+export default connect(mapStateToProps, { removeNotification })(Notifications)

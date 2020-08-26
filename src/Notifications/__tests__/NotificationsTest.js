@@ -6,6 +6,7 @@ import {
   notificationsSelector,
   removeNotification
 } from '../interactions'
+import { openAccordian } from '../../Accordian/interactions'
 
 describe('Notifications', () => {
   it('can be added', () => {
@@ -53,5 +54,15 @@ describe('Notifications', () => {
 
     const notifications = notificationsSelector(store.getState())
     expect(notifications).toHaveLength(0)
+  })
+
+  it('are cleared when an accordian is opened', () => {
+    const { dispatch, getState } = createStore()
+
+    dispatch(addNotification('one'))
+    expect(notificationsSelector(getState())).toHaveLength(1)
+
+    dispatch(openAccordian('anAccordian'))
+    expect(notificationsSelector(getState())).toHaveLength(0)
   })
 })

@@ -1,6 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import persistState from 'redux-localstorage'
-import { reducer as accordian } from './Accordian/interactions'
+import { reducer as accordian, middleware as accordianMiddleware } from './Accordian/interactions'
 import { reducer as dudes, middleware as dudesMiddleware } from './DudeList/interactions'
 import { reducer as items, middleware as itemsMiddleware } from './ItemList/interactions'
 import { reducer as notifications } from './Notifications/interactions'
@@ -21,7 +21,7 @@ const localStorageAvailable = !!(isBrowser && window.localStorage)
 const composeEnhancers = (isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
 
 function createAppStore () {
-  const middlewares = [itemsMiddleware, dudesMiddleware]
+  const middlewares = [accordianMiddleware, itemsMiddleware, dudesMiddleware]
   return createStore(
     reducer,
     composeEnhancers(
