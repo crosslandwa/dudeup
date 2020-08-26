@@ -3,51 +3,42 @@ import { connect } from 'react-redux'
 import { clear } from './interactions'
 import Accordian from '../Accordian'
 import { addNotification } from '../Notifications/interactions'
+import { closeAccordian, openAccordian, isAccordianOpen } from '../Accordian/interactions'
 
-class Clear extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = { showClear: false }
+const mapStateToProps = state => ({
+  showClear: isAccordianOpen(state, 'clear')
+})
 
-    this.openClear = (e) => {
-      e && e.preventDefault()
-      this.setState({ showClear: true })
-    }
+const mapDispatchToProps = dispatch => ({
+  clear: () => {
+    dispatch(clear())
+    dispatch(addNotification('All Dudes and Items have been cleared'))
+    dispatch(closeAccordian())
+  },
+  closeClearAccordion: () => dispatch(closeAccordian()),
+  openClearAccordion: () => dispatch(openAccordian('clear'))
+})
 
-    this.closeAccordian = () => {
-      this.setState({ showClear: false })
-    }
-
-    this.clear = () => {
-      this.props.clear()
-      this.props.addNotification('All Dudes and Items have been cleared')
-      this.closeAccordian()
-    }
-  }
-
-  render () {
-    return (
-      <>
-        <button class={`du-button du-button--text-only du-button--header ${this.state.showClear ? 'du-flyout--below' : ''}`} onClick={this.openClear}>
-          <span class="du-button__label">Clear</span>
-        </button>
-        {this.state.showClear && (
-          <div class="du-full-width-container__outer">
-            <div class="du-full-width-container__inner">
-              <Accordian overlay="true" closeExplicit={this.closeAccordian} closeImplicit={this.closeAccordian} onSubmit={this.clear} title="Clear">
-                <div class="du-info-text">Clearing will remove all Dudes and Items from your device. Click the Clear button to proceed</div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5em' }}>
-                  <button class="du-button du-button--delete" type="submit">Clear</button>
-                  <button autoFocus class="du-button" type="button" onClick={this.closeAccordian}>Cancel</button>
-                </div>
-                <span><em>This can not be undone</em></span>
-              </Accordian>
+const Clear = ({ clear, closeClearAccordion, openClearAccordion, showClear }) => (
+  <>
+    <button class={`du-button du-button--text-only du-button--header ${showClear ? 'du-flyout--below' : ''}`} onClick={openClearAccordion}>
+      <span class="du-button__label">Clear</span>
+    </button>
+    {showClear && (
+      <div class="du-full-width-container__outer">
+        <div class="du-full-width-container__inner">
+          <Accordian overlay="true" closeExplicit={closeClearAccordion} onSubmit={clear} title="Clear">
+            <div class="du-info-text">Clearing will remove all Dudes and Items from your device. Click the Clear button to proceed</div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5em' }}>
+              <button class="du-button du-button--delete" type="submit">Clear</button>
+              <button autoFocus class="du-button" type="button" onClick={closeClearAccordion}>Cancel</button>
             </div>
-          </div>
-        )}
-      </>
-    )
-  }
-}
+            <span><em>This can not be undone</em></span>
+          </Accordian>
+        </div>
+      </div>
+    )}
+  </>
+)
 
-export default connect(null, { addNotification, clear })(Clear)
+export default connect(mapStateToProps, mapDispatchToProps)(Clear)

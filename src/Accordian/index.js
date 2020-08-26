@@ -17,17 +17,6 @@ class Accordian extends React.Component {
         this.props.closeExplicit()
       }
     }
-
-    this.captureRef = node => {
-      this.ref = node
-    }
-
-    this.closeIfFocusLost = blurEvent => {
-      const targetElement = blurEvent.relatedTarget
-      if ((targetElement === null) || (this.ref && !this.ref.contains(targetElement))) {
-        this.props.closeImplicit()
-      }
-    }
   }
 
   componentDidMount () {
@@ -39,12 +28,13 @@ class Accordian extends React.Component {
   }
 
   render () {
+    const { children, closeExplicit, onSubmit, overlay, title } = this.props
     return (
-      <div ref={this.captureRef} class={this.props.overlay ? 'du-accordian du-accordian--overlay' : 'du-accordian'}>
-        <div class="du-closing-cross" onClick={this.props.closeExplicit} />
-        <h3 style={{ margin: '0 0 0.5em 0', maxWidth: 'calc(100% - 2em)' }}>{this.props.title}</h3>
-        <form onBlur={this.closeIfFocusLost} onSubmit={this.props.onSubmit} >
-          {this.props.children}
+      <div class={overlay ? 'du-accordian du-accordian--overlay' : 'du-accordian'}>
+        <div class="du-closing-cross" onClick={closeExplicit} />
+        <h3 style={{ margin: '0 0 0.5em 0', maxWidth: 'calc(100% - 2em)' }}>{title}</h3>
+        <form onSubmit={onSubmit} >
+          {children}
         </form>
       </div>
     )

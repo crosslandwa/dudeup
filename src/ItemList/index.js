@@ -1,30 +1,38 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addItem, itemIdsSelector } from './interactions'
+import { itemIdsSelector } from './interactions'
 import ItemSummary from './ItemSummary'
 import EditItemAccordian from './EditItemAccordian'
+import { closeAccordian, openAccordian, isAccordianOpen } from '../Accordian/interactions'
 
 const mapStateToProps = state => ({
-  ids: itemIdsSelector(state)
+  ids: itemIdsSelector(state),
+  showAccordian: isAccordianOpen(state, 'addItem')
+})
+
+const mapDispatchToProps = dispatch => ({
+  closeItemAccordion: () => dispatch(closeAccordian()),
+  openItemAccordion: () => dispatch(openAccordian('addItem'))
 })
 
 class ItemList extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { add: false }
+    this.state = { reFocus: false }
 
     this.toggleAdd = e => {
       this.setState(state => {
-        if (state.add) {
+        if (this.props.showAccordian) {
           this.closeAddAndRefocus()
         } else {
-          return ({ add: !state.add })
+          this.props.openItemAccordion()
         }
       })
     }
 
     this.closeAdd = (reFocus = false) => {
-      this.setState({ add: false, reFocus })
+      this.props.closeItemAccordion()
+      this.setState({ reFocus })
     }
 
     this.closeAddAndRefocus = () => {
@@ -46,16 +54,17 @@ class ItemList extends React.Component {
   }
 
   render () {
+    const { ids, showAccordian } = this.props
     return (
       <>
-        {this.props.ids.map(id => <ItemSummary id={id} />)}
-        <button class={`du-button du-button--text-only ${this.state.add ? 'du-flyout--below' : ''}`} ref={this.captureRef} onClick={this.toggleAdd}>
+        {ids.map(id => <ItemSummary id={id} />)}
+        <button class={`du-button du-button--text-only ${showAccordian ? 'du-flyout--below' : ''}`} ref={this.captureRef} onClick={this.toggleAdd}>
           <span class="du-button__label">Add item</span>
         </button>
-        {this.state.add && <EditItemAccordian closeExplicit={this.closeAddAndRefocus} closeImplicit={this.closeAdd} />}
+        {showAccordian && <EditItemAccordian closeExplicit={this.closeAddAndRefocus} closeImplicit={this.closeAdd} />}
       </>
     )
   }
 }
 
-export default connect(mapStateToProps, { addItem })(ItemList)
+export default connect(mapStateToProps, mapDispatchToProps)(ItemList)

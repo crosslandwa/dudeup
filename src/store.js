@@ -1,5 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import persistState from 'redux-localstorage'
+import { reducer as accordian } from './Accordian/interactions'
 import { reducer as dudes, middleware as dudesMiddleware } from './DudeList/interactions'
 import { reducer as items, middleware as itemsMiddleware } from './ItemList/interactions'
 import { reducer as notifications } from './Notifications/interactions'
@@ -10,6 +11,7 @@ const reducer = resetingReducer(combineReducers({
     dudes,
     items
   }),
+  accordian,
   notifications
 }))
 

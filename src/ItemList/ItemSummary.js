@@ -9,6 +9,7 @@ import { dudeNameSelector } from '../DudeList/interactions'
 import EditItemAccordian from './EditItemAccordian'
 import { secondaryTextItalic } from '../styles'
 import FocusableDiv from '../GenericUi/FocusableDiv'
+import { closeAccordian, openAccordian, isAccordianOpen } from '../Accordian/interactions'
 
 const apply = (f, x) => f(x)
 
@@ -19,16 +20,28 @@ const mapStateToProps = (state, { id }) => ({
     itemBoughtByDudeIdSelector(state, id)
   ),
   price: itemPriceSelector(state, id),
-  sharingLabel: itemSharingLabelSelector(state, id)
+  sharingLabel: itemSharingLabelSelector(state, id),
+  showAccordian: isAccordianOpen(state, `editItem-${id}`)
+})
+
+const mapDispatchToProps = (dispatch, { id }) => ({
+  closeItemAccordion: () => dispatch(closeAccordian()),
+  openItemAccordion: () => dispatch(openAccordian(`editItem-${id}`))
 })
 
 class ItemSummary extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { edit: false, reFocus: false }
+    this.state = { reFocus: false }
 
-    this.toggleEdit = e => {
-      this.setState(state => ({ edit: !state.edit }))
+    this.toggleEditOpen = e => {
+      this.setState(state => {
+        if (this.props.showAccordian) {
+          this.closeAndRefocus()
+        } else {
+          this.props.openItemAccordion()
+        }
+      })
     }
 
     this.captureRef = node => {
@@ -36,7 +49,8 @@ class ItemSummary extends React.Component {
     }
 
     this.closeEdit = (reFocus = false) => {
-      this.setState({ edit: false, reFocus })
+      this.props.closeItemAccordion()
+      this.setState({ reFocus })
     }
 
     this.closeEditAndRefocus = () => {
@@ -54,14 +68,14 @@ class ItemSummary extends React.Component {
   }
 
   render () {
-    const { description, dude, id, price, sharingLabel } = this.props
+    const { description, dude, id, price, sharingLabel, showAccordian } = this.props
     return (
       <>
-        {this.state.edit
+        {showAccordian
           ? (
             <EditItemAccordian id={id} closeExplicit={this.closeEditAndRefocus} closeImplicit={this.closeEdit} />
           ) : (
-            <FocusableDiv class="du-item-summary" ref={this.captureRef} onClick={this.toggleEdit}>
+            <FocusableDiv class="du-item-summary" ref={this.captureRef} onClick={this.toggleEditOpen}>
               <div style={{
                 display: 'flex',
                 justifyContent: 'space-between'
@@ -92,4 +106,4 @@ class ItemSummary extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(ItemSummary)
+export default connect(mapStateToProps, mapDispatchToProps)(ItemSummary)

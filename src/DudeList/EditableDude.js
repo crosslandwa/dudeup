@@ -2,9 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { dudeNameSelector } from './interactions'
 import EditDudeAccordian from './EditDudeAccordian'
+import { closeAccordian, openAccordian, isAccordianOpen } from '../Accordian/interactions'
 
 const mapStateToProps = (state, { id }) => ({
-  name: dudeNameSelector(state, id)
+  name: dudeNameSelector(state, id),
+  showAccordian: isAccordianOpen(state, `editDude-${id}`)
+})
+
+const mapDispatchToProps = (dispatch, { id }) => ({
+  closeDudeAccordion: () => dispatch(closeAccordian()),
+  openDudeAccordion: () => dispatch(openAccordian(`editDude-${id}`))
 })
 
 class DudeManagement extends React.Component {
@@ -14,16 +21,17 @@ class DudeManagement extends React.Component {
 
     this.toggleEditOpen = e => {
       this.setState(state => {
-        if (state.editOpen) {
+        if (this.props.showAccordian) {
           this.closeAndRefocus()
         } else {
-          return ({ editOpen: !state.editOpen })
+          this.props.openDudeAccordion()
         }
       })
     }
 
     this.close = (reFocus = false) => {
-      this.setState({ editOpen: false, reFocus })
+      this.props.closeDudeAccordion()
+      this.setState({ reFocus })
     }
 
     this.closeAndRefocus = () => {
@@ -45,16 +53,16 @@ class DudeManagement extends React.Component {
   }
 
   render () {
-    const edit = !!this.state.editOpen
+    const { id, name, showAccordian } = this.props
     return (
       <div style={{ margin: '0 1em 0.25em 0' }}>
-        <button ref={this.captureRef} class={`du-button ${edit ? 'du-flyout--below' : ''}`} onClick={this.toggleEditOpen}>
-          <span class="du-button__label du-button__label--name">{this.props.name}</span>
+        <button ref={this.captureRef} class={`du-button ${showAccordian ? 'du-flyout--below' : ''}`} onClick={this.toggleEditOpen}>
+          <span class="du-button__label du-button__label--name">{name}</span>
         </button>
-        {this.state.editOpen && <EditDudeAccordian id={this.props.id} closeExplicit={this.closeAndRefocus} closeImplicit={this.close} />}
+        {showAccordian && <EditDudeAccordian id={id} closeExplicit={this.closeAndRefocus} closeImplicit={this.close} />}
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps)(DudeManagement)
+export default connect(mapStateToProps, mapDispatchToProps)(DudeManagement)

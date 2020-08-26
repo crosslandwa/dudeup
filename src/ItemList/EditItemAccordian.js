@@ -114,9 +114,9 @@ class EditItemAccordian extends React.Component {
   }
 
   render () {
-    const { closeExplicit, closeImplicit } = this.props
+    const { closeExplicit } = this.props
     return (
-      <Accordian closeExplicit={closeExplicit} closeImplicit={closeImplicit} onSubmit={this.updateItem} title={this.props.id ? 'Update item' : 'Add item'} >
+      <Accordian closeExplicit={closeExplicit} onSubmit={this.updateItem} title={this.props.id ? 'Update item' : 'Add item'} >
         <input
           style={{
             ...textInputStyle,
