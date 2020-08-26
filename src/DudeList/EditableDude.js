@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch, { id }) => ({
   openDudeAccordion: () => dispatch(openAccordian(`editDude-${id}`))
 })
 
-class DudeManagement extends React.Component {
+class EditableDude extends React.Component {
   constructor (props) {
     super(props)
     this.state = { editOpen: false }
@@ -29,13 +29,9 @@ class DudeManagement extends React.Component {
       })
     }
 
-    this.close = (reFocus = false) => {
-      this.props.closeDudeAccordion()
-      this.setState({ reFocus })
-    }
-
     this.closeAndRefocus = () => {
-      this.close(true)
+      this.props.closeDudeAccordion()
+      this.setState({ reFocus: true })
     }
 
     this.captureRef = node => {
@@ -59,10 +55,10 @@ class DudeManagement extends React.Component {
         <button ref={this.captureRef} class={`du-button ${showAccordian ? 'du-flyout--below' : ''}`} onClick={this.toggleEditOpen}>
           <span class="du-button__label du-button__label--name">{name}</span>
         </button>
-        {showAccordian && <EditDudeAccordian id={id} closeExplicit={this.closeAndRefocus} closeImplicit={this.close} />}
+        {showAccordian && <EditDudeAccordian id={id} onClose={this.closeAndRefocus} />}
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DudeManagement)
+export default connect(mapStateToProps, mapDispatchToProps)(EditableDude)

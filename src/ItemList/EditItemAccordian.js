@@ -76,7 +76,6 @@ class EditItemAccordian extends React.Component {
 
     this.remove = () => {
       this.props.remove()
-      this.props.closeImplicit()
     }
 
     this.shareByEveryone = () => {
@@ -101,7 +100,7 @@ class EditItemAccordian extends React.Component {
         const args = [description, dudeId, price, isEqualSplit ? selectedIds : individualAmounts]
         const apply = this.props.id ? this.props.updateItem : this.props.addItem
         apply(...args)
-        this.props.closeExplicit()
+        this.props.onClose()
       }
     }
 
@@ -114,9 +113,9 @@ class EditItemAccordian extends React.Component {
   }
 
   render () {
-    const { closeExplicit } = this.props
+    const { onClose } = this.props
     return (
-      <Accordian onClose={closeExplicit} onSubmit={this.updateItem} title={this.props.id ? 'Update item' : 'Add item'} >
+      <Accordian onClose={onClose} onSubmit={this.updateItem} title={this.props.id ? 'Update item' : 'Add item'} >
         <input
           style={{
             ...textInputStyle,
@@ -161,7 +160,7 @@ class EditItemAccordian extends React.Component {
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5em' }}>
           <button class="du-button du-button--submit" type="submit">{this.props.id ? 'Update' : 'Add'}</button>
           {this.props.id && (
-            <button class="du-button du-button--delete" onClick={this.remove}>Remove</button>
+            <button class="du-button du-button--delete" onClick={this.remove} type="button">Remove</button>
           )}
         </div>
       </Accordian>

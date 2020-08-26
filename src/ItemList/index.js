@@ -30,13 +30,9 @@ class ItemList extends React.Component {
       })
     }
 
-    this.closeAdd = (reFocus = false) => {
-      this.props.closeItemAccordion()
-      this.setState({ reFocus })
-    }
-
     this.closeAddAndRefocus = () => {
-      this.closeAdd(true)
+      this.props.closeItemAccordion()
+      this.setState({ reFocus: true })
     }
 
     this.captureRef = node => {
@@ -61,7 +57,7 @@ class ItemList extends React.Component {
         <button class={`du-button du-button--text-only ${showAccordian ? 'du-flyout--below' : ''}`} ref={this.captureRef} onClick={this.toggleAdd}>
           <span class="du-button__label">Add item</span>
         </button>
-        {showAccordian && <EditItemAccordian closeExplicit={this.closeAddAndRefocus} closeImplicit={this.closeAdd} />}
+        {showAccordian && <EditItemAccordian onClose={this.closeAddAndRefocus} />}
       </>
     )
   }

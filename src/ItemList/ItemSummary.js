@@ -48,13 +48,9 @@ class ItemSummary extends React.Component {
       this.ref = node
     }
 
-    this.closeEdit = (reFocus = false) => {
-      this.props.closeItemAccordion()
-      this.setState({ reFocus })
-    }
-
     this.closeEditAndRefocus = () => {
-      this.closeEdit(true)
+      this.props.closeItemAccordion()
+      this.setState({ reFocus: true })
     }
   }
 
@@ -73,7 +69,7 @@ class ItemSummary extends React.Component {
       <>
         {showAccordian
           ? (
-            <EditItemAccordian id={id} closeExplicit={this.closeEditAndRefocus} closeImplicit={this.closeEdit} />
+            <EditItemAccordian id={id} onClose={this.closeEditAndRefocus} />
           ) : (
             <FocusableDiv class="du-item-summary" ref={this.captureRef} onClick={this.toggleEditOpen}>
               <div style={{

@@ -30,13 +30,9 @@ class DudeManagement extends React.Component {
       })
     }
 
-    this.close = (reFocus = false) => {
-      this.props.closeDudeAccordion()
-      this.setState({ reFocus })
-    }
-
     this.closeAndRefocus = () => {
-      this.close(true)
+      this.props.closeDudeAccordion()
+      this.setState({ reFocus: true })
     }
 
     this.captureRef = node => {
@@ -67,7 +63,7 @@ class DudeManagement extends React.Component {
           </button>
         </div>
         {showAccordian && (
-          <EditDudeAccordian closeExplicit={this.closeAndRefocus} closeImplicit={this.close} />
+          <EditDudeAccordian onClose={this.closeAndRefocus} />
         )}
       </>
     )
