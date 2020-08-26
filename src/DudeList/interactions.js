@@ -1,4 +1,4 @@
-import { addNotification } from '../Notifications/interactions'
+import { addDeleteNotification, addNotification } from '../Notifications/interactions'
 import { isDudeInvoledInAnyItemsSelector } from '../ItemList/interactions'
 
 // ------ACTIONS------
@@ -63,7 +63,7 @@ export function middleware (store) {
       case 'DUDELIST_REMOVE_DUDE':
         const name = dudeNameSelector(store.getState(), action.id)
         next(action)
-        next(addNotification(`Removed '${name}'`))
+        next(addDeleteNotification(`Removed '${name}'`))
         return
     }
     next(action)

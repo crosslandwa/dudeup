@@ -134,20 +134,24 @@ body {
 
 .du-notifications__item {
   align-items: center;
-  border-radius: 0.1em;
-  box-shadow: inset 0.03em 0.03em 0.1em 0.15em white;
+  background: white;
+  border-radius: 0.5em;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   padding: 0.5em;
 }
 
+.du-notifications__item--delete {
+  box-shadow: inset 0 0 0.1em 0.25em #ff0909, 0px 0em 0.5em 0em #ff0909;
+}
+
 .du-notifications__item--success {
-  background-color: #51b1c7;
+  box-shadow: inset 0 0 0.1em 0.25em #43b139, 0px 0em 0.5em 0em #43b139;
 }
 
 .du-notifications__item--warning {
-  background-color: #ffce15;
+  box-shadow: inset 0 0 0.1em 0.25em #ffce15, 0px 0em 0.5em 0em #ffce15;
 }
 
 .du-item-summary {

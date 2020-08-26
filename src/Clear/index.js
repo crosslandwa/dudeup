@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { clear } from './interactions'
 import Accordian from '../Accordian'
-import { addNotification } from '../Notifications/interactions'
+import { addDeleteNotification } from '../Notifications/interactions'
 import { closeAccordian, openAccordian, isAccordianOpen } from '../Accordian/interactions'
 
 const mapStateToProps = state => ({
@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   clear: () => {
     dispatch(clear())
-    dispatch(addNotification('All Dudes and Items have been cleared'))
+    dispatch(addDeleteNotification('All Dudes and Items have been cleared'))
     dispatch(closeAccordian())
   },
   closeClearAccordion: () => dispatch(closeAccordian()),

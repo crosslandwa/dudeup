@@ -1,5 +1,11 @@
 import createStore from '../../store'
-import { addNotification, addWarningNotification, notificationsSelector, removeNotification } from '../interactions'
+import {
+  addDeleteNotification,
+  addNotification,
+  addWarningNotification,
+  notificationsSelector,
+  removeNotification
+} from '../interactions'
 
 describe('Notifications', () => {
   it('can be added', () => {
@@ -19,6 +25,15 @@ describe('Notifications', () => {
     const notifications = notificationsSelector(store.getState())
     expect(notifications[0].text).toEqual('alert!')
     expect(notifications[0].type).toEqual('warning')
+  })
+
+  it('can be added as "delete" notifications', () => {
+    const { dispatch, getState } = createStore()
+    dispatch(addDeleteNotification('removed something'))
+
+    const notifications = notificationsSelector(getState())
+    expect(notifications[0].text).toEqual('removed something')
+    expect(notifications[0].type).toEqual('delete')
   })
 
   it('only the most recent notification is available', () => {

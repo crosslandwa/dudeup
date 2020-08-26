@@ -1,6 +1,7 @@
 // ------ACTIONS------
 export const addNotification = (text, timeoutSeconds = 3) => ({ type: 'NOTIFICATIONS_ADD', notificationType: 'success', text, timeoutSeconds })
 export const addWarningNotification = (text, timeoutSeconds = 3) => ({ type: 'NOTIFICATIONS_ADD', notificationType: 'warning', text, timeoutSeconds })
+export const addDeleteNotification = (text, timeoutSeconds = 3) => ({ type: 'NOTIFICATIONS_ADD', notificationType: 'delete', text, timeoutSeconds })
 export const removeNotification = () => ({ type: 'NOTIFICATIONS_REMOVE' })
 
 // ------SELECTORS------

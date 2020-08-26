@@ -1,5 +1,5 @@
 import { dudeNameSelector } from '../DudeList/interactions'
-import { addNotification } from '../Notifications/interactions'
+import { addDeleteNotification, addNotification } from '../Notifications/interactions'
 
 const roundDown = amount => Math.round(amount * 100) / 100
 const apply = (f, x) => f(x)
@@ -99,11 +99,12 @@ export function middleware (store) {
     switch (action.type) {
       case 'ITEMLIST_ADD_ITEM':
         next(action)
+        next(addNotification(`Added new item '${action.description}'`))
         return
       case 'ITEMLIST_REMOVE_ITEM':
         const removedItemDescription = itemDescriptionSelector(store.getState(), action.id)
         next(action)
-        next(addNotification(removedItemDescription ? `Removed item '${removedItemDescription}'` : 'Item removed'))
+        next(addDeleteNotification(removedItemDescription ? `Removed item '${removedItemDescription}'` : 'Item removed'))
         return
     }
     next(action)
