@@ -55,7 +55,7 @@ class EditDudeAccordian extends React.Component {
 
     return (
       <FullWidthHack tall={this.props.id && !this.props.isRemovable}>
-        <Accordian closeExplicit={closeExplicit} onSubmit={this.submit} title={this.props.id ? `Update ${this.props.name}` : 'Add dude'}>
+        <Accordian onClose={closeExplicit} onSubmit={this.submit} title={this.props.id ? `Update ${this.props.name}` : 'Add dude'}>
           <input style={{
             ...textInputStyle,
             boxSizing: 'border-box',

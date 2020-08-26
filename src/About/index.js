@@ -20,7 +20,7 @@ const About = ({ closeAbout, openAbout, showAbout }) => (
     {showAbout && (
       <div class="du-full-width-container__outer">
         <div class="du-full-width-container__inner">
-          <Accordian overlay="true" closeExplicit={closeAbout} onSubmit={closeAbout} title="About">
+          <Accordian overlay="true" onClose={closeAbout} onSubmit={closeAbout} title="About">
             <p>Take the maths out of settling up the cost of group activities.</p>
             <ul>
               <li>Add dudes <em>(Press "Add dude")</em></li>

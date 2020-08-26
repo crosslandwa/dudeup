@@ -27,7 +27,7 @@ const Clear = ({ clear, closeClearAccordion, openClearAccordion, showClear }) =>
     {showClear && (
       <div class="du-full-width-container__outer">
         <div class="du-full-width-container__inner">
-          <Accordian overlay="true" closeExplicit={closeClearAccordion} onSubmit={clear} title="Clear">
+          <Accordian overlay="true" onClose={closeClearAccordion} onSubmit={clear} title="Clear">
             <div class="du-info-text">Clearing will remove all Dudes and Items from your device. Click the Clear button to proceed</div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5em' }}>
               <button class="du-button du-button--delete" type="submit">Clear</button>
