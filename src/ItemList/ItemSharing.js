@@ -11,12 +11,9 @@ const mapDudeIdToName = (state, { id }) => ({
 })
 
 const CheckBox = ({ id, label, onChange, selected }) => (
-  <label style={{
-    display: 'flex',
-    justifyContent: 'space-between'
-  }}>
-    {label}
+  <label>
     <input type="checkbox" value={id} checked={selected} onChange={onChange} />
+    <span>{label}</span>
   </label>
 )
 const CheckBoxOption = connect(mapDudeIdToName)(props => (
