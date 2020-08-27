@@ -34,12 +34,15 @@ const CheckBoxOption = connect(mapDudeIdToName)(props => (
   <CheckBox {...props} label={props.name} />
 ))
 
-const ItemSharing = ({ allDudeIds, amountPerDude, sharedByDudeAmounts, sharedByDudeIds, shareByEveryone, toggleDudesInvolvement, updateIndividualAmount }) => (
+const ItemSharing = ({ allDudeIds, amountLeft, amountPerDude, hasExplicitSharingAmounts, sharedByDudeAmounts, sharedByDudeIds, shareByEveryone, toggleDudesInvolvement, updateIndividualAmount }) => (
   <>
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       <CheckBox id="_everyone_" label={<strong>Everyone</strong>} onChange={shareByEveryone} selected={!sharedByDudeIds.length} />
       {!sharedByDudeIds.length && (
         <span>Amount each: {amountPerDude}</span>
+      )}
+      {hasExplicitSharingAmounts && (
+        <span>Amount left to split: {amountLeft.toFixed(2)}</span>
       )}
     </div>
     {allDudeIds.map(dudeId => (

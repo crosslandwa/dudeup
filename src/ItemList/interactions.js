@@ -3,6 +3,13 @@ import { addDeleteNotification, addNotification } from '../Notifications/interac
 
 const roundDown = amount => Math.round(amount * 100) / 100
 const apply = (f, x) => f(x)
+const hasAnyExplicitAmounts = sharedByDudes => sharedByDudes.some(({ amount }) => amount)
+
+const sortByDudeId = ({dudeId: a = ''}, {dudeId: b = ''}) => {
+  return a < b
+    ? -1
+    : a > b ? 1 : 0
+}
 
 // ------ACTIONS------
 export const addItem = (description, dudeId, price, sharedByDudes = []) => ({
@@ -10,8 +17,17 @@ export const addItem = (description, dudeId, price, sharedByDudes = []) => ({
   description,
   dudeId,
   price,
-  sharedByDudes
+  sharedByDudes: sanitise(sharedByDudes)
 })
+const sanitise = incomingSharedByDudes => {
+  const mapped = incomingSharedByDudes
+    .map(({ dudeId, amount }) => ({ dudeId, amount }))
+    .sort(sortByDudeId)
+
+  return hasAnyExplicitAmounts(mapped)
+    ? mapped.filter(({ amount }) => amount > 0)
+    : mapped.map(({ dudeId }) => ({ dudeId }))
+}
 export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
 export const updateItem = (id, description, dudeId, price, sharedByDudes = []) => ({
   ...addItem(description, dudeId, price, sharedByDudes),
@@ -35,7 +51,7 @@ const itemSharedByDudeIdsSelector = (state, id) => itemSelector(state, id).share
 export const itemSharedByDudesSelector = (state, id) => itemSelector(state, id).sharedByDudes
 export const itemSharingLabelSelector = (state, id) => apply(
   sharedByDudes => sharedByDudes.length
-    ? sharedByDudes.some(({ amount }) => amount)
+    ? hasAnyExplicitAmounts(sharedByDudes)
       ? `${sharedByDudes.map(({ dudeId, amount }) => `${dudeNameSelector(state, dudeId)} (${amount.toFixed(2)})`).join(', ')}`
       : `Split between ${sharedByDudes.map(({ dudeId }) => dudeNameSelector(state, dudeId)).join(', ')}`
     : '',
