@@ -25,7 +25,7 @@ describe('Item sharing', () => {
 
     store.dispatch(updateItem(itemId, 'an item', dudeId1, 1.99, [dudeId1, dudeId2]))
 
-    expect(itemSharingLabelSelector(store.getState(), itemId)).toEqual('Shared by A man, Another man')
+    expect(itemSharingLabelSelector(store.getState(), itemId)).toEqual('Split between A man, Another man')
     expect(isItemExplicitlySplitSelector(store.getState(), itemId)).toEqual(false)
   })
 
@@ -38,7 +38,7 @@ describe('Item sharing', () => {
 
     store.dispatch(updateItem(itemId, 'an item', dudeId1, 30, { [dudeId1]: 10, [dudeId2]: 20 }))
 
-    expect(itemSharingLabelSelector(store.getState(), itemId)).toEqual('Split between A man (10.00), Another man (20.00)')
+    expect(itemSharingLabelSelector(store.getState(), itemId)).toEqual('A man (10.00), Another man (20.00)')
     expect(isItemExplicitlySplitSelector(store.getState(), itemId)).toEqual(true)
   })
 
@@ -50,10 +50,10 @@ describe('Item sharing', () => {
 
     const dudeId2 = addDudeAndReturnId(store, 'Another man')
 
-    expect(itemSharingLabelSelector(store.getState(), itemId)).toEqual('Split between A man (100.00)')
+    expect(itemSharingLabelSelector(store.getState(), itemId)).toEqual('A man (100.00)')
 
     store.dispatch(updateItem(itemId, 'an item', dudeId1, 1.99, [dudeId1, dudeId2]))
     addDudeAndReturnId(store, 'Third man man')
-    expect(itemSharingLabelSelector(store.getState(), itemId)).toEqual('Shared by A man, Another man')
+    expect(itemSharingLabelSelector(store.getState(), itemId)).toEqual('Split between A man, Another man')
   })
 })
