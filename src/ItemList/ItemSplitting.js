@@ -23,7 +23,7 @@ const ItemSplitting = ({ allDudeIds, amountLeft, individualAmounts, updateIndivi
     {allDudeIds.map(id => (
       <AmountInputOption id={id} price={individualAmounts[id]} onChange={e => updateIndividualAmount(id, e.target.value)} />
     ))}
-    <span>Amount left to split: {amountLeft.toFixed(2)}</span>
+    <div style={{ display: 'flex', justifyContent: 'flex-end' }}><span>Amount left to split: {amountLeft.toFixed(2)}</span></div>
   </>
 )
 

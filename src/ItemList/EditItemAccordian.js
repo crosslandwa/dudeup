@@ -114,6 +114,7 @@ class EditItemAccordian extends React.Component {
 
   render () {
     const { onClose } = this.props
+    const { price } = this.state
     return (
       <Accordian onClose={onClose} onSubmit={this.updateItem} title={this.props.id ? 'Update item' : 'Add item'} >
         <input
@@ -133,7 +134,7 @@ class EditItemAccordian extends React.Component {
           flexWrap: 'wrap',
           margin: '0 -0.5em'
         }}>
-          <PriceInput style={{ flexGrow: 1, margin: '0.5em 0.5em 0 0.5em' }} onChange={this.storeItemPrice} price={this.state.price} />
+          <PriceInput style={{ flexGrow: 1, margin: '0.5em 0.5em 0 0.5em' }} onChange={this.storeItemPrice} price={price} />
           <DudeList style={{ maxWidth: 'calc(100% - 1em)', flexGrow: 1, margin: '0.5em 0.5em 0 0.5em' }} selectedId={this.state.dudeId} onChange={this.storeItemBoughtBy}/>
         </div>
         <div style={{
@@ -152,10 +153,16 @@ class EditItemAccordian extends React.Component {
               <input type="radio" checked={!this.state.isEqualSplit} onChange={this.setNonEqualSplit} />
             </label>
           </div>
-          {this.state.isEqualSplit
-            ? <ItemSharing selectedIds={this.state.selectedIds} shareByEveryone={this.shareByEveryone} toggleDudesInvolvement={this.toggleDudesInvolvement} />
-            : <ItemSplitting amountLeft={this.state.amountLeft} individualAmounts={this.state.individualAmounts} updateIndividualAmount={this.updateIndividualAmount} />
-          }
+          {this.state.isEqualSplit ? (
+            <ItemSharing
+              price={price}
+              selectedIds={this.state.selectedIds}
+              shareByEveryone={this.shareByEveryone}
+              toggleDudesInvolvement={this.toggleDudesInvolvement}
+            />
+          ) : (
+            <ItemSplitting amountLeft={this.state.amountLeft} individualAmounts={this.state.individualAmounts} updateIndividualAmount={this.updateIndividualAmount} />
+          )}
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5em' }}>
           <button class="du-button du-button--submit" type="submit">{this.props.id ? 'Update' : 'Add'}</button>
