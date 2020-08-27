@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import {
   addItem,
   updateItem,
-  isItemExplicitlySplitSelector,
   itemCostSplitSelector,
   itemDescriptionSelector,
   itemBoughtByDudeIdSelector, itemPriceSelector,
@@ -16,13 +15,11 @@ import PriceInput from '../GenericUi/PriceInput'
 import { textInputStyle } from '../styles'
 import { addWarningNotification } from '../Notifications/interactions'
 import ItemSharing from './ItemSharing'
-import ItemSplitting from './ItemSplitting'
 
 const mapStateToProps = (state, { id }) => ({
   costSplitting: id ? itemCostSplitSelector(state, id) : {},
   description: id ? itemDescriptionSelector(state, id) : undefined,
   dudeId: id ? itemBoughtByDudeIdSelector(state, id) : undefined,
-  isEqualSplit: id ? !isItemExplicitlySplitSelector(state, id) : true,
   itemSharedByDudeIds: id ? itemSharedByDudeIdsSelector(state, id) : [],
   price: id ? itemPriceSelector(state, id) : undefined
 })
@@ -34,10 +31,15 @@ const mapDispatchToProps = (dispatch, { id }) => ({
   updateItem: (...args) => dispatch(updateItem(id, ...args))
 })
 
-const amountLeft = (price = 0, individualAmounts) => price - Object.keys(individualAmounts)
-  .map(dudeId => individualAmounts[dudeId])
-  .filter(x => x)
-  .reduce((a, b) => a + b, 0)
+const amountLeft = (price = 0, individualAmounts) => {
+  if (!Object.keys(individualAmounts).filter(id => !!individualAmounts[id]).length) {
+    return 0
+  }
+  return price - Object.keys(individualAmounts)
+    .map(dudeId => individualAmounts[dudeId])
+    .filter(x => x)
+    .reduce((a, b) => a + b, 0)
+}
 
 class EditItemAccordian extends React.Component {
   constructor (props) {
@@ -47,24 +49,11 @@ class EditItemAccordian extends React.Component {
       description: props.description,
       dudeId: props.dudeId,
       individualAmounts: props.costSplitting,
-      isEqualSplit: props.isEqualSplit,
       price: props.price,
       selectedIds: props.itemSharedByDudeIds
     }
 
     const store = key => e => this.setState({ [key]: e.target ? e.target.value : e })
-
-    this.setEqualSplit = e => {
-      if (e.target.checked) {
-        this.setState({ isEqualSplit: true })
-      }
-    }
-
-    this.setNonEqualSplit = e => {
-      if (e.target.checked) {
-        this.setState({ isEqualSplit: false })
-      }
-    }
 
     this.storeItemBoughtBy = store('dudeId')
     this.storeItemDescription = store('description')
@@ -79,35 +68,45 @@ class EditItemAccordian extends React.Component {
     }
 
     this.shareByEveryone = () => {
-      this.setState({ selectedIds: [] })
+      this.setState({ selectedIds: [], individualAmounts: {}, amountLeft: 0 })
     }
 
     this.toggleDudesInvolvement = (dudeId, checked) => {
-      this.setState((state, props) => ({
-        selectedIds: checked
-          ? [...new Set(state.selectedIds.concat(dudeId))]
-          : state.selectedIds.filter(id => id !== dudeId)
-      }))
+      this.setState((state) => {
+        const individualAmounts = { ...state.individualAmounts, [dudeId]: 0 }
+        const newAmountLeft = amountLeft(this.state.price, individualAmounts)
+        return {
+          amountLeft: newAmountLeft,
+          individualAmounts,
+          selectedIds: checked
+            ? [...new Set(state.selectedIds.concat(dudeId))]
+            : state.selectedIds.filter(id => id !== dudeId)
+        }
+      })
     }
 
     this.updateItem = e => {
+      const { amountLeft, description, dudeId, price, selectedIds, individualAmounts } = this.state
       if (!this.state.description) {
         this.props.addWarningNotification(`Did not ${this.props.id ? 'update' : 'add'} item - description required`)
-      } else if (!this.state.isEqualSplit && this.state.amountLeft !== 0) {
+      } else if (amountLeft !== 0) {
         this.props.addWarningNotification("Dude that doesn't add up! - the individual amounts don't add up to the item total")
       } else {
-        const { description, dudeId, price, isEqualSplit, selectedIds, individualAmounts } = this.state
-        const args = [description, dudeId, price, isEqualSplit ? selectedIds : individualAmounts]
-        const apply = this.props.id ? this.props.updateItem : this.props.addItem
-        apply(...args)
+        const updateOrAdd = this.props.id ? this.props.updateItem : this.props.addItem
+        const updatedCostSplitDetails = Object.keys(individualAmounts).length ? individualAmounts : selectedIds
+        updateOrAdd(description, dudeId, price, updatedCostSplitDetails)
         this.props.onClose()
       }
     }
 
     this.updateIndividualAmount = (dudeId, amount) => {
-      this.setState((state, props) => {
+      this.setState((state) => {
         const individualAmounts = { ...state.individualAmounts, [dudeId]: parseFloat(amount || 0) }
-        return { individualAmounts, amountLeft: amountLeft(state.price, individualAmounts) }
+        return {
+          selectedIds: [...new Set(state.selectedIds.concat(dudeId))],
+          individualAmounts,
+          amountLeft: amountLeft(state.price, individualAmounts)
+        }
       })
     }
   }
@@ -143,26 +142,16 @@ class EditItemAccordian extends React.Component {
           marginTop: '0.5em',
           lineHeight: '2em'
         }}>
-          <div>
-            <label>
-              Split between
-              <input type="radio" checked={this.state.isEqualSplit} onChange={this.setEqualSplit} />
-            </label>
-            <label style={{ marginLeft: '0.5em' }}>
-              Exact amounts
-              <input type="radio" checked={!this.state.isEqualSplit} onChange={this.setNonEqualSplit} />
-            </label>
-          </div>
-          {this.state.isEqualSplit ? (
-            <ItemSharing
-              price={price}
-              selectedIds={this.state.selectedIds}
-              shareByEveryone={this.shareByEveryone}
-              toggleDudesInvolvement={this.toggleDudesInvolvement}
-            />
-          ) : (
-            <ItemSplitting amountLeft={this.state.amountLeft} individualAmounts={this.state.individualAmounts} updateIndividualAmount={this.updateIndividualAmount} />
-          )}
+          <div>Split between</div>
+          <ItemSharing
+            price={price}
+            selectedIds={this.state.selectedIds}
+            shareByEveryone={this.shareByEveryone}
+            toggleDudesInvolvement={this.toggleDudesInvolvement}
+            amountLeft={this.state.amountLeft}
+            individualAmounts={this.state.individualAmounts}
+            updateIndividualAmount={this.updateIndividualAmount}
+          />
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5em' }}>
           <button class="du-button du-button--submit" type="submit">{this.props.id ? 'Update' : 'Add'}</button>

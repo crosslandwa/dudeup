@@ -3,13 +3,15 @@ import { connect } from 'react-redux'
 import { dudeIdsSelector, dudeNameSelector } from '../DudeList/interactions'
 import PriceInput from '../GenericUi/PriceInput'
 
-const mapStateToProps = (state, { price, selectedIds }) => {
+const mapStateToProps = (state, { price, individualAmounts, selectedIds }) => {
   const allDudeIds = dudeIdsSelector(state)
   const numberOfDudesSharing = selectedIds.length || allDudeIds.length || 1
-  const amountPerDude = (price / numberOfDudesSharing).toFixed(2)
+  const anyExplicitAmounts = !!Object.keys(individualAmounts).filter(k => individualAmounts[k] > 0).length
+  const amountPerDude = anyExplicitAmounts ? 0 : (price / numberOfDudesSharing).toFixed(2)
   return {
     allDudeIds,
-    amountPerDude
+    amountPerDude,
+    anyExplicitAmounts
   }
 }
 
@@ -27,7 +29,7 @@ const CheckBoxOption = connect(mapDudeIdToName)(props => (
   <CheckBox {...props} label={props.name} />
 ))
 
-const ItemSharing = ({ allDudeIds, amountPerDude, selectedIds, shareByEveryone, toggleDudesInvolvement }) => (
+const ItemSharing = ({ allDudeIds, amountPerDude, individualAmounts, selectedIds, shareByEveryone, toggleDudesInvolvement, updateIndividualAmount }) => (
   <>
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       <CheckBox id="_everyone_" label={<strong>Everyone</strong>} onChange={shareByEveryone} selected={!selectedIds.length} />
@@ -41,7 +43,7 @@ const ItemSharing = ({ allDudeIds, amountPerDude, selectedIds, shareByEveryone, 
         {selectedIds.includes(id) && (
           <label>
             <span style={{ marginRight: '0.5em' }}>Amount:</span>
-            <PriceInput placeholder={amountPerDude} />
+            <PriceInput price={individualAmounts[id]} placeholder={amountPerDude} onChange={e => updateIndividualAmount(id, e.target.value)} />
           </label>
         )}
       </div>
