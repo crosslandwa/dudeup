@@ -5,46 +5,41 @@ const roundDown = amount => Math.round(amount * 100) / 100
 const apply = (f, x) => f(x)
 
 // ------ACTIONS------
-export const addItem = (description, dudeId, price, costSplitting = []) => ({
+export const addItem = (description, dudeId, price, sharedByDudes = []) => ({
   type: 'ITEMLIST_ADD_ITEM',
   description,
   dudeId,
-  itemSplit: Array.isArray(costSplitting) ? {} : Object.keys(costSplitting)
-    .map(dudeId => ({ dudeId, amount: roundDown(costSplitting[dudeId]) || 0 }))
-    .filter(({ amount }) => amount > 0)
-    .reduce((acc, { dudeId, amount }) => ({ ...acc, [dudeId]: amount }), {}),
   price,
-  sharedByDudeIds: Array.isArray(costSplitting) ? costSplitting : Object.keys(costSplitting)
+  sharedByDudes
 })
 export const removeItem = id => ({ type: 'ITEMLIST_REMOVE_ITEM', id })
-export const updateItem = (id, description, dudeId, price, costSplitting = []) => ({
-  ...addItem(description, dudeId, price, costSplitting),
+export const updateItem = (id, description, dudeId, price, sharedByDudes = []) => ({
+  ...addItem(description, dudeId, price, sharedByDudes),
   type: 'ITEMLIST_UPDATE_ITEM',
   id
 })
 
 // ------SELECTORS------
-export const isItemExplicitlySplitSelector = (state, id) => !!Object.keys(itemCostSplitSelector(state, id)).length
 export const isDudeInvoledInAnyItemsSelector = (state, dudeId) => !!itemIdsBoughtByDudeSelector(state, dudeId).length ||
-  itemIdsSelector(state).reduce((acc, itemId) => acc.concat(itemSharedByDudeIdsSelector(state, itemId)), []).includes(dudeId)
+  itemIdsSelector(state)
+    .reduce((acc, itemId) => acc.concat(itemSharedByDudeIdsSelector(state, itemId)), [])
+    .includes(dudeId)
 export const itemIdsSelector = state => state.persisted.items.allIds
 const itemSelector = (state, id) => state.persisted.items.byId[id]
 export const itemDescriptionSelector = (state, id) => itemSelector(state, id).description
 export const itemPriceSelector = (state, id) => itemSelector(state, id).boughtBy.price
 export const itemBoughtByDudeIdSelector = (state, id) => itemSelector(state, id).boughtBy.dudeId
-export const itemCostSplitSelector = (state, id) => itemSelector(state, id).itemSplit
 export const itemIdsBoughtByDudeSelector = (state, dudeId) => itemIdsSelector(state)
   .filter(itemId => itemBoughtByDudeIdSelector(state, itemId) === dudeId)
-export const itemSharedByDudeIdsSelector = (state, id) => itemSelector(state, id).itemSharedByDudes
+const itemSharedByDudeIdsSelector = (state, id) => itemSelector(state, id).sharedByDudes.map(({ dudeId }) => dudeId)
+export const itemSharedByDudesSelector = (state, id) => itemSelector(state, id).sharedByDudes
 export const itemSharingLabelSelector = (state, id) => apply(
-  dudeIds => dudeIds.length
-    ? apply(
-      itemSplit => Object.keys(itemSplit).length
-        ? `${dudeIds.map(dudeId => `${dudeNameSelector(state, dudeId)} (${itemSplit[dudeId].toFixed(2)})`).join(', ')}`
-        : `Split between ${dudeIds.map(dudeId => dudeNameSelector(state, dudeId)).join(', ')}`,
-      itemCostSplitSelector(state, id)
-    ) : '',
-  itemSharedByDudeIdsSelector(state, id)
+  sharedByDudes => sharedByDudes.length
+    ? sharedByDudes.some(({ amount }) => amount)
+      ? `${sharedByDudes.map(({ dudeId, amount }) => `${dudeNameSelector(state, dudeId)} (${amount.toFixed(2)})`).join(', ')}`
+      : `Split between ${sharedByDudes.map(({ dudeId }) => dudeNameSelector(state, dudeId)).join(', ')}`
+    : '',
+  itemSharedByDudesSelector(state, id)
 )
 export const lastAddedItemIdSelector = state => itemIdsSelector(state).slice(-1)[0]
 
@@ -55,8 +50,7 @@ const defaultItemState = {
     price: 0
   },
   description: '',
-  itemSharedByDudes: [],
-  itemSplit: {}
+  sharedByDudes: []
 }
 
 const item = (state = defaultItemState, action) => {
@@ -67,8 +61,7 @@ const item = (state = defaultItemState, action) => {
       price: action.price ? roundDown(action.price) : state.boughtBy.price
     },
     description: action.description,
-    itemSharedByDudes: action.sharedByDudeIds,
-    itemSplit: action.itemSplit
+    sharedByDudes: action.sharedByDudes
   }
 }
 

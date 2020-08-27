@@ -67,7 +67,7 @@ describe('Dude List', () => {
     expect(dudeCanBeRemovedSelector(store.getState(), dudeId2)).toEqual(true)
 
     const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItem(itemId, 'an item', dudeId1, 1.99, [dudeId1, dudeId2]))
+    store.dispatch(updateItem(itemId, 'an item', dudeId1, 1.99, [{ dudeId: dudeId1 }, { dudeId: dudeId2 }]))
 
     expect(dudeCanBeRemovedSelector(store.getState(), dudeId2)).toEqual(false)
   })
