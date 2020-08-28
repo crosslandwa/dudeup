@@ -55,13 +55,13 @@ describe('Summary', () => {
     const dudeId3 = addDudeAndReturnId(store, 'dude 3')
 
     const itemId = addItemAndReturnId(store)
-    store.dispatch(updateItem(itemId, 'an item', dudeId1, 9, [dudeId1, dudeId2]))
+    store.dispatch(updateItem(itemId, 'an item', dudeId1, 9, [{ dudeId: dudeId1 }, { dudeId: dudeId2 }]))
 
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId1]).toEqual([])
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId2]).toEqual([{ dudeId: dudeId1, amount: 4.5 }])
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId3]).toEqual([])
 
-    store.dispatch(updateItem(itemId, 'an item', dudeId1, 9, { [dudeId1]: 3, [dudeId2]: 6 }))
+    store.dispatch(updateItem(itemId, 'an item', dudeId1, 9, [{ dudeId: dudeId1, amount: 3 }, { dudeId: dudeId2, amount: 6 }]))
 
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId1]).toEqual([])
     expect(dudesInDebtSummarySelector(store.getState()).debts[dudeId2]).toEqual([{ dudeId: dudeId1, amount: 6 }])

@@ -1,34 +1,69 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { dudeIdsSelector, dudeNameSelector } from '../DudeList/interactions'
+import PriceInput from '../GenericUi/PriceInput'
 
-const mapStateToProps = (state, { itemId }) => ({
-  allDudeIds: dudeIdsSelector(state)
-})
+const mapStateToProps = (state, { price = 0, hasExplicitSharingAmounts, sharedByDudes }) => {
+  const allDudeIds = dudeIdsSelector(state)
+  const numberOfDudesSharing = sharedByDudes.length || allDudeIds.length
+  const amountPerDude = hasExplicitSharingAmounts
+    ? 0
+    : (price / (numberOfDudesSharing || 1)).toFixed(2)
+  return {
+    allDudeIds,
+    amountPerDude,
+    sharedByDudeIds: sharedByDudes.map(({ dudeId }) => dudeId),
+    sharedByDudeAmounts: sharedByDudes.reduce(
+      (acc, { dudeId, amount }) => ({ ...acc, [dudeId]: amount }),
+      {}
+    )
+  }
+}
 
 const mapDudeIdToName = (state, { id }) => ({
   name: dudeNameSelector(state, id)
 })
 
 const CheckBox = ({ id, label, onChange, selected }) => (
-  <label style={{
-    display: 'flex',
-    justifyContent: 'space-between'
-  }}>
-    {label}
+  <label>
     <input type="checkbox" value={id} checked={selected} onChange={onChange} />
+    <span style={{ margin: '0 0.5em' }}>{label}</span>
   </label>
 )
 const CheckBoxOption = connect(mapDudeIdToName)(props => (
   <CheckBox {...props} label={props.name} />
 ))
 
-const ItemSharing = ({ allDudeIds, selectedIds, shareByEveryone, toggleDudesInvolvement }) => (
+const ItemSharing = ({ allDudeIds, amountLeft, amountPerDude, hasExplicitSharingAmounts, sharedByDudeAmounts, sharedByDudeIds, shareByEveryone, toggleDudesInvolvement, updateIndividualAmount }) => (
   <>
-    {allDudeIds.map(id => (
-      <CheckBoxOption id={id} selected={selectedIds.includes(id)} onChange={e => toggleDudesInvolvement(id, e.target.checked)}/>
+    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <CheckBox id="_everyone_" label={<strong>Everyone</strong>} onChange={shareByEveryone} selected={!sharedByDudeIds.length} />
+      {!sharedByDudeIds.length && (
+        <span>Amount each: {amountPerDude}</span>
+      )}
+      {hasExplicitSharingAmounts && (
+        <span>Amount left to split: {amountLeft.toFixed(2)}</span>
+      )}
+    </div>
+    {allDudeIds.map(dudeId => (
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <CheckBoxOption
+          id={dudeId}
+          selected={sharedByDudeIds.includes(dudeId)}
+          onChange={e => toggleDudesInvolvement(dudeId, e.target.checked)}
+        />
+        {sharedByDudeIds.includes(dudeId) && (
+          <label>
+            <span style={{ marginRight: '0.5em' }}>Amount:</span>
+            <PriceInput
+              price={sharedByDudeAmounts[dudeId]}
+              placeholder={amountPerDude}
+              onChange={e => updateIndividualAmount(dudeId, e.target.value)}
+            />
+          </label>
+        )}
+      </div>
     ))}
-    <CheckBox id="_everyone_" label={<strong>Everyone</strong>} onChange={shareByEveryone} selected={!selectedIds.length} />
   </>
 )
 
