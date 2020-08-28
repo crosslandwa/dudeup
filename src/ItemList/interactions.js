@@ -110,6 +110,9 @@ export function middleware (store) {
         next(action)
         next(addNotification(`Added new item '${action.description}'`))
         return
+      case 'ITEMLIST_UPDATE_ITEM':
+        next(action)
+        return next(addNotification(`Updated item '${action.description}'`))
       case 'ITEMLIST_REMOVE_ITEM':
         const removedItemDescription = itemDescriptionSelector(store.getState(), action.id)
         next(action)
