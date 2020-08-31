@@ -13,6 +13,21 @@ body {
   position: inherit !important;
 }
 
+.du-header__inner {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.du-header__title {
+  display: inline-block;
+  margin: 0 0.25em 0 0;
+}
+
+.du-header__item {
+  margin: 0.5em 0.5em 0 0;
+}
+
 .du-content-container {
   box-sizing: border-box;
   font-size: 1em;

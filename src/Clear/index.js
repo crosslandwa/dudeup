@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { clear } from './interactions'
 import Accordian from '../Accordian'
@@ -19,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
   openClearAccordion: () => dispatch(openAccordian('clear'))
 })
 
-const Clear = ({ clear, closeClearAccordion, openClearAccordion, showClear }) => (
+const Clear = ({ clear, closeClearAccordion, openClearAccordion, showClear }) => ReactDOM.createPortal(
   <>
     <button class={`du-button du-button--text-only du-button--header ${showClear ? 'du-flyout--below' : ''}`} onClick={openClearAccordion}>
       <span class="du-button__label">Clear</span>
@@ -38,7 +39,8 @@ const Clear = ({ clear, closeClearAccordion, openClearAccordion, showClear }) =>
         </div>
       </div>
     )}
-  </>
+  </>,
+  document.getElementById('clear')
 )
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clear)

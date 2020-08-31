@@ -11,14 +11,12 @@ import './app.css'
 const App = () => (
   <>
     <Header />
-    <div class="du-content-container">
-      <AnErrorOccurred>
-        <Notifications />
-        <Section title="Dudes"><DudeManagement /></Section>
-        <Section title="Items"><ItemList /></Section>
-        <Section title="Settle up..."><Summary /></Section>
-      </AnErrorOccurred>
-    </div>
+    <AnErrorOccurred>
+      <Notifications />
+      <Section title="Dudes"><DudeManagement /></Section>
+      <Section title="Items"><ItemList /></Section>
+      <Section title="Settle up..."><Summary /></Section>
+    </AnErrorOccurred>
   </>
 )
 

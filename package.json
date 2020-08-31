@@ -2,9 +2,9 @@
   "name": "dudeup-webapp",
   "version": "1.0.0",
   "scripts": {
-    "build": "rollup -c",
+    "build": "rm -rf dist && mkdir dist && rollup -c",
     "lint": "eslint .",
-    "start": "open dist/index.html && npm run watch",
+    "start": "npm run build && open dist/index.html && npm run watch",
     "test": "jest",
     "watch": "npm run build -- --watch"
   },
@@ -15,6 +15,7 @@
     "@babel/preset-react": "^7.10.4",
     "@rollup/plugin-babel": "^5.1.0",
     "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-html": "^0.2.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-replace": "^2.3.3",
     "eslint": "^5.4.0",
@@ -27,7 +28,7 @@
     "eslint-plugin-standard": "^3.1.0",
     "jest": "^26.4.0",
     "rollup": "^2.23.1",
-    "rollup-plugin-postcss": "^3.1.4"
+    "rollup-plugin-css-only": "^2.1.0"
   },
   "jest": {
     "testEnvironment": "node"
