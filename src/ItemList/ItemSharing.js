@@ -37,7 +37,7 @@ const CheckboxOption = ({ checked, id, label, name, onChange, value }) => (
 
 const ItemSharing = ({ allDudeIds, amountLeft, amountPerDude, hasExplicitSharingAmounts, sharedByDudeAmounts, sharedByDudeIds, shareByEveryone, toggleDudesInvolvement, updateIndividualAmount }) => (
   <>
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
       <CheckboxOption
         id="item-sharing-0"
         checked={!sharedByDudeIds.length}
@@ -47,14 +47,18 @@ const ItemSharing = ({ allDudeIds, amountLeft, amountPerDude, hasExplicitSharing
         value="_everyone_"
       />
       {!sharedByDudeIds.length && (
-        <span>Amount each: {amountPerDude}</span>
+        <span style={{ marginBottom: '0.5em' }}>
+          Amount each: {amountPerDude}
+        </span>
       )}
       {hasExplicitSharingAmounts && (
-        <span>Amount left to split: {amountLeft.toFixed(2)}</span>
+        <span style={{ marginBottom: '0.5em' }}>
+          Amount left to split: {amountLeft.toFixed(2)}
+        </span>
       )}
     </div>
     {allDudeIds.map(dudeId => (
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
         <CheckBoxOptionWithDudeName
           checked={sharedByDudeIds.includes(dudeId)}
           id={dudeId}
@@ -62,7 +66,7 @@ const ItemSharing = ({ allDudeIds, amountLeft, amountPerDude, hasExplicitSharing
           value={dudeId}
         />
         {sharedByDudeIds.includes(dudeId) && (
-          <label>
+          <label style={{ marginBottom: '0.5em' }}>
             <span style={{ marginRight: '0.5em' }}>Amount:</span>
             <PriceInput
               price={sharedByDudeAmounts[dudeId]}
