@@ -21,11 +21,25 @@ body {
 
 .du-header__title {
   display: inline-block;
-  margin: 0 0.25em 0 0;
+  margin-right: 0.5em;
+
 }
 
 .du-header__item {
   margin: 0.5em 0.5em 0 0;
+}
+
+.du-header-text {
+  margin-bottom: 0.5em;
+  margin-top: 0;
+}
+
+.du-header-text--medium {
+  font-size: 1.25em;
+}
+
+.du-header-text--small {
+  font-size: 1.125em;
 }
 
 .du-content-container {

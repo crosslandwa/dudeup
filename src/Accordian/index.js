@@ -29,7 +29,7 @@ class Accordian extends React.Component {
     return (
       <div class={overlay ? 'du-accordian du-accordian--overlay' : 'du-accordian'}>
         <div class="du-closing-cross" onClick={onClose} />
-        <h3 style={{ margin: '0 0 0.5em 0', maxWidth: 'calc(100% - 2em)' }}>{title}</h3>
+        <h3 class="du-header-text du-header-text--small">{title}</h3>
         <form onSubmit={this.onSubmit} >
           {children}
         </form>

@@ -36,7 +36,7 @@ export default {
   <body>
     <header class="du-full-width-container__outer du-header">
       <div class="du-full-width-container__inner du-header__inner">
-        <h1 class="du-header__title">DUDE UP</h1>
+        <h1 class="du-header-text du-header__title">DUDE UP</h1>
         <div id="about" class="du-header__item"></div>
         <div id="clear" class="du-header__item"></div>
       </div>
