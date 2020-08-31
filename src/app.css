@@ -50,7 +50,7 @@ body {
 }
 
 .du-button__label--name {
-  max-width: 20em;
+  max-width: 17em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -73,6 +73,12 @@ body {
 .du-button:disabled {
   cursor: default;
   opacity: 0.5;
+}
+
+.du-dude-name-button {
+  display: inline-block;
+  margin-bottom: 0.5em;
+  margin-right: 1em;
 }
 
 .du-item-summary:hover, .du-details:hover > summary, .du-button:hover:enabled {

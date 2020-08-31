@@ -53,10 +53,7 @@ class DudeManagement extends React.Component {
     const { dudeIds, showAccordian } = this.props
     return (
       <>
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap'
-        }}>
+        <div>
           {dudeIds.map(id => <EditableDude id={id} />)}
           <button class={`du-button du-button--text-only ${showAccordian ? 'du-flyout--below' : ''}`} ref={this.captureRef} onClick={this.toggleAddDude}>
             <span class="du-button__label">Add dude</span>

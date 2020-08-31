@@ -51,7 +51,7 @@ class EditableDude extends React.Component {
   render () {
     const { id, name, showAccordian } = this.props
     return (
-      <div style={{ margin: '0 1em 0.25em 0' }}>
+      <div class="du-dude-name-button">
         <button ref={this.captureRef} class={`du-button ${showAccordian ? 'du-flyout--below' : ''}`} onClick={this.toggleEditOpen}>
           <span class="du-button__label du-button__label--name">{name}</span>
         </button>
