@@ -18,10 +18,7 @@ const mapStateToProps = state => {
 }
 
 const Summary = props => (
-  <div style={{
-    display: 'flex',
-    flexDirection: 'column'
-  }}>
+  <div>
     {props.ids.map(id => (
       <DudeSummary id={id} paymentsDue={props.paymentsDue} balance={props.balances[id]} />
     ))}
