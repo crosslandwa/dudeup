@@ -65,7 +65,8 @@ body {
 }
 
 
-*:focus {
+*:focus, *:focus+.du-checkboxes__label:before {
+  border-width: 2px !important;
   box-shadow: 0 0 0.1em 0.1em #51b1c7;
   color: #51b1c7;
   outline:none;
@@ -209,4 +210,66 @@ body {
   margin-top: 0.75em;
   position: absolute;
   left: calc(50% - 1em);
+}
+
+.du-checkboxes__item {
+  line-height: 2em;
+  margin-bottom: 0.5em;
+  padding-left: 2.5em;
+  position: relative;
+}
+
+.du-checkboxes__input {
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 1em;
+  left: 0em;
+  height: 1.5em;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0.25em;
+  width: 2em;
+}
+
+.du-checkboxes__label {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.du-checkboxes__label:before {
+  background: white;
+  border: solid 1px black;
+  box-sizing: border-box;
+  content: "";
+  height: 1.5em;
+  left: 0em;
+  position: absolute;
+  top: 0.25em;
+  width: 1.5em;
+}
+
+.du-checkboxes__label:after {
+  border: solid 2px black;
+  border-width: 0 0 2px 2px;
+  content: "";
+  height: 0.25em;
+  left: 0.33em;
+  margin-top: 0.5em;
+  opacity: 0;
+  position: absolute;
+  top: 0.25em;
+  transform: rotate(-45deg);
+  width: 0.75em;
+}
+
+.du-checkboxes__input:checked+.du-checkboxes__label:after {
+  opacity: 1;
+}
+
+.du-fieldset {
+  border: 0;
+  line-height: 2em;
+  margin: 0;
+  padding: 0;
 }

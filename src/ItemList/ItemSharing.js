@@ -24,20 +24,28 @@ const mapDudeIdToName = (state, { id }) => ({
   name: dudeNameSelector(state, id)
 })
 
-const CheckBox = ({ id, label, onChange, selected }) => (
-  <label>
-    <input type="checkbox" value={id} checked={selected} onChange={onChange} />
-    <span style={{ margin: '0 0.5em' }}>{label}</span>
-  </label>
-)
-const CheckBoxOption = connect(mapDudeIdToName)(props => (
-  <CheckBox {...props} label={props.name} />
+const CheckBoxOptionWithDudeName = connect(mapDudeIdToName)(props => (
+  <CheckboxOption {...props} label={props.name} />
 ))
+
+const CheckboxOption = ({ checked, id, label, name, onChange, value }) => (
+  <div class="du-checkboxes__item">
+    <input id={id} class="du-checkboxes__input" name={name} type="checkbox" onChange={onChange} value={value} checked={checked} />
+    <label class="du-checkboxes__label" for={id}>{label}</label>
+  </div>
+)
 
 const ItemSharing = ({ allDudeIds, amountLeft, amountPerDude, hasExplicitSharingAmounts, sharedByDudeAmounts, sharedByDudeIds, shareByEveryone, toggleDudesInvolvement, updateIndividualAmount }) => (
   <>
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-      <CheckBox id="_everyone_" label={<strong>Everyone</strong>} onChange={shareByEveryone} selected={!sharedByDudeIds.length} />
+      <CheckboxOption
+        id="item-sharing-0"
+        checked={!sharedByDudeIds.length}
+        label={<strong>Everyone</strong>}
+        name="itemSharing"
+        onChange={shareByEveryone}
+        value="_everyone_"
+      />
       {!sharedByDudeIds.length && (
         <span>Amount each: {amountPerDude}</span>
       )}
@@ -47,10 +55,11 @@ const ItemSharing = ({ allDudeIds, amountLeft, amountPerDude, hasExplicitSharing
     </div>
     {allDudeIds.map(dudeId => (
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <CheckBoxOption
+        <CheckBoxOptionWithDudeName
+          checked={sharedByDudeIds.includes(dudeId)}
           id={dudeId}
-          selected={sharedByDudeIds.includes(dudeId)}
           onChange={e => toggleDudesInvolvement(dudeId, e.target.checked)}
+          value={dudeId}
         />
         {sharedByDudeIds.includes(dudeId) && (
           <label>

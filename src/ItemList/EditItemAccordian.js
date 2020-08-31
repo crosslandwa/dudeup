@@ -132,18 +132,15 @@ class EditItemAccordian extends React.Component {
           display: 'flex',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
-          margin: '0 -0.5em'
+          margin: '0 -0.5em 0.5em -0.5em'
         }}>
           <PriceInput style={{ flexGrow: 1, margin: '0.5em 0.5em 0 0.5em' }} onChange={this.storeItemPrice} price={price} />
           <DudeList style={{ maxWidth: 'calc(100% - 1em)', flexGrow: 1, margin: '0.5em 0.5em 0 0.5em' }} selectedId={dudeId} onChange={this.storeItemBoughtBy}/>
         </div>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          marginTop: '0.5em',
-          lineHeight: '2em'
-        }}>
-          <div>Split between</div>
+        <fieldset class="du-fieldset">
+          <legend>
+            Split item cost between dudes
+          </legend>
           <ItemSharing
             price={price}
             sharedByDudes={sharedByDudes}
@@ -153,7 +150,7 @@ class EditItemAccordian extends React.Component {
             updateIndividualAmount={this.updateIndividualAmount}
             hasExplicitSharingAmounts={hasExplicitSharingAmounts(sharedByDudes)}
           />
-        </div>
+        </fieldset>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5em' }}>
           <button class="du-button du-button--submit" type="submit">{id ? 'Update' : 'Add'}</button>
           {id && (
