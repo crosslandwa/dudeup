@@ -2,7 +2,7 @@
   "name": "dudeup-webapp",
   "version": "1.0.0",
   "scripts": {
-    "build": "rm -rf dist && mkdir dist && rollup -c",
+    "build": "mkdir -p dist && rm -rf dist/* && rollup -c",
     "lint": "eslint .",
     "start": "npm run build && open dist/index.html && npm run watch",
     "test": "jest",

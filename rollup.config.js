@@ -30,6 +30,7 @@ export default {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Settle up the cost of group activities.">
     <title>Dude Up</title>
     <link href="dude-up.css" rel="stylesheet" type="text/css" />
   </head>
