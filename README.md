@@ -36,3 +36,7 @@ npm run lint
 ```
 
 Linting is done with [ESLint](https://eslint.org/) and is configured to conform code to https://standardjs.com/
+
+### Deployment
+
+This site is hosted on [Github Pages](https://crosslandwa.github.io/dudeup). Deployment happens on commit to the `main` branch via a Github Action
