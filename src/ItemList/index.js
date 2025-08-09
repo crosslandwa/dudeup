@@ -20,8 +20,8 @@ class ItemList extends React.Component {
     super(props)
     this.state = { reFocus: false }
 
-    this.toggleAdd = e => {
-      this.setState(state => {
+    this.toggleAdd = () => {
+      this.setState(() => {
         if (this.props.showAccordian) {
           this.closeAddAndRefocus()
         } else {
@@ -42,7 +42,7 @@ class ItemList extends React.Component {
 
   componentDidUpdate () {
     if (this.ref && this.state.reFocus) {
-      this.setState(state => {
+      this.setState(() => {
         this.ref.focus()
         return { reFocus: false }
       })

@@ -34,8 +34,8 @@ class ItemSummary extends React.Component {
     super(props)
     this.state = { reFocus: false }
 
-    this.toggleEditOpen = e => {
-      this.setState(state => {
+    this.toggleEditOpen = () => {
+      this.setState(() => {
         if (this.props.showAccordian) {
           this.closeAndRefocus()
         } else {
@@ -56,7 +56,7 @@ class ItemSummary extends React.Component {
 
   componentDidUpdate () {
     if (this.ref && this.state.reFocus) {
-      this.setState(state => {
+      this.setState(() => {
         this.ref.focus()
         return { reFocus: false }
       })

@@ -26,7 +26,7 @@ const mapStateToProps = (state, { id }) => ({
 const mapDispatchToProps = (dispatch, { id }) => ({
   addItem: (...args) => dispatch(addItem(...args)),
   addWarningNotification: text => dispatch(addWarningNotification(text)),
-  remove: e => dispatch(removeItem(id)),
+  remove: () => dispatch(removeItem(id)),
   updateItem: (...args) => dispatch(updateItem(id, ...args))
 })
 
@@ -85,7 +85,7 @@ class EditItemAccordian extends React.Component {
       })
     }
 
-    this.updateItem = e => {
+    this.updateItem = () => {
       const { amountLeft, description, dudeId, price, sharedByDudes } = this.state
       if (!this.state.description) {
         this.props.addWarningNotification(`Did not ${this.props.id ? 'update' : 'add'} item - description required`)

@@ -23,7 +23,7 @@ export default {
       output: 'dist/dude-up.css'
     }),
     html({
-      template: ({ attributes, bundle, files, publicPath, title }) => `
+      template: () => `
 <!DOCTYPE html>
 <html lang="en">
   <head>

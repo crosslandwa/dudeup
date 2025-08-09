@@ -20,8 +20,8 @@ class DudeManagement extends React.Component {
     super(props)
     this.state = { reFocus: false }
 
-    this.toggleAddDude = e => {
-      this.setState(state => {
+    this.toggleAddDude = () => {
+      this.setState(() => {
         if (this.props.showAccordian) {
           this.closeAndRefocus()
         } else {
@@ -42,7 +42,7 @@ class DudeManagement extends React.Component {
 
   componentDidUpdate () {
     if (this.ref && this.state.reFocus) {
-      this.setState(state => {
+      this.setState(() => {
         this.ref.focus()
         return { reFocus: false }
       })

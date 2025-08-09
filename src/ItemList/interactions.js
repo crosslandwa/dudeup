@@ -83,19 +83,21 @@ const item = (state = defaultItemState, action) => {
 
 export const reducer = (state = { allIds: [], byId: {} }, action) => {
   switch (action.type) {
-    case 'ITEMLIST_ADD_ITEM':
+    case 'ITEMLIST_ADD_ITEM': {
       const id = `item-${(state.allIds.length ? Math.max(...state.allIds.map(x => x.replace('item-', ''))) : 0) + 1}`
       return {
         allIds: state.allIds.concat(state.allIds.includes(id) ? [] : id),
         byId: { ...state.byId, [id]: item(state.byId[id], action) }
       }
-    case 'ITEMLIST_REMOVE_ITEM':
+    }
+    case 'ITEMLIST_REMOVE_ITEM': {
       const updatedIds = [...state.allIds]
       updatedIds.splice(state.allIds.indexOf(action.id), 1)
       return {
         allIds: updatedIds,
         byId: { ...state.byId, [action.id]: undefined }
       }
+    }
     case 'ITEMLIST_UPDATE_ITEM':
       return { ...state, byId: { ...state.byId, [action.id]: item(state.byId[action.id], action) } }
   }
@@ -113,11 +115,12 @@ export function middleware (store) {
       case 'ITEMLIST_UPDATE_ITEM':
         next(action)
         return next(addNotification(`Updated item '${action.description}'`))
-      case 'ITEMLIST_REMOVE_ITEM':
+      case 'ITEMLIST_REMOVE_ITEM': {
         const removedItemDescription = itemDescriptionSelector(store.getState(), action.id)
         next(action)
         next(addDeleteNotification(removedItemDescription ? `Removed item '${removedItemDescription}'` : 'Item removed'))
         return
+      }
     }
     next(action)
   }

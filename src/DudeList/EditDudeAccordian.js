@@ -32,7 +32,7 @@ class EditDudeAccordian extends React.Component {
       this.setState({ name: event.target.value })
     }
 
-    this.remove = e => {
+    this.remove = () => {
       this.props.removeDude(this.props.id)
     }
 

@@ -19,8 +19,8 @@ class EditableDude extends React.Component {
     super(props)
     this.state = { editOpen: false }
 
-    this.toggleEditOpen = e => {
-      this.setState(state => {
+    this.toggleEditOpen = () => {
+      this.setState(() => {
         if (this.props.showAccordian) {
           this.closeAndRefocus()
         } else {
@@ -41,7 +41,7 @@ class EditableDude extends React.Component {
 
   componentDidUpdate () {
     if (this.ref && this.state.reFocus) {
-      this.setState(state => {
+      this.setState(() => {
         this.ref.focus()
         return { reFocus: false }
       })

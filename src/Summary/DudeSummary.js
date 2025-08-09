@@ -4,7 +4,7 @@ import { dudeNameSelector } from '../DudeList/interactions'
 
 const pick = (balance, negative, zero, postive) => balance === 0 ? zero : balance > 0 ? postive : negative
 
-const mapStateToProps = (state, { id, balance, credits, debts, paymentsDue }) => ({
+const mapStateToProps = (state, { id, balance, paymentsDue }) => ({
   credits: paymentsDue.filter(({ to }) => to === id).map(({ from, amount }) => ({
     name: dudeNameSelector(state, from), amount
   })),
