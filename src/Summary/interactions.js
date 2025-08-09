@@ -4,7 +4,7 @@ import {
   itemPriceSelector,
   itemSharedByDudesSelector
 } from '../ItemList/interactions'
-import DudeUp from 'dudeup-lib'
+import { calculate } from './calculations'
 
 const apply = (f, x) => f(x)
 
@@ -30,7 +30,7 @@ export const dudesInDebtSummarySelector = state => {
     }),
     {}
   )
-  const summary = DudeUp(dudeUpData)
+  const summary = calculate(dudeUpData)
 
   return {
     dudeIds,
