@@ -1,5 +1,5 @@
 {
-  "name": "dudeup-webapp",
+  "name": "dudeup",
   "version": "1.0.0",
   "scripts": {
     "build": "mkdir -p dist && rm -rf dist/* && rollup -c",
@@ -34,7 +34,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "dudeup": "github:crosslandwa/dudeup#2.0.0",
+    "dudeup-lib": "github:crosslandwa/dudeup-lib#2.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",

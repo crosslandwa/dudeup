@@ -4,7 +4,7 @@ import {
   itemPriceSelector,
   itemSharedByDudesSelector
 } from '../ItemList/interactions'
-import DudeUp from 'dudeup'
+import DudeUp from 'dudeup-lib'
 
 const apply = (f, x) => f(x)
 
