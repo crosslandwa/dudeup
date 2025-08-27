@@ -40,3 +40,23 @@ Linting is done with [ESLint](https://eslint.org/) and is configured to conform 
 ### Deployment
 
 This site is hosted on [Github Pages](https://crosslandwa.github.io/dudeup). Deployment happens on commit to the `main` branch via a Github Action
+
+### Logo
+
+Generate a SVG logo - here's the markup for the current one
+
+```html
+  <svg id="logo" width="300" height="300">
+    <rect width="300" height="300" fill="#51b1c7" rx="50" ry="50" />
+    <text x="10" y="145" fill="#efefef" font-size="9em" font-family="Monospace" font-weight="800">dUde</text>
+    <text x="80" y="250" fill="#efefef" font-size="9em" font-family="Monospace" font-weight="800">P</text>
+  </svg>
+```
+
+Then grab the svg content as a base64 encoded string
+
+```js
+`data:image/svg+xml;base64,${btoa(new XMLSerializer().serializeToString(document.getElementById("logo")))}`
+```
+
+Finally, place the generated string in the `href` attribute of the `<link rel="shortcut icon">` element in the `<head>` of the page
