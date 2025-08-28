@@ -2,7 +2,7 @@
   "name": "dudeup",
   "version": "1.0.0",
   "scripts": {
-    "build": "mkdir -p dist && rm -rf dist/* && rollup -c",
+    "build": "mkdir -p dist && rm -rf dist/* && cp src/favicon.ico dist && rollup -c",
     "lint": "eslint .",
     "start": "npm run build && open dist/index.html && npm run watch",
     "test": "jest",

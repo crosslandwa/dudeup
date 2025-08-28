@@ -33,6 +33,7 @@ export default {
     <meta name="description" content="Settle up the cost of group activities.">
     <title>Dude Up</title>
     <link rel="shortcut icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGlkPSJsb2dvIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiM1MWIxYzciIHJ4PSI1MCIgcnk9IjUwIi8+PHRleHQgeD0iMTAiIHk9IjE0NSIgZmlsbD0iI2VmZWZlZiIgZm9udC1zaXplPSI5ZW0iIGZvbnQtZmFtaWx5PSJNb25vc3BhY2UiIGZvbnQtd2VpZ2h0PSI4MDAiPmRVZGU8L3RleHQ+PHRleHQgeD0iODAiIHk9IjI1MCIgZmlsbD0iI2VmZWZlZiIgZm9udC1zaXplPSI5ZW0iIGZvbnQtZmFtaWx5PSJNb25vc3BhY2UiIGZvbnQtd2VpZ2h0PSI4MDAiPlA8L3RleHQ+PC9zdmc+">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link href="dude-up.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
